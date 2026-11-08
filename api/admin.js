@@ -151,13 +151,13 @@ module.exports = async (req, res) => {
 
     let prompt = "";
     if (customOccasion) {
-      prompt = `Occasion: "${customOccasion}". Write a heartfelt, respectful 4 to 5 line festive greeting note in warm Indian business English/Hindi on behalf of Mr. Bedi and Bedi Fashion™ (Faridabad). Begin with "🙏 Namaste & Festive Greetings!". Express warm wishes for prosperity, health, and family happiness.`;
+      prompt = `Occasion: "${customOccasion}". Write an authentic, respectful 4-5 line festive greeting in Indian business English with rich celebratory emojis (🪔✨🌟🙏🌸). Represent the sender as "Sardar Guru Charan Singh Bedi & The Entire Family at Bedi Fashion™ (Faridabad)". Express heartfelt prayers for prosperity, health, and family happiness. Format as JSON: { "occasion": "${customOccasion}", "greeting_note": "4-5 lines note", "image_url": "/images/diwali_greeting_bedi_fashion.jpg" }`;
     } else {
       prompt = `Today's date is ${today}. 
-1. Check major Indian celebrations (Hindu, Muslim, Sikh, Christian, National) around this date (Diwali, Holi, Eid, Gurpurab, New Year, Christmas, Independence Day, etc.). 
-2. If there is a holiday or upcoming festival, identify it. If none, select "General Auspicious Greetings".
-3. Write a respectful, warm 4 to 5 line greeting note on behalf of Mr. Bedi & Bedi Fashion™ wishing the client and their family happiness, health, and prosperity.
-Format as JSON: { "occasion": "Festival Name", "greeting_note": "4-5 line note with emojis and polite tone" }`;
+1. Check major Indian celebrations (Hindu, Muslim, Sikh, Christian, National: Diwali, Holi, Eid, Gurpurab, New Year, Christmas, Independence Day, etc.). 
+2. If there is a holiday or upcoming festival, identify it. If none, select "Auspicious Festive Greetings".
+3. Write a respectful, warm 4-5 line greeting note with rich festive emojis representing "Sardar Guru Charan Singh Bedi & The Entire Family at Bedi Fashion™ (Faridabad)" wishing prosperity, joy, and peace.
+Format as JSON: { "occasion": "Festival Name", "greeting_note": "4-5 line note with emojis", "image_url": "/images/diwali_greeting_bedi_fashion.jpg" }`;
     }
 
     try {
@@ -191,16 +191,22 @@ Format as JSON: { "occasion": "Festival Name", "greeting_note": "4-5 line note w
         resJson = JSON.parse(text);
       } catch (_) {
         resJson = {
-          occasion: customOccasion || "Festive Greetings",
-          greeting_note: text || `🙏 *Namaste & Heartfelt Festive Greetings!*\n\nMay this auspicious occasion bring joy, prosperity, and good health to you and your entire family.\nWe sincerely thank you for being a cherished partner of Bedi Fashion™.\n\nWarm regards,\n*Mr. Bedi & The Bedi Fashion Team (Faridabad)*`
+          occasion: customOccasion || "Diwali 🪔",
+          image_url: "/images/diwali_greeting_bedi_fashion.jpg",
+          greeting_note: text || `🪔✨ *शुभ दीपावली | Festive Greetings from Bedi Fashion™* ✨🪔\n\n🙏 Warmest Diwali greetings and heartfelt blessings to you and your beloved family!\n🌟 May the divine glow of Diwali fill your life with boundless joy, prosperity, peace, and vibrant health.\n🌸 We deeply cherish your trusted relationship with us.\n\n🎆 *With sincere respect, warm prayers & festive regards,*\n*Sardar Guru Charan Singh Bedi & The Entire Family at Bedi Fashion™ (Faridabad)* 🇮🇳🙏`
         };
+      }
+
+      if (!resJson.image_url) {
+        resJson.image_url = "/images/diwali_greeting_bedi_fashion.jpg";
       }
 
       return res.status(200).json(resJson);
     } catch (e) {
       return res.status(200).json({
-        occasion: customOccasion || "Festive Greetings",
-        greeting_note: `🙏 *Namaste & Warm Greetings!*\n\nMay this blessed season bring prosperity, success, and good health to you and your family.\nThank you for your valuable association with Bedi Fashion™.\n\nWarmest wishes,\n*Mr. Bedi & Team Bedi Fashion™ (Faridabad)*`
+        occasion: customOccasion || "Diwali 🪔",
+        image_url: "/images/diwali_greeting_bedi_fashion.jpg",
+        greeting_note: `🪔✨ *शुभ दीपावली | Festive Greetings from Bedi Fashion™* ✨🪔\n\n🙏 Warmest Diwali greetings and heartfelt blessings to you and your beloved family!\n🌟 May the divine glow of Diwali fill your life with boundless joy, prosperity, peace, and vibrant health.\n🌸 We deeply cherish your trusted relationship with us.\n\n🎆 *With sincere respect, warm prayers & festive regards,*\n*Sardar Guru Charan Singh Bedi & The Entire Family at Bedi Fashion™ (Faridabad)* 🇮🇳🙏`
       });
     }
   }

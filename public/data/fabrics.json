@@ -1,0 +1,85 @@
+[
+  {
+    "id": "terry-cotton",
+    "name": "Terry-Cotton Uniform Weave",
+    "composition": "67% Polyester / 33% Cotton",
+    "gsm_range": "210 - 240 GSM",
+    "suitable_for": [
+      "School Trousers",
+      "Hospital Staff Uniforms",
+      "Security Guards"
+    ],
+    "wash_durability": "150+ commercial laundry cycles without fading or shrinkage",
+    "features": [
+      "Permanent colorfastness",
+      "High tear strength",
+      "Wrinkle recovery"
+    ]
+  },
+  {
+    "id": "heavy-cotton-drill",
+    "name": "Heavy 100% Cotton Drill",
+    "composition": "100% Pure Ring-Spun Cotton",
+    "gsm_range": "260 - 280 GSM",
+    "suitable_for": [
+      "Boiler Suits",
+      "Industrial Coveralls",
+      "Heavy Cargo Pants"
+    ],
+    "wash_durability": "Built for abrasive workshop environments",
+    "features": [
+      "Spark & heat resistant",
+      "High breathability",
+      "Reinforced double-ply warp"
+    ]
+  },
+  {
+    "id": "anti-microbial-poplin",
+    "name": "Silvadur™ Anti-Microbial Poplin",
+    "composition": "65% Polyester / 35% Combed Cotton",
+    "gsm_range": "150 - 180 GSM",
+    "suitable_for": [
+      "Doctor Lab Coats",
+      "OT Scrub Suits",
+      "Surgeon Gowns"
+    ],
+    "wash_durability": "Maintains 99.4% anti-microbial bacterial inhibition across 50 autoclave cycles",
+    "features": [
+      "Fluid repellent",
+      "Silver-ion odor control",
+      "Autoclave safe"
+    ]
+  },
+  {
+    "id": "anti-pill-cashmilon",
+    "name": "Anti-Pill Thermal Cashmilon",
+    "composition": "100% Long-Staple Low-Pill Acrylic",
+    "gsm_range": "10-12 Gauge Knit",
+    "suitable_for": [
+      "School V-Neck Sweaters",
+      "Security Commando Knitwear"
+    ],
+    "wash_durability": "Special zero-friction yarn prevents surface bobbles and fuzz",
+    "features": [
+      "Lightweight warmth",
+      "Retains ribbed elastic shape",
+      "Hypoallergenic"
+    ]
+  },
+  {
+    "id": "combed-cotton-pique",
+    "name": "Combed Cotton Pique Knit",
+    "composition": "100% Bio-Washed Combed Cotton",
+    "gsm_range": "220 GSM",
+    "suitable_for": [
+      "Corporate Polo T-Shirts",
+      "Executive Casuals"
+    ],
+    "wash_durability": "Enzyme treated for zero pilling and silky touch",
+    "features": [
+      "Honeycomb breathable knit",
+      "Anti-curl collar tipping",
+      "Eco-friendly dyes"
+    ]
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "faq-01",
+    "question_en": "What is the minimum order quantity (MOQ) for institutional uniforms?",
+    "question_hi": "संस्थागत वर्दियों के लिए न्यूनतम ऑर्डर मात्रा (MOQ) क्या है?",
+    "answer_en": "For ready-made inventory supply, our minimum order quantity is just 25 pieces per category. For bespoke customized institutional tailoring (with custom dyeing, pattern development, and logo embroidery), the MOQ starts at 100 pieces.",
+    "answer_hi": "तैयार इन्वेंटरी सप्लाई के लिए न्यूनतम ऑर्डर केवल 25 पीस है। कस्टम सिलाई, स्कूल लोगो और विशेष रंगों के लिए न्यूनतम ऑर्डर 100 पीस से शुरू होता है।"
+  },
+  {
+    "id": "faq-02",
+    "question_en": "Do you provide physical fabric samples and sizing sets before bulk production?",
+    "question_hi": "क्या आप बड़े ऑर्डर से पहले फैब्रिक सैंपल और साइजिंग सेट प्रदान करते हैं?",
+    "answer_en": "Yes! For schools, hospitals, and corporate clients in Faridabad, Delhi NCR, and across India, we dispatch full fabric swatches and size fitting sets directly to your management committee for physical evaluation.",
+    "answer_hi": "हाँ! फरीदाबाद, दिल्ली एनसीआर और पूरे भारत के स्कूलों, अस्पतालों और कॉर्पोरेट ग्राहकों के लिए हम मूल्यांकन हेतु फैब्रिक स्वाच और साइजिंग सेट सीधे भेजते हैं।"
+  },
+  {
+    "id": "faq-03",
+    "question_en": "How long does a bulk uniform delivery typically take?",
+    "question_hi": "थोक यूनिफार्म की डिलीवरी में आमतौर पर कितना समय लगता है?",
+    "answer_en": "Standard in-stock uniform supplies are dispatched within 3 to 7 business days. Custom institutional batches requiring embroidery and custom sizing typically take 14 to 21 business days.",
+    "answer_hi": "तैयार स्टॉक 3 से 7 दिनों में भेजा जाता है। स्कूल लोगो कढ़ाई और विशेष सिलाई वाले ऑर्डर में आमतौर पर 14 से 21 दिन लगते हैं।"
+  },
+  {
+    "id": "faq-04",
+    "question_en": "Where are your manufacturing facilities located?",
+    "question_hi": "आपकी विनिर्माण इकाइयाँ कहाँ स्थित हैं?",
+    "answer_en": "Our Head Office is situated at Plot No - 125, Sector-18, Faridabad, 121002 (Haryana). Our primary production facility, Manufacturing Unit I, is located at Plot No- 12, Block-1, Springfield Colony (DLF), Sec-31/32, Faridabad.",
+    "answer_hi": "हमारा मुख्य कार्यालय प्लॉट नंबर 125, सेक्टर 18, फरीदाबाद (हरियाणा) में है, और विनिर्माण इकाई स्प्रिंगफील्ड कॉलोनी, सेक्टर 31/32, फरीदाबाद में स्थित है।"
+  }
+]

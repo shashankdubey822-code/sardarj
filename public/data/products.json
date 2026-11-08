@@ -1,0 +1,1818 @@
+[
+  {
+    "id": "sch-01",
+    "slug": "classic-school-oxford-shirt",
+    "name": "Classic School Oxford & Poplin Shirt",
+    "hindi_name": "क्लासिक स्कूल ऑक्सफोर्ड शर्ट",
+    "category_id": "school",
+    "category_name": "School Uniforms",
+    "short_desc": "Half and full-sleeve premium school shirts with anti-wrinkle finish and custom pocket crest embroidery.",
+    "fabric": "65% Polyester / 35% Combed Cotton Poplin",
+    "gsm": "145 - 160 GSM",
+    "sizes": [
+      "Age 3-4 (Size 20)",
+      "Age 5-6 (Size 24)",
+      "Age 7-8 (Size 28)",
+      "Age 9-11 (Size 32)",
+      "Age 12-14 (Size 36)",
+      "Senior (Size 40)"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Crisp White",
+      "Sky Blue",
+      "Pale Yellow",
+      "Light Grey"
+    ],
+    "features": [
+      "Pre-shrunk fabric",
+      "Fused collar band",
+      "Double-needle side seams",
+      "Optional school monogram embroidery"
+    ],
+    "lead_time": "3 - 7 days for ready stock, 14 days for custom crest batches",
+    "image": "images/1__1_.jpg",
+    "is_3d_available": true
+  },
+  {
+    "id": "sch-02",
+    "slug": "pleated-school-skirt-tunic",
+    "name": "Reinforced Pleated School Skirt & Tunic",
+    "hindi_name": "प्लीटेड स्कूल स्कर्ट और ट्यूनिक",
+    "category_id": "school",
+    "category_name": "School Uniforms",
+    "short_desc": "Permanently set knife-pleat and box-pleat skirts with adjustable elastic waistbands and concealed safety zips.",
+    "fabric": "Terry-Cotton / Poly-Viscose Tartan Twill",
+    "gsm": "210 - 230 GSM",
+    "sizes": [
+      "Age 4 (22\")",
+      "Age 6 (24\")",
+      "Age 8 (26\")",
+      "Age 10 (28\")",
+      "Age 12 (30\")",
+      "Senior (32\"-34\")"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Navy Tartan",
+      "Bottle Green",
+      "Royal Stewart Plaid",
+      "Charcoal Grey"
+    ],
+    "features": [
+      "Permanent heat-set pleats",
+      "Concealed heavy YKK zipper",
+      "Stain-resistant Teflon finish"
+    ],
+    "lead_time": "5 - 10 days",
+    "image": "images/school-skirts-250x250.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sch-03",
+    "slug": "tailored-school-trousers",
+    "name": "Heavy-Duty School Uniform Trousers",
+    "hindi_name": "मजबूत स्कूल ट्राउजर",
+    "category_id": "school",
+    "category_name": "School Uniforms",
+    "short_desc": "Comfortable flat-front school trousers with bar-tacked pockets and reinforced knee durability.",
+    "fabric": "Heavy Poly-Viscose / Terry-Cotton Drill",
+    "gsm": "240 GSM",
+    "sizes": [
+      "Size 22",
+      "Size 24",
+      "Size 26",
+      "Size 28",
+      "Size 30",
+      "Size 32",
+      "Size 34",
+      "Size 36"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Dark Navy",
+      "Steel Grey",
+      "Khaki",
+      "Bottle Green"
+    ],
+    "features": [
+      "Expandable back elastic for juniors",
+      "Bar-tacked stress points",
+      "High tear strength"
+    ],
+    "lead_time": "3 - 7 days",
+    "image": "images/b59_bsmp_d_front.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sch-04",
+    "slug": "crested-school-blazer",
+    "name": "Bespoke Gold-Crested School Blazer",
+    "hindi_name": "गोल्ड-क्रेस्टेड स्कूल ब्लेज़र",
+    "category_id": "school",
+    "category_name": "School Uniforms",
+    "short_desc": "Traditional tailored woolen-blend blazer with structured canvas chest piece and hand-embroidered bullion crest.",
+    "fabric": "70% Wool Serge / 30% Poly Blend with Silk Viscose Lining",
+    "gsm": "340 GSM",
+    "sizes": [
+      "Junior (26\"-30\")",
+      "Intermediate (32\"-36\")",
+      "Senior (38\"-42\")"
+    ],
+    "min_order_qty": 20,
+    "ready_stock": false,
+    "color_options": [
+      "Heritage Navy",
+      "Burgundy / Maroon",
+      "Forest Green",
+      "Royal Blue"
+    ],
+    "features": [
+      "Gold brass crest buttons",
+      "Hand-stitched lapel edges",
+      "Internal chest pass pocket"
+    ],
+    "lead_time": "14 - 21 days",
+    "image": "images/school_blazer_official.png",
+    "is_3d_available": true
+  },
+  {
+    "id": "sch-05",
+    "slug": "anti-pill-school-sweater",
+    "name": "Anti-Pill V-Neck School Sweater",
+    "hindi_name": "एंटी-पिलिंग वी-नेक स्कूल स्वेटर",
+    "category_id": "school",
+    "category_name": "School Uniforms",
+    "short_desc": "Warm, zero-pilling knitwear featuring institution tipping stripes on collar and cuffs.",
+    "fabric": "100% Low-Pill Cashmilon Acrylic Yarn",
+    "gsm": "12-Gauge Double Knit",
+    "sizes": [
+      "Size 22 to Size 42"
+    ],
+    "min_order_qty": 30,
+    "ready_stock": true,
+    "color_options": [
+      "Navy with Red Tipping",
+      "Maroon with Gold Tipping",
+      "Bottle Green with Yellow Tipping"
+    ],
+    "features": [
+      "Colorfast yarn",
+      "Shrink-resistant wash formula",
+      "Heavy ribbed waist hem"
+    ],
+    "lead_time": "7 - 14 days",
+    "image": "images/1__2_.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sch-06",
+    "slug": "school-winter-fleece-jacket",
+    "name": "Institutional Winter Fleece Jacket & Hoodie",
+    "hindi_name": "विंटर फ्लीस जैकेट और हुडी",
+    "category_id": "school",
+    "category_name": "School Uniforms",
+    "short_desc": "Heavyweight thermal brushed fleece with water-repellent nylon yoke and school chest embroidery.",
+    "fabric": "320 GSM Brushed Cotton-Poly Polar Fleece",
+    "gsm": "320 GSM",
+    "sizes": [
+      "Size 24 to Size 40"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Navy / Grey Block",
+      "Maroon / Charcoal",
+      "Black / Gold"
+    ],
+    "features": [
+      "YKK nylon coil zipper",
+      "Drawstring hoodie",
+      "Thermal dual front pockets"
+    ],
+    "lead_time": "10 - 15 days",
+    "image": "images/1__3_.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sch-07",
+    "slug": "school-house-sports-jersey",
+    "name": "Sublimated School House Sports Jersey",
+    "hindi_name": "स्कूल हाउस स्पोर्ट्स जर्सी",
+    "category_id": "school",
+    "category_name": "School Uniforms",
+    "short_desc": "Breathable moisture-wicking active dry-fit shirts designed for inter-house sports competitions.",
+    "fabric": "100% Micro-Interlock Dry-Fit Polyester",
+    "gsm": "160 GSM",
+    "sizes": [
+      "Size 24 to Size 42"
+    ],
+    "min_order_qty": 30,
+    "ready_stock": true,
+    "color_options": [
+      "House Red",
+      "House Blue",
+      "House Green",
+      "House Yellow"
+    ],
+    "features": [
+      "Breathable mesh side panels",
+      "UV protection",
+      "Vibrant non-fade digital sublimation"
+    ],
+    "lead_time": "5 - 7 days",
+    "image": "images/Dri_shorts__37180.1433153979.1280.1280.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sch-08",
+    "slug": "school-micro-peach-tracksuit",
+    "name": "Micro-Peach Athletic School Tracksuit",
+    "hindi_name": "माइक्रो-पीच एथलेटिक स्कूल ट्रैकसूट",
+    "category_id": "school",
+    "category_name": "School Uniforms",
+    "short_desc": "Wind-resistant athletic tracksuit jacket and pants set with moisture-transport mesh lining.",
+    "fabric": "Polyester Micro-Peach with Sweat-Absorbing Tricot Mesh",
+    "gsm": "180 GSM",
+    "sizes": [
+      "Size 24 to Size 42"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Navy with White Accents",
+      "Bottle Green with Gold Piping",
+      "Black with Red Trim"
+    ],
+    "features": [
+      "Elasticized cuffs and ankle zips",
+      "Reflective piping for morning drills",
+      "Heavy pocket zips"
+    ],
+    "lead_time": "10 - 14 days",
+    "image": "images/BC081.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "corp-01",
+    "slug": "executive-formal-shirt",
+    "name": "Executive Giza-Cotton Formal Shirt",
+    "hindi_name": "एग्जीक्यूटिव गिज़ा-कॉटन फॉर्मल शर्ट",
+    "category_id": "corporate",
+    "category_name": "Corporate & Executive Wear",
+    "short_desc": "Luxury combed Egyptian Giza cotton executive shirts with French cuffs and precision spread collars.",
+    "fabric": "100% Two-Ply Giza Cotton Twill",
+    "gsm": "135 GSM",
+    "sizes": [
+      "38 (S)",
+      "40 (M)",
+      "42 (L)",
+      "44 (XL)",
+      "46 (2XL)",
+      "48 (3XL)"
+    ],
+    "min_order_qty": 20,
+    "ready_stock": true,
+    "color_options": [
+      "Crisp White",
+      "Powder Blue",
+      "Lavender",
+      "Fine Bengal Stripe"
+    ],
+    "features": [
+      "Fused German interlinings",
+      "Mother-of-pearl finish buttons",
+      "Silky handfeel"
+    ],
+    "lead_time": "5 - 10 days",
+    "image": "images/men-s-corporate-shirt-250x250.jpg",
+    "is_3d_available": true
+  },
+  {
+    "id": "corp-02",
+    "slug": "corporate-flat-front-trousers",
+    "name": "Tailored Poly-Viscose Formal Trousers",
+    "hindi_name": "टेलर फॉर्मल ट्राउजर",
+    "category_id": "corporate",
+    "category_name": "Corporate & Executive Wear",
+    "short_desc": "Wrinkle-resistant formal trousers engineered with internal silicone shirt-grip waistbands.",
+    "fabric": "70% Polyester / 30% Viscose Suiting",
+    "gsm": "260 GSM",
+    "sizes": [
+      "30",
+      "32",
+      "34",
+      "36",
+      "38",
+      "40",
+      "42",
+      "44"
+    ],
+    "min_order_qty": 20,
+    "ready_stock": true,
+    "color_options": [
+      "Charcoal Melange",
+      "Dark Navy",
+      "Jet Black",
+      "Mocha Brown"
+    ],
+    "features": [
+      "Silicone shirt-gripper waistband",
+      "Bar-tacked belt loops",
+      "Stain-guard finish"
+    ],
+    "lead_time": "5 - 10 days",
+    "image": "images/trsr_3.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "corp-03",
+    "slug": "executive-merino-pullover",
+    "name": "Executive Fine-Gauge Office Pullover",
+    "hindi_name": "एग्जीक्यूटिव फाइन-गेज ऑफिस पुलोवर",
+    "category_id": "corporate",
+    "category_name": "Corporate & Executive Wear",
+    "short_desc": "Ultra-lightweight V-neck pullovers designed for air-conditioned executive office suites.",
+    "fabric": "Fine Australian Merino Wool & Silk Touch Acrylic Blend",
+    "gsm": "14-Gauge Fine Knit",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Corporate Navy",
+      "Anthracite Grey",
+      "Burgundy Wine",
+      "Oatmeal Beige"
+    ],
+    "features": [
+      "Ribbed collar with Lycra retention",
+      "Zero itching",
+      "Machine-washable delicate cycle"
+    ],
+    "lead_time": "7 - 12 days",
+    "image": "images/2119large.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "corp-04",
+    "slug": "executive-business-suit",
+    "name": "Executive 2-Piece & 3-Piece Business Suit",
+    "hindi_name": "एग्जीक्यूटिव 2-पीस और 3-पीस बिजनेस सूट",
+    "category_id": "corporate",
+    "category_name": "Corporate & Executive Wear",
+    "short_desc": "Bespoke corporate suits with half-canvas construction, notch lapels, and custom monogramming.",
+    "fabric": "Super 120s Wool & Poly-Viscose Blend",
+    "gsm": "290 GSM",
+    "sizes": [
+      "36R",
+      "38R",
+      "40R",
+      "42R",
+      "44R",
+      "46R",
+      "Bespoke Tailored"
+    ],
+    "min_order_qty": 10,
+    "ready_stock": false,
+    "color_options": [
+      "Midnight Blue",
+      "Charcoal Herringbone",
+      "Classic Black",
+      "Slate Grey"
+    ],
+    "features": [
+      "Hand-finished buttonholes",
+      "Breathable viscose cupro lining",
+      "Twin rear vents"
+    ],
+    "lead_time": "15 - 21 days",
+    "image": "images/20150406171632-suit-man-jacket-corporate-business-shirt-tie-man.jpeg",
+    "is_3d_available": false
+  },
+  {
+    "id": "corp-05",
+    "slug": "jacquard-corporate-ties-scarves",
+    "name": "Custom Jacquard Woven Corporate Ties & Scarves",
+    "hindi_name": "कस्टम जैक्वार्ड कॉर्पोरेट टाई और स्कार्फ",
+    "category_id": "corporate",
+    "category_name": "Corporate & Executive Wear",
+    "short_desc": "Woven microfiber and 100% silk neckwear with corporate logo woven directly into the fabric pattern.",
+    "fabric": "High-Density Jacquard Microfiber / Pure Silk",
+    "gsm": "1200 Needle Count",
+    "sizes": [
+      "Standard 3.25\" Width",
+      "Slim 2.75\" Width",
+      "Women's Square Scarf"
+    ],
+    "min_order_qty": 50,
+    "ready_stock": false,
+    "color_options": [
+      "Corporate PMS Matching Available"
+    ],
+    "features": [
+      "Double wool interlining for wrinkle-free knot",
+      "Tipped back blade",
+      "Custom institutional box packaging"
+    ],
+    "lead_time": "10 - 15 days",
+    "image": "images/promotional-ties.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "corp-06",
+    "slug": "bio-washed-corporate-polo",
+    "name": "Bio-Washed Combed Cotton Corporate Polo",
+    "hindi_name": "बायो-वाश कॉटन कॉर्पोरेट पोलो",
+    "category_id": "corporate",
+    "category_name": "Corporate & Executive Wear",
+    "short_desc": "Premium 220 GSM pique knit polo t-shirts with anti-curl collars and chest embroidery.",
+    "fabric": "100% Combed Compact Cotton Pique",
+    "gsm": "220 GSM",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL",
+      "3XL"
+    ],
+    "min_order_qty": 30,
+    "ready_stock": true,
+    "color_options": [
+      "Royal Blue",
+      "Navy",
+      "Charcoal",
+      "Burgundy",
+      "White",
+      "Bottle Green"
+    ],
+    "features": [
+      "Bio-washed silicone softening",
+      "Anti-curl knit collar",
+      "Reinforced side slits with herringbone tape"
+    ],
+    "lead_time": "5 - 7 days",
+    "image": "images/Corporate-Teeshirts-printing.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "ind-01",
+    "slug": "heavy-duty-cotton-boiler-suit",
+    "name": "Heavy-Duty 100% Cotton Drill Boiler Suit",
+    "hindi_name": "हेवी-ड्यूटी कॉटन बॉयलर सूट",
+    "category_id": "industrial",
+    "category_name": "Industrial & Safety Workwear",
+    "short_desc": "Rugged one-piece industrial overall with action back, heavy two-way brass zipper, and multi-tool pockets.",
+    "fabric": "100% Cotton Heavy Twill Drill",
+    "gsm": "260 - 280 GSM",
+    "sizes": [
+      "36 (S)",
+      "38 (M)",
+      "40 (L)",
+      "42 (XL)",
+      "44 (2XL)",
+      "46 (3XL)"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Petroleum Blue",
+      "Safety Orange",
+      "Navy Blue",
+      "Bottle Green",
+      "Khaki"
+    ],
+    "features": [
+      "Heavy two-way front brass zipper",
+      "Action-back shoulder pleats",
+      "Double-fabric reinforced knees",
+      "Hammer loop"
+    ],
+    "lead_time": "5 - 10 days",
+    "image": "images/industrial-uniform-250x250.jpg",
+    "is_3d_available": true
+  },
+  {
+    "id": "ind-02",
+    "slug": "high-visibility-reflective-coverall",
+    "name": "3M High-Visibility Industrial Coverall",
+    "hindi_name": "3M हाई-विजिबिलिटी रिफ्लेक्टिव कवरऑल",
+    "category_id": "industrial",
+    "category_name": "Industrial & Safety Workwear",
+    "short_desc": "EN ISO 20471 certified safety coverall equipped with 2-inch 3M Scotchlite retro-reflective bands.",
+    "fabric": "Treated Cotton-Poly Safety Twill with Fluorocarbon Finish",
+    "gsm": "240 GSM",
+    "sizes": [
+      "M",
+      "L",
+      "XL",
+      "2XL",
+      "3XL"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "High-Vis Orange / Navy",
+      "Fluorescent Yellow / Navy"
+    ],
+    "features": [
+      "3M 8906 retro-reflective tape (500 candlepower)",
+      "Gas monitor detector loop on chest",
+      "Triple needle stitch"
+    ],
+    "lead_time": "7 - 12 days",
+    "image": "images/indust_1.jpg",
+    "is_3d_available": true
+  },
+  {
+    "id": "ind-03",
+    "slug": "industrial-workwear-shirt",
+    "name": "Heavy-Stitched Factory Work Shirt",
+    "hindi_name": "फैक्ट्री वर्कवियर शर्ट",
+    "category_id": "industrial",
+    "category_name": "Industrial & Safety Workwear",
+    "short_desc": "Durable work shirts with reinforced epaulets, pencil pockets, and tear-resistant weave.",
+    "fabric": "65% Poly / 35% Cotton Uniform Drill",
+    "gsm": "190 GSM",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Industrial Grey",
+      "Navy Blue",
+      "Khaki Tan",
+      "Sky Blue"
+    ],
+    "features": [
+      "Dual flap chest pockets with button closures",
+      "Heavy interlining on collar",
+      "Sleeve pen slot"
+    ],
+    "lead_time": "4 - 7 days",
+    "image": "images/indust_3.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "ind-04",
+    "slug": "multi-pocket-cargo-work-trouser",
+    "name": "Multi-Pocket Heavy Duty Cargo Trouser",
+    "hindi_name": "मल्टी-पॉकेट हेवी ड्यूटी कार्गो ट्राउजर",
+    "category_id": "industrial",
+    "category_name": "Industrial & Safety Workwear",
+    "short_desc": "6-pocket cargo utility pants built for factory maintenance, electrical, and mechanical crews.",
+    "fabric": "100% Pre-Shrunk Cotton Canvas Twill",
+    "gsm": "280 GSM",
+    "sizes": [
+      "30",
+      "32",
+      "34",
+      "36",
+      "38",
+      "40",
+      "42"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Charcoal Grey",
+      "Dark Navy",
+      "Khaki Sand",
+      "Black"
+    ],
+    "features": [
+      "Side cargo bellows pockets with velcro flaps",
+      "Knee-pad insert pockets",
+      "Bar-tacked stress points"
+    ],
+    "lead_time": "5 - 9 days",
+    "image": "images/Dickies-EH30000-Eisenhower-Trousers.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "ind-05",
+    "slug": "heavy-canvas-welding-apron",
+    "name": "Heat-Resistant Workshop & Welding Apron",
+    "hindi_name": "हीट-रेसिस्टेंट वेल्डिंग एप्रन",
+    "category_id": "industrial",
+    "category_name": "Industrial & Safety Workwear",
+    "short_desc": "Heavy split leather and treated flame-retardant canvas protective aprons for metal fabrication.",
+    "fabric": "Treated 16oz Flame-Resistant Duck Canvas / Split Cowhide",
+    "gsm": "450 GSM",
+    "sizes": [
+      "One Size Fits All (Adjustable Harness)"
+    ],
+    "min_order_qty": 20,
+    "ready_stock": true,
+    "color_options": [
+      "Golden Brown",
+      "Heavy Olive Canvas"
+    ],
+    "features": [
+      "Kevlar heat-resistant thread stitching",
+      "Cross-back ergonomic strap system",
+      "Reinforced chest tool pocket"
+    ],
+    "lead_time": "3 - 7 days",
+    "image": "images/agfjpvc.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "ind-06",
+    "slug": "industrial-bib-dungarees",
+    "name": "High-Tensile Industrial Bib Dungarees",
+    "hindi_name": "इंडस्ट्रियल बिब डंगरी",
+    "category_id": "industrial",
+    "category_name": "Industrial & Safety Workwear",
+    "short_desc": "Over-the-shoulder work dungarees with elastic suspenders, large zip bib pocket, and side button entries.",
+    "fabric": "100% Cotton Tough Twill",
+    "gsm": "270 GSM",
+    "sizes": [
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Cobalt Blue",
+      "Navy",
+      "Workplace Green"
+    ],
+    "features": [
+      "Heavy unbreakable acetal buckles",
+      "Side elastic waist for mobility",
+      "Ruler and tool pocket"
+    ],
+    "lead_time": "7 - 12 days",
+    "image": "images/indust_4.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "ind-07",
+    "slug": "en471-high-vis-safety-vest",
+    "name": "EN 471 Fluorescent Safety Reflective Vest",
+    "hindi_name": "हाई-विजिबिलिटी सेफ्टी वेस्ट",
+    "category_id": "industrial",
+    "category_name": "Industrial & Safety Workwear",
+    "short_desc": "Ultra-light breathable safety vests with front zipper and dual horizontal and vertical reflective strips.",
+    "fabric": "100% Warp-Knit High-Visibility Fluorescent Polyester",
+    "gsm": "120 GSM",
+    "sizes": [
+      "Free Size",
+      "XL",
+      "2XL"
+    ],
+    "min_order_qty": 50,
+    "ready_stock": true,
+    "color_options": [
+      "Neon Lime Yellow",
+      "Blaze Orange"
+    ],
+    "features": [
+      "2-inch silver retro-reflective tapes",
+      "Front YKK zip closure",
+      "Transparent ID badge holder pocket"
+    ],
+    "lead_time": "2 - 5 days",
+    "image": "images/tx55.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hot-01",
+    "slug": "master-executive-chef-coat",
+    "name": "Executive Double-Breasted Master Chef Coat",
+    "hindi_name": "मास्टर एग्जीक्यूटिव शेफ कोट",
+    "category_id": "hotel",
+    "category_name": "Hotel & Culinary Apparel",
+    "short_desc": "French-cut double-breasted chef jackets with cloth knot buttons, underarm cooling mesh, and pen sleeve pockets.",
+    "fabric": "100% Combed Long-Staple Cotton Twill with Stain Release",
+    "gsm": "220 GSM",
+    "sizes": [
+      "38 (S)",
+      "40 (M)",
+      "42 (L)",
+      "44 (XL)",
+      "46 (2XL)"
+    ],
+    "min_order_qty": 15,
+    "ready_stock": true,
+    "color_options": [
+      "Sanitary White",
+      "Executive Midnight Black",
+      "Slate Grey with Black Piping"
+    ],
+    "features": [
+      "Handmade cloth knot buttons",
+      "Underarm CoolVent™ air mesh",
+      "Split left-sleeve thermometer pocket"
+    ],
+    "lead_time": "3 - 7 days",
+    "image": "images/028_mid.jpg",
+    "is_3d_available": true
+  },
+  {
+    "id": "hot-02",
+    "slug": "banquet-waiter-uniform-set",
+    "name": "Banquet Service & Waiter Uniform Set",
+    "hindi_name": "बैंक्वेट वेटर यूनिफार्म सेट",
+    "category_id": "hotel",
+    "category_name": "Hotel & Culinary Apparel",
+    "short_desc": "Smart Mandarin-collar shirts with matching tailored vests and pleated service trousers for banquet staff.",
+    "fabric": "Poly-Viscose Wrinkle-Free Blend",
+    "gsm": "190 GSM",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "min_order_qty": 20,
+    "ready_stock": true,
+    "color_options": [
+      "Black with Gold Satin Trim",
+      "Maroon with Black Lapel",
+      "Navy Blue"
+    ],
+    "features": [
+      "Front covered placket",
+      "Satin-backed vest with adjustable cinch",
+      "Deep order-pad pockets"
+    ],
+    "lead_time": "7 - 12 days",
+    "image": "images/dcv.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hot-03",
+    "slug": "culinary-bib-kitchen-apron",
+    "name": "Heavy Cotton Culinary Bib Apron",
+    "hindi_name": "हैवी कॉटन किचन बिब एप्रन",
+    "category_id": "hotel",
+    "category_name": "Hotel & Culinary Apparel",
+    "short_desc": "Full-coverage kitchen aprons with adjustable neck strap, towel loop, and twin front utility pouch pockets.",
+    "fabric": "100% Cotton Heavy Drill",
+    "gsm": "240 GSM",
+    "sizes": [
+      "Universal Size (34\" Length x 28\" Width)"
+    ],
+    "min_order_qty": 30,
+    "ready_stock": true,
+    "color_options": [
+      "Classic Black",
+      "Kitchen White",
+      "Butcher Pinstripe",
+      "Forest Green"
+    ],
+    "features": [
+      "Reinforced metal grommets",
+      "Extra-long 40\" waist ties",
+      "Bar-tacked pocket corners"
+    ],
+    "lead_time": "3 - 5 days",
+    "image": "images/Tapared_White_Chef_Aprons_11.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hot-04",
+    "slug": "hospitality-service-waistcoat",
+    "name": "Hospitality Tailored Front-Desk Waistcoat",
+    "hindi_name": "हॉस्पिटैलिटी फ्रंट-डेस्क वेस्टकोट",
+    "category_id": "hotel",
+    "category_name": "Hotel & Culinary Apparel",
+    "short_desc": "Structured 5-button hospitality waistcoats for hotel front office, concierge, and restaurant hosts.",
+    "fabric": "Poly-Viscose Fine Twill with Acetate Lining",
+    "gsm": "250 GSM",
+    "sizes": [
+      "36",
+      "38",
+      "40",
+      "42",
+      "44",
+      "46"
+    ],
+    "min_order_qty": 15,
+    "ready_stock": true,
+    "color_options": [
+      "Midnight Black",
+      "Burgundy",
+      "Navy",
+      "Silver Grey Jacquard"
+    ],
+    "features": [
+      "Twin lower welt pockets",
+      "Rear metal adjustment cinch buckle",
+      "Dry-clean friendly"
+    ],
+    "lead_time": "7 - 10 days",
+    "image": "images/mVaDPATPw4BQZnwKtYJJbeg.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hot-05",
+    "slug": "traditional-chef-toque-skull-cap",
+    "name": "Traditional Pleated Chef Toque & Mesh Skull Cap",
+    "hindi_name": "शेफ हैट और मेश स्कल कैप",
+    "category_id": "hotel",
+    "category_name": "Hotel & Culinary Apparel",
+    "short_desc": "Classic high-pleat cotton chef hats and breathable top-mesh skull caps with velcro size adjustment.",
+    "fabric": "100% Stiffened Poplin Cotton / Nylon Mesh Top",
+    "gsm": "140 GSM",
+    "sizes": [
+      "Adjustable Velcro (56 cm - 62 cm)"
+    ],
+    "min_order_qty": 40,
+    "ready_stock": true,
+    "color_options": [
+      "Sanitary White",
+      "Jet Black",
+      "Black/White Check"
+    ],
+    "features": [
+      "Sweat-absorbing brow band",
+      "Elastic back strap",
+      "Machine-washable"
+    ],
+    "lead_time": "2 - 4 days",
+    "image": "images/484.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hosp-01",
+    "slug": "doctor-anti-microbial-lab-coat",
+    "name": "Doctor Silvadur™ Anti-Microbial Lab Coat",
+    "hindi_name": "डॉक्टर एंटी-माइक्रोबियल लैब कोट",
+    "category_id": "hospital",
+    "category_name": "Medical & Hospital Uniforms",
+    "short_desc": "Notch-lapel lab coats treated with silver-ion antimicrobial finish, featuring side pass-through pockets.",
+    "fabric": "65% Poly / 35% Cotton Antimicrobial Twill",
+    "gsm": "180 GSM",
+    "sizes": [
+      "36",
+      "38",
+      "40",
+      "42",
+      "44",
+      "46"
+    ],
+    "min_order_qty": 20,
+    "ready_stock": true,
+    "color_options": [
+      "Sanitary Optical White"
+    ],
+    "features": [
+      "Side pocket access slits for inner trouser reach",
+      "Deep chest pocket with pen divider",
+      "Autoclave safe"
+    ],
+    "lead_time": "3 - 7 days",
+    "image": "images/82400_DWHZ.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hosp-02",
+    "slug": "autoclavable-surgeon-gowns",
+    "name": "Fluid-Resistant Autoclavable Surgeon Gown",
+    "hindi_name": "ऑटोक्लेवेबल सर्जन गाउन",
+    "category_id": "hospital",
+    "category_name": "Medical & Hospital Uniforms",
+    "short_desc": "AAMI Level 3 barrier gowns engineered for operating theaters with wrap-around back and knitted storm cuffs.",
+    "fabric": "High-Density Poly-Cotton Microfiber Barrier Fabric",
+    "gsm": "160 GSM",
+    "sizes": [
+      "Universal L (48\" Length)",
+      "Universal XL (52\" Length)"
+    ],
+    "min_order_qty": 30,
+    "ready_stock": true,
+    "color_options": [
+      "OT Surgical Green",
+      "Ceil Blue"
+    ],
+    "features": [
+      "Double back overlap with tie cords",
+      "Soft 100% cotton rib knit cuffs",
+      "Tested for 100+ autoclave cycles"
+    ],
+    "lead_time": "5 - 8 days",
+    "image": "images/surgeon-gown-250x250.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hosp-03",
+    "slug": "unisex-ot-scrub-suit",
+    "name": "Unisex OT Surgical Scrub Suit (Top & Cargo Pant)",
+    "hindi_name": "यूनिसेक्स ओटी सर्जिकल स्क्रब सूट",
+    "category_id": "hospital",
+    "category_name": "Medical & Hospital Uniforms",
+    "short_desc": "Comfort-fit V-neck scrub tops and drawstring multi-pocket cargo pants engineered for intense 12-hour hospital shifts.",
+    "fabric": "65% Poly / 35% Combed Cotton Breathable Poplin",
+    "gsm": "150 GSM",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL",
+      "3XL"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Surgical Green",
+      "Ceil Blue",
+      "Royal Navy",
+      "Teal",
+      "Wine"
+    ],
+    "features": [
+      "Double-stitched pocket corners",
+      "Side slit vents on top",
+      "Drawstring waist with back elastic",
+      "Cargo utility pocket"
+    ],
+    "lead_time": "3 - 7 days",
+    "image": "images/sureon-suits-250x250.jpg",
+    "is_3d_available": true
+  },
+  {
+    "id": "hosp-04",
+    "slug": "nursing-staff-tunic-trouser-set",
+    "name": "Modern Nursing Staff Tunic & Trouser Set",
+    "hindi_name": "नर्सिंग स्टाफ ट्यूनिक और ट्राउजर",
+    "category_id": "hospital",
+    "category_name": "Medical & Hospital Uniforms",
+    "short_desc": "Professional nursing tunics with smart contrast piping, deep dual front pockets, and flexi-waist trousers.",
+    "fabric": "Poly-Cotton Stretch Blend",
+    "gsm": "165 GSM",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "White with Navy Piping",
+      "Sky Blue with White Trim",
+      "Teal with Grey Trim"
+    ],
+    "features": [
+      "Concealed front zip closure",
+      "Waterproof inner pocket lining for pens",
+      "Side mobility vents"
+    ],
+    "lead_time": "5 - 10 days",
+    "image": "images/hospital-uniforms-790177.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hosp-05",
+    "slug": "breathable-cotton-patient-gown",
+    "name": "Soft Breathable Cotton Patient Gown",
+    "hindi_name": "सॉफ्ट कॉटन पेशेंट गाउन",
+    "category_id": "hospital",
+    "category_name": "Medical & Hospital Uniforms",
+    "short_desc": "Pre-shrunk, soft hospital patient gowns featuring secure tie cords on back and side for easy medical examination.",
+    "fabric": "100% Pre-Shrunk Breathable Cotton Sheeting",
+    "gsm": "130 GSM",
+    "sizes": [
+      "Universal Adult (Free Size)",
+      "Pediatric Junior"
+    ],
+    "min_order_qty": 50,
+    "ready_stock": true,
+    "color_options": [
+      "Sanitary Snowflake Print",
+      "Hospital Blue Stripe",
+      "Pastel Green Check"
+    ],
+    "features": [
+      "Heavy woven twill tie tapes",
+      "Raglan roomy sleeves",
+      "Chlorine bleach resistant dyes"
+    ],
+    "lead_time": "3 - 6 days",
+    "image": "images/patient-gown-250x250.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hosp-06",
+    "slug": "ward-boy-housekeeping-uniform",
+    "name": "Hospital Attendant & Ward Boy Uniform",
+    "hindi_name": "वार्ड बॉय और अटेंडेंट यूनिफार्म",
+    "category_id": "hospital",
+    "category_name": "Medical & Hospital Uniforms",
+    "short_desc": "High-durability stain-resistant shirt and trouser sets designed for hospital ward boys and sanitation staff.",
+    "fabric": "Heavy Duty Poly-Cotton Twill",
+    "gsm": "210 GSM",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Steel Grey",
+      "Dark Khaki",
+      "Hospital Brown",
+      "Navy Blue"
+    ],
+    "features": [
+      "Chlorine bleach resistant",
+      "Triple-needle crotch stitch on pants",
+      "Reinforced button placket"
+    ],
+    "lead_time": "5 - 8 days",
+    "image": "images/surgeon-gowen-500x500.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hosp-07",
+    "slug": "bleach-resistant-hospital-towels",
+    "name": "Institutional Bleach-Resistant Terry Towels",
+    "hindi_name": "ब्लीच-रेसिस्टेंट हॉस्पिटल टॉवल",
+    "category_id": "hospital",
+    "category_name": "Medical & Hospital Uniforms",
+    "short_desc": "100% cotton high-absorbency terry bath and hand towels engineered for commercial hospital laundries.",
+    "fabric": "100% Long-Staple Ring Spun Cotton Terry",
+    "gsm": "450 - 500 GSM",
+    "sizes": [
+      "Bath Towel (30\"x60\")",
+      "Hand Towel (16\"x24\")",
+      "OT Green Drapes"
+    ],
+    "min_order_qty": 50,
+    "ready_stock": true,
+    "color_options": [
+      "Sanitary White",
+      "OT Surgical Green"
+    ],
+    "features": [
+      "Fast drying spiral ring yarn",
+      "Double lock-stitch side hems",
+      "Withstands 90°C thermal disinfection"
+    ],
+    "lead_time": "3 - 5 days",
+    "image": "images/71512.jpeg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hosp-08",
+    "slug": "200-tc-hospital-bed-linens",
+    "name": "200 Thread Count Sanitary Hospital Bed Sheets",
+    "hindi_name": "200 टीसी हॉस्पिटल बेडशीट",
+    "category_id": "hospital",
+    "category_name": "Medical & Hospital Uniforms",
+    "short_desc": "Heavy-duty commercial bedsheets and matching pillow covers with optional hospital crest print.",
+    "fabric": "100% Cotton Percale / 60/40 Poly-Cotton",
+    "gsm": "200 Thread Count (145 GSM)",
+    "sizes": [
+      "Standard Hospital Bed (60\" x 100\")",
+      "Pillow Cover (18\" x 28\")"
+    ],
+    "min_order_qty": 50,
+    "ready_stock": true,
+    "color_options": [
+      "Hospital Plain White",
+      "Blue Woven Stripe",
+      "Green Woven Stripe"
+    ],
+    "features": [
+      "Colorfast vat dyeing",
+      "Deep 2-inch top and bottom hems",
+      "Zero shrinkage preshrunk finishing"
+    ],
+    "lead_time": "4 - 8 days",
+    "image": "images/113108.jpeg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hosp-09",
+    "slug": "patient-dressing-ot-accessories",
+    "name": "Surgical Caps, OT Masks & Protective Accessories",
+    "hindi_name": "सर्जिकल कैप और ओटी मास्क",
+    "category_id": "hospital",
+    "category_name": "Medical & Hospital Uniforms",
+    "short_desc": "Reusable autoclavable surgeon scrub caps with tie-backs and surgical cloth masks.",
+    "fabric": "100% Breathable Cotton Poplin",
+    "gsm": "135 GSM",
+    "sizes": [
+      "One Size Fits All (Adjustable Tie-Back)"
+    ],
+    "min_order_qty": 100,
+    "ready_stock": true,
+    "color_options": [
+      "OT Green",
+      "Ceil Blue",
+      "Navy Blue"
+    ],
+    "features": [
+      "Sweat absorbent brow band",
+      "Elasticized back pouch for long hair",
+      "Autoclavable 50+ times"
+    ],
+    "lead_time": "2 - 5 days",
+    "image": "images/BT-D05_W.png",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-01",
+    "slug": "security-guard-epaulet-shirt",
+    "name": "Tactical Security Guard Epaulet Shirt",
+    "hindi_name": "सिक्योरिटी गार्ड एपॉलेट शर्ट",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "Crisp permanent-press security shirts with button-down epaulets, twin box-pleat pockets, and pencil slots.",
+    "fabric": "67% Poly / 33% Cotton Crisp Uniform Weave",
+    "gsm": "165 GSM",
+    "sizes": [
+      "38 (S)",
+      "40 (M)",
+      "42 (L)",
+      "44 (XL)",
+      "46 (2XL)"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Security Sky Blue",
+      "Security Khaki",
+      "Crisp White",
+      "Dark Navy"
+    ],
+    "features": [
+      "Internal sling for whistle lanyard",
+      "Reinforced shoulder epaulets for badges",
+      "Permanent press finish"
+    ],
+    "lead_time": "3 - 7 days",
+    "image": "images/security_2.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-02",
+    "slug": "heavy-duty-security-trousers",
+    "name": "Heavy-Duty Security Uniform Trousers",
+    "hindi_name": "सिक्योरिटी गार्ड ट्राउजर",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "Heavy poly-viscose drill trousers with wide tunnel belt loops accommodating 2-inch tactical duty belts.",
+    "fabric": "Heavy Poly-Viscose Drill Suiting",
+    "gsm": "260 GSM",
+    "sizes": [
+      "30",
+      "32",
+      "34",
+      "36",
+      "38",
+      "40",
+      "42"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Midnight Navy",
+      "Security Khaki",
+      "Jet Black"
+    ],
+    "features": [
+      "Wide 2.5\" duty belt loops",
+      "Deep reinforced front slash pockets",
+      "Bar-tacked rear button pockets"
+    ],
+    "lead_time": "3 - 7 days",
+    "image": "images/us525pm.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-03",
+    "slug": "executive-security-safari-suit",
+    "name": "Executive Security Supervisor Safari Suit",
+    "hindi_name": "सिक्योरिटी सुपरवाइजर सफारी सूट",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "Authoritative single-breasted safari jacket and matching trousers for facility officers and executive bodyguards.",
+    "fabric": "Premium Poly-Viscose Matt Weave",
+    "gsm": "240 GSM",
+    "sizes": [
+      "38 (S)",
+      "40 (M)",
+      "42 (L)",
+      "44 (XL)",
+      "46 (2XL)"
+    ],
+    "min_order_qty": 15,
+    "ready_stock": true,
+    "color_options": [
+      "Executive Grey",
+      "Dark Navy",
+      "Beige Khaki",
+      "Black"
+    ],
+    "features": [
+      "Four front cargo-style button pockets",
+      "Center back vent",
+      "Epaulets on shoulders"
+    ],
+    "lead_time": "7 - 12 days",
+    "image": "images/us525pm.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-04",
+    "slug": "commando-security-v-neck-sweater",
+    "name": "Commando Security V-Neck Winter Sweater",
+    "hindi_name": "कमांडो सिक्योरिटी विंटर स्वेटर",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "Military-grade ribbed acrylic sweater featuring heavy cotton-drill shoulder and elbow reinforcement patches.",
+    "fabric": "100% Heavy Cashmilon Acrylic Knit with Cotton Twill Patches",
+    "gsm": "7-Gauge Heavy Rib Knit",
+    "sizes": [
+      "38 (M)",
+      "40 (L)",
+      "42 (XL)",
+      "44 (2XL)"
+    ],
+    "min_order_qty": 20,
+    "ready_stock": true,
+    "color_options": [
+      "Security Black",
+      "Midnight Navy",
+      "Olive Military Green"
+    ],
+    "features": [
+      "Shoulder epaulets with velcro closures",
+      "Velcro pen pocket on sleeve",
+      "Double-thick ribbed cuffs and waistband"
+    ],
+    "lead_time": "5 - 10 days",
+    "image": "images/8013cfs.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-05",
+    "slug": "rigid-peaked-security-cap",
+    "name": "Rigid Visor Peaked Security Cap",
+    "hindi_name": "सिक्योरिटी पीक कैप",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "High-crown peaked security caps featuring glossy rigid patent visor, golden chin cord, and front badge mount.",
+    "fabric": "Wool-Poly Blend Crown with PVC Patent Visor",
+    "gsm": "Structured Millboard Base",
+    "sizes": [
+      "Small (55 cm)",
+      "Medium (57 cm)",
+      "Large (59 cm)",
+      "XL (61 cm)"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Midnight Navy",
+      "Black",
+      "Khaki"
+    ],
+    "features": [
+      "Braided gold wire chin strap with side crest buttons",
+      "Ventilation eyelets",
+      "Leather sweatband"
+    ],
+    "lead_time": "4 - 7 days",
+    "image": "images/4152334.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-06",
+    "slug": "100-wool-ceremonial-beret",
+    "name": "100% Pure Wool Ceremonial Security Beret",
+    "hindi_name": "100% वूल सिक्योरिटी बेरी कैप",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "Seamless pure wool berets featuring internal badge reinforcement stiffener and genuine leather sweatband.",
+    "fabric": "100% Pure Felted Wool",
+    "gsm": "Heavy Felting",
+    "sizes": [
+      "Size 6.75",
+      "Size 7.0",
+      "Size 7.25",
+      "Size 7.5"
+    ],
+    "min_order_qty": 30,
+    "ready_stock": true,
+    "color_options": [
+      "Dark Maroon",
+      "Navy Blue",
+      "Jet Black",
+      "Commando Green"
+    ],
+    "features": [
+      "Genuine leather sweatband with drawstring adjustment",
+      "Brass eyelets for breathability",
+      "Internal badge stiffener"
+    ],
+    "lead_time": "3 - 5 days",
+    "image": "images/jrotc-beret-with-flash-size-7.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-07",
+    "slug": "braided-security-lanyard-strings",
+    "name": "Braided Nylon Whistle Lanyard & Shoulder Cords",
+    "hindi_name": "सिक्योरिटी सीटी लैनयार्ड और शोल्डर डोरी",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "Heavy braided nylon shoulder lanyards with chrome-plated swivel snap hook for whistle attachment.",
+    "fabric": "High-Tenacity Braided Nylon Cord",
+    "gsm": "N/A",
+    "sizes": [
+      "Standard 36\" Length (Single Twist & Double Twist)"
+    ],
+    "min_order_qty": 50,
+    "ready_stock": true,
+    "color_options": [
+      "Bright Gold",
+      "White",
+      "Navy Blue",
+      "Red",
+      "Black"
+    ],
+    "features": [
+      "Chrome swivel trigger hook",
+      "Uniform epaulet button loop",
+      "Colorfast non-fraying tips"
+    ],
+    "lead_time": "2 - 4 days",
+    "image": "images/DSC01270.JPG",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-08",
+    "slug": "thunderer-chrome-metal-whistle",
+    "name": "Thunderer Chrome-Plated Brass Security Whistle",
+    "hindi_name": "थंडरर क्रोम मेटल सीटी",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "High-decibel audible security whistles engineered from chrome-plated solid brass with synthetic pea.",
+    "fabric": "Chrome-Plated Solid Brass",
+    "gsm": "N/A",
+    "sizes": [
+      "Standard 2.25\" Body"
+    ],
+    "min_order_qty": 50,
+    "ready_stock": true,
+    "color_options": [
+      "Mirror Polished Chrome",
+      "High-Polish Brass Gold"
+    ],
+    "features": [
+      "Produces 115+ dB alarm tone",
+      "Rust-proof construction",
+      "Reinforced split ring for lanyard cord"
+    ],
+    "lead_time": "1 - 3 days",
+    "image": "images/DSC01270.JPG",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-09",
+    "slug": "tactical-nylon-duty-belt",
+    "name": "Tactical Heavy Duty Web Duty Belt",
+    "hindi_name": "टैक्टिकल हेवी ड्यूटी बेल्ट",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "2.25-inch high-density rigid nylon web belt featuring 3-point quick-release combat polymer buckle.",
+    "fabric": "High-Density Ballistic Nylon Webbing",
+    "gsm": "Heavy Gauge",
+    "sizes": [
+      "Adjustable (28\" to 48\" Waist)"
+    ],
+    "min_order_qty": 30,
+    "ready_stock": true,
+    "color_options": [
+      "Tactical Black",
+      "Security Khaki"
+    ],
+    "features": [
+      "Unbreakable 3-point lock buckle",
+      "Includes 4 belt keeper loops",
+      "Stiffened to hold baton and holster without sagging"
+    ],
+    "lead_time": "2 - 5 days",
+    "image": "images/security-guard-belt-250x250.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-10",
+    "slug": "custom-embroidered-metal-security-badges",
+    "name": "Custom Metal & Embroidered Security Badges",
+    "hindi_name": "कस्टम मेटल और कढ़ाई वाले सिक्योरिटी बैज",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "Gold and silver die-cast metal star badges, institutional shoulder crest monograms, and agency chest patches.",
+    "fabric": "Die-Cast Brass with Enamel Infill / Bullion Embroidery Patches",
+    "gsm": "N/A",
+    "sizes": [
+      "Standard Shoulder Crescent (4.5\")",
+      "Chest Star (2.5\")"
+    ],
+    "min_order_qty": 50,
+    "ready_stock": false,
+    "color_options": [
+      "Gold Finish",
+      "Silver Chrome",
+      "Custom Embroidered Colors"
+    ],
+    "features": [
+      "Heavy safety-pin back clasp or screw-post mounting",
+      "Scratch-resistant clear epoxy coating",
+      "Precision laser-cut edges"
+    ],
+    "lead_time": "7 - 12 days",
+    "image": "images/DSC01270.JPG",
+    "is_3d_available": false
+  },
+  {
+    "id": "sec-11",
+    "slug": "custom-woven-security-agency-tie",
+    "name": "Uniform Security Ties (Clip-On & Standard)",
+    "hindi_name": "सिक्योरिटी एजेंसी यूनिफार्म टाई",
+    "category_id": "security",
+    "category_name": "Security Force & Guard Uniforms",
+    "short_desc": "Breakaway clip-on safety ties and traditional long ties featuring printed or woven agency logo.",
+    "fabric": "100% Durable Woven Polyester Twill",
+    "gsm": "Heavy Twill Weave",
+    "sizes": [
+      "Clip-On Safety Tie (18\" Length)",
+      "Traditional Tie (58\" Length)"
+    ],
+    "min_order_qty": 50,
+    "ready_stock": true,
+    "color_options": [
+      "Midnight Navy",
+      "Black with Gold Logo",
+      "Maroon",
+      "Steel Grey"
+    ],
+    "features": [
+      "Safety breakaway clip prevents strangulation in duty altercations",
+      "Stain-resistant scotchgard treatment"
+    ],
+    "lead_time": "4 - 7 days",
+    "image": "images/Unisex-Ties-Pure-Women-and-Men-Nano-Waterproof-Ties-the-Executive-Wedding-Multiple-Occasions-Ties.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sprt-01",
+    "slug": "sublimated-basketball-kit",
+    "name": "Custom Sublimated Team Basketball Kit",
+    "hindi_name": "कस्टम सब्लिमेटेड बास्केटबॉल किट",
+    "category_id": "sports",
+    "category_name": "Sports & Athletic Garments",
+    "short_desc": "Ultra-lightweight mesh tank jerseys and knee-length wide athletic shorts featuring digital sublimation numbering.",
+    "fabric": "100% Breathable Birdseye Mesh Polyester",
+    "gsm": "160 GSM",
+    "sizes": [
+      "Youth M",
+      "Youth L",
+      "Adult S",
+      "Adult M",
+      "Adult L",
+      "Adult XL"
+    ],
+    "min_order_qty": 15,
+    "ready_stock": false,
+    "color_options": [
+      "Full Custom Sublimation PMS Color Palette"
+    ],
+    "features": [
+      "Zero fade graphic sublimation",
+      "Elastic drawstring waistband with silicone grip",
+      "Reinforced flatlock seams"
+    ],
+    "lead_time": "7 - 10 days",
+    "image": "images/youth-basketball-uniforms-250x250.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sprt-02",
+    "slug": "poly-spandex-athletic-tracksuit",
+    "name": "Pro-Flex Poly-Spandex Athletic Tracksuit",
+    "hindi_name": "प्रो-फ्लेक्स एथलेटिक ट्रैकसूट",
+    "category_id": "sports",
+    "category_name": "Sports & Athletic Garments",
+    "short_desc": "High-stretch training tracksuit jacket and tapered jogger set built for athletic training, sports squads, and physical education faculty.",
+    "fabric": "92% Polyester / 8% Spandex 4-Way Stretch Interlock",
+    "gsm": "240 GSM",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "2XL"
+    ],
+    "min_order_qty": 20,
+    "ready_stock": true,
+    "color_options": [
+      "Anthracite with Neon Green",
+      "Navy with Sky Blue",
+      "Black with White Piping"
+    ],
+    "features": [
+      "4-way stretch unrestricted athletic movement",
+      "Water-repellent DWR outer coating",
+      "Zippered secure phone pockets"
+    ],
+    "lead_time": "7 - 12 days",
+    "image": "images/BC081.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sprt-03",
+    "slug": "dry-fit-training-shorts-tee",
+    "name": "Moisture-Transport Dry-Fit Training Top & Shorts",
+    "hindi_name": "ड्राई-फिट ट्रेनिंग टॉप और शॉर्ट्स",
+    "category_id": "sports",
+    "category_name": "Sports & Athletic Garments",
+    "short_desc": "Ergonomic active dry-fit training crew-neck tops and matching athletic shorts for physical training and warmups.",
+    "fabric": "Micro-Poly Mini Waffle Active Knit",
+    "gsm": "150 GSM",
+    "sizes": [
+      "Junior (Size 26-32)",
+      "Senior (Size 34-42)"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Electric Blue",
+      "Fiery Red",
+      "Neon Yellow",
+      "Charcoal Grey"
+    ],
+    "features": [
+      "Quick-dry hydrophilic yarn treatment",
+      "Reflective safety logos for evening training",
+      "Anti-chafing flatlock seams"
+    ],
+    "lead_time": "4 - 7 days",
+    "image": "images/Dri_shorts__37180.1433153979.1280.1280.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sch-09",
+    "slug": "school-house-polo-pe-tshirt",
+    "name": "Institutional House Color Polo & P.E. T-Shirt",
+    "hindi_name": "स्कूल हाउस पोलो और पी.ई. टी-शर्ट",
+    "category_id": "school",
+    "category_name": "School Uniforms",
+    "short_desc": "Bio-washed combed cotton pique school house t-shirts featuring contrast tipping and high-definition crest printing.",
+    "fabric": "100% Combed Cotton Pique / Poly-Cotton Blend",
+    "gsm": "180 - 200 GSM",
+    "sizes": [
+      "Age 3-4 (Size 20)",
+      "Age 5-6 (Size 24)",
+      "Age 7-8 (Size 28)",
+      "Age 9-11 (Size 32)",
+      "Age 12-14 (Size 36)",
+      "Senior (Size 40)"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "House Red",
+      "House Royal Blue",
+      "House Emerald Green",
+      "House Amber Gold"
+    ],
+    "features": [
+      "Bio-washed anti-pilling yarn",
+      "Colorfast reactive dyes",
+      "Reinforced neck tape",
+      "House name screen or embroidery"
+    ],
+    "lead_time": "3 - 7 days for ready stock, 12 days for custom house prints",
+    "image": "images/Corporate-Teeshirts-printing.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sch-10",
+    "slug": "unisex-school-winter-cardigan",
+    "name": "Unisex School Winter Button Cardigan & Knit Vest",
+    "hindi_name": "यूनिसेक्स स्कूल विंटर कार्डिगन और निट वेस्ट",
+    "category_id": "school",
+    "category_name": "School Uniforms",
+    "short_desc": "Front-button school knit cardigan and sleeveless sweater vest with reinforced button plackets and ribbed hems.",
+    "fabric": "100% Anti-Pilling Low-Shrink Acrylic Cashmilon",
+    "gsm": "280 GSM (10 Gauge)",
+    "sizes": [
+      "Size 22",
+      "Size 24",
+      "Size 26",
+      "Size 28",
+      "Size 30",
+      "Size 32",
+      "Size 34",
+      "Size 36"
+    ],
+    "min_order_qty": 25,
+    "ready_stock": true,
+    "color_options": [
+      "Deep Navy",
+      "Burgundy Maroon",
+      "Forest Green",
+      "Heather Grey"
+    ],
+    "features": [
+      "Heavy-duty resin buttons",
+      "Twin needle ribbed cuffs",
+      "Machine washable",
+      "Retains thermal loft"
+    ],
+    "lead_time": "5 - 10 days",
+    "image": "images/2119large.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "corp-07",
+    "slug": "tailored-poly-wool-executive-blazer",
+    "name": "Executive Poly-Wool Corporate Blazer",
+    "hindi_name": "एग्जीक्यूटिव पॉली-वूल कॉर्पोरेट ब्लेज़र",
+    "category_id": "corporate",
+    "category_name": "Corporate & Executive Wear",
+    "short_desc": "Structured single and double-breasted executive blazers crafted for corporate leadership, banks, and hospitality reception.",
+    "fabric": "65% Poly / 35% Merino Wool Serge",
+    "gsm": "260 GSM",
+    "sizes": [
+      "36 (S)",
+      "38 (M)",
+      "40 (L)",
+      "42 (XL)",
+      "44 (2XL)",
+      "46 (3XL)"
+    ],
+    "min_order_qty": 15,
+    "ready_stock": true,
+    "color_options": [
+      "Midnight Blue",
+      "Charcoal Anthracite",
+      "Classic Black"
+    ],
+    "features": [
+      "Breathable viscose lining",
+      "Inner passport & pen pockets",
+      "Crease-recovery weave",
+      "Hand-stitched lapel edges"
+    ],
+    "lead_time": "7 - 14 days",
+    "image": "images/20150406171632-suit-man-jacket-corporate-business-shirt-tie-man.jpeg",
+    "is_3d_available": true
+  },
+  {
+    "id": "ind-08",
+    "slug": "heavy-duty-split-leather-welder-apron",
+    "name": "Heavy-Duty Split-Leather Welder Apron & Arm Sleeves",
+    "hindi_name": "हेवी-ड्यूटी लेदर वेल्डर एप्रन और सुरक्षा आस्तीन",
+    "category_id": "industrial",
+    "category_name": "Industrial & Safety Workwear",
+    "short_desc": "Flame-resistant split cowhide leather apron with adjustable cross-back harness and Kevlar stitching for fabrication units.",
+    "fabric": "100% Heat-Resistant Split Cowhide (1.2mm - 1.4mm)",
+    "gsm": "950 GSM Equivalent",
+    "sizes": [
+      "Standard Universal (24x36)",
+      "Extended Full-Coverage (24x42)"
+    ],
+    "min_order_qty": 10,
+    "ready_stock": true,
+    "color_options": [
+      "Natural Golden Tan",
+      "Dark Russet Brown"
+    ],
+    "features": [
+      "Kevlar fireproof thread stitching",
+      "Rivet-reinforced strap anchors",
+      "Front utility tool pocket",
+      "Protects against slag & sparks"
+    ],
+    "lead_time": "3 - 5 days",
+    "image": "images/agfjpvc.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hot-06",
+    "slug": "houndstooth-kitchen-pants",
+    "name": "Executive Houndstooth Check Kitchen Trousers",
+    "hindi_name": "एग्जीक्यूटिव शेफ हाउंड्सटूथ किचन ट्राउजर",
+    "category_id": "hotel",
+    "category_name": "Hotel & Culinary Apparel",
+    "short_desc": "Traditional black-and-white houndstooth patterned commercial kitchen pants designed to disguise kitchen splatters.",
+    "fabric": "100% Breathable Combed Cotton Twill",
+    "gsm": "210 GSM",
+    "sizes": [
+      "S (28-30)",
+      "M (32-34)",
+      "L (36-38)",
+      "XL (40-42)",
+      "2XL (44-46)"
+    ],
+    "min_order_qty": 20,
+    "ready_stock": true,
+    "color_options": [
+      "Classic Black/White Houndstooth",
+      "Solid Jet Black"
+    ],
+    "features": [
+      "Elastic waistband with drawstring",
+      "Deep side slip pockets",
+      "Relaxed leg cut for airflow",
+      "Industrial laundry safe"
+    ],
+    "lead_time": "3 - 7 days",
+    "image": "images/Dickies-EH30000-Eisenhower-Trousers.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "hosp-10",
+    "slug": "fluid-barrier-icu-isolation-gown",
+    "name": "Fluid-Barrier ICU Isolation Gown & Protective Smock",
+    "hindi_name": "फ्लूइड-बैरियर आईसीयू आइसोलेशन गाउन",
+    "category_id": "hospital",
+    "category_name": "Medical & Hospital Uniforms",
+    "short_desc": "AAMI Level 3 fluid-resistant reusable patient care and isolation smock with elastic knit cuffs and neck-waist ties.",
+    "fabric": "Polyurethane Laminated Micro-Polyester Poplin",
+    "gsm": "160 GSM",
+    "sizes": [
+      "Universal Regular (Length 46)",
+      "Universal XL (Length 50)"
+    ],
+    "min_order_qty": 30,
+    "ready_stock": true,
+    "color_options": [
+      "Hospital Sky Blue",
+      "Surgical Mint Green",
+      "Clean Yellow"
+    ],
+    "features": [
+      "AAMI Level 3 splash resistance",
+      "Autoclavable up to 75 cycles",
+      "Full back overlap coverage",
+      "Ultrasonic sealed seams"
+    ],
+    "lead_time": "3 - 7 days",
+    "image": "images/surgeon-gowen-500x500.jpg",
+    "is_3d_available": false
+  },
+  {
+    "id": "sprt-04",
+    "slug": "all-weather-athletics-windcheater",
+    "name": "All-Weather Athletics Micro-Ripstop Windcheater",
+    "hindi_name": "ऑल-वेदर एथलेटिक्स विंडचीटर",
+    "category_id": "sports",
+    "category_name": "Sports & Athletic Garments",
+    "short_desc": "Ultra-lightweight windproof and drizzle-resistant training jacket with breathable mesh underarm panels and reflective zip.",
+    "fabric": "100% Diamond Ripstop Micro-Polyester with DWR",
+    "gsm": "125 GSM",
+    "sizes": [
+      "Junior (Size 26-32)",
+      "Senior (Size 34-44)"
+    ],
+    "min_order_qty": 20,
+    "ready_stock": true,
+    "color_options": [
+      "Navy with Fluorescent Accents",
+      "All-Black Stealth",
+      "Cobalt Blue with White"
+    ],
+    "features": [
+      "Windproof DWR finish",
+      "Concealed packable hood",
+      "Elastic drawcord hem",
+      "High-visibility reflective print"
+    ],
+    "lead_time": "5 - 10 days",
+    "image": "images/BC081.jpg",
+    "is_3d_available": false
+  }
+]

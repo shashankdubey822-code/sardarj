@@ -380,52 +380,65 @@
     <div id="tab-broadcast" class="tab-panel">
       
       <div class="card">
-        <div class="card-title">🪔 AI Occasion Detector & Greeting Note</div>
+        <div class="card-title">🪔 AI Occasion Detector & Greeting Generator</div>
         <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.2rem;">
-          Our Gemini AI automatically checks today's date across all Indian cultural and religious celebrations (Diwali, Holi, Eid, Gurpurab, New Year, Christmas, Independence Day, etc.) and crafts an authentic 4-5 line heartfelt greeting note.
+          Our Gemini AI automatically detects today's festive occasion across all Indian cultural celebrations and generates an authentic holiday greeting with your built-in proprietor portrait.
         </p>
 
+        <!-- Built-in Proprietor Profile -->
+        <div style="background:#11141c; border:1px solid #2d3343; border-radius:10px; padding:1rem; display:flex; align-items:center; gap:1.2rem; margin-bottom:1.5rem;">
+          <img src="/images/mr_bedi_greeting.jpg" alt="Sardar Guru Charan Singh Bedi" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid var(--gold-primary);">
+          <div>
+            <div style="font-weight:700; color:#fff; font-size:1.05rem;">Sardar Guru Charan Singh Bedi (Proprietor)</div>
+            <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.2rem;">Pre-configured reference model • Bareheaded (no turban) • Dignified side Namaste pose • Bedi Fashion™ (Faridabad)</div>
+            <div style="display:inline-block; font-size:0.75rem; background:rgba(16,185,129,0.15); color:var(--success); padding:0.2rem 0.6rem; border-radius:4px; margin-top:0.4rem; font-weight:600;">✓ Inbuilt Reference Active</div>
+          </div>
+        </div>
+
         <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom: 1rem;">
-          <button class="btn-gold" onclick="detectOccasion(null)">🔮 Detect Today's Occasion (AI)</button>
-          <select id="quick-occasion" class="form-input" style="max-width:260px;" onchange="detectOccasion(this.value)">
-            <option value="">-- Or Choose Custom Occasion --</option>
-            <option value="Diwali 🪔">Diwali (Festival of Lights)</option>
+          <button class="btn-gold" onclick="generateFestivalArtworkAI()">✨ Generate Festival Artwork & Greeting (AI)</button>
+          <select id="quick-occasion" class="form-input" style="max-width:280px;" onchange="generateFestivalArtworkAI(this.value)">
+            <option value="">-- Choose or Auto-Detect Festival --</option>
+            <option value="Diwali 🪔" selected>Diwali (Festival of Lights)</option>
             <option value="Holi 🎨">Holi (Festival of Colors)</option>
             <option value="Eid Mubarak 🌙">Eid ul-Fitr / Eid ul-Adha</option>
             <option value="Gurpurab ੴ">Gurpurab (Guru Nanak Jayanti)</option>
+            <option value="Baisakhi 🌾">Baisakhi (Harvest & Khalsa Day)</option>
+            <option value="Lohri 🔥">Lohri Celebrations</option>
             <option value="New Year ✨">Happy New Year</option>
-            <option value="Independence Day 🇮🇳">Independence Day / Republic Day</option>
+            <option value="Republic Day 🇮🇳">Republic Day / Independence Day</option>
             <option value="Raksha Bandhan 🧵">Raksha Bandhan</option>
           </select>
         </div>
 
         <div class="form-group">
           <label class="form-label">Detected / Target Occasion:</label>
-          <input type="text" id="occasion-title" class="form-input" value="Auspicious Festive Greetings">
+          <input type="text" id="occasion-title" class="form-input" value="Diwali (Festival of Lights) 🪔">
         </div>
 
         <div class="form-group">
-          <label class="form-label">Greeting Message (4-5 lines):</label>
-          <textarea id="greeting-note" class="form-textarea">🙏 *Namaste & Heartfelt Festive Greetings!*
+          <label class="form-label">Greeting Message (with Festive Emojis):</label>
+          <textarea id="greeting-note" class="form-textarea">🪔✨ *शुभ दीपावली | Festive Greetings from Bedi Fashion™* ✨🪔
 
-May this auspicious occasion bring boundless happiness, good health, and abundant prosperity to you and your entire family.
-We deeply cherish your trust and partnership with us.
+🙏 Warmest Diwali greetings and heartfelt blessings to you and your beloved family!
+🌟 May the divine glow of Diwali fill your life with boundless joy, prosperity, peace, and vibrant health.
+🌸 We deeply cherish your trusted relationship and valued association with us.
 
-Warmest regards & best wishes,
-*Mr. Bedi & The Entire Team at Bedi Fashion™ (Faridabad)*</textarea>
+🎆 *With sincere respect, warm prayers & festive regards,*
+*Sardar Guru Charan Singh Bedi & The Entire Family at Bedi Fashion™ (Faridabad)* 🇮🇳🙏</textarea>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Greeting Image URL (Your Namaste Photo or Festive Graphic):</label>
-          <input type="text" id="image-url" class="form-input" value="https://images.unsplash.com/photo-1605379399642-870262d3d051?w=800&auto=format&fit=crop" placeholder="https://...image.jpg">
-          <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.3rem;">Paste a link to your photo with joined hands (Indian greeting style) or festive banner.</p>
+          <label class="form-label">Greeting Image URL (Inbuilt AI Masterpiece):</label>
+          <input type="text" id="image-url" class="form-input" value="/images/diwali_greeting_bedi_fashion.jpg" placeholder="/images/...">
+          <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.3rem;">Automatically links to Sardar Guru Charan Singh Bedi's festive artwork for the occasion.</p>
         </div>
 
         <!-- Live Preview -->
         <div class="card-title" style="margin-top: 1.5rem;">📱 WhatsApp Recipient Live Preview</div>
         <div class="wa-preview">
           <div class="wa-bubble">
-            <img id="preview-img" class="wa-img" src="https://images.unsplash.com/photo-1605379399642-870262d3d051?w=800&auto=format&fit=crop" alt="Festive Greeting">
+            <img id="preview-img" class="wa-img" src="/images/diwali_greeting_bedi_fashion.jpg" alt="Festive Greeting">
             <div id="preview-caption" class="wa-caption"></div>
           </div>
         </div>
@@ -567,11 +580,11 @@ Warmest regards & best wishes,
       reader.readAsText(file);
     }
 
-    // Occasion Detection
-    async function detectOccasion(customVal) {
-      const btn = event?.target;
+    // Occasion Detection & AI Artwork Generation
+    async function generateFestivalArtworkAI(customVal) {
+      const btn = event?.target || document.querySelector('#tab-broadcast .btn-gold');
       const originalText = btn ? btn.innerText : '';
-      if (btn) btn.innerText = "⏳ Detecting with Gemini...";
+      if (btn) btn.innerText = "⏳ Generating AI Artwork & Greeting...";
 
       try {
         const res = await fetch('/api/admin?action=detect_occasion', {
@@ -583,20 +596,25 @@ Warmest regards & best wishes,
         if (data) {
           if (data.occasion) document.getElementById('occasion-title').value = data.occasion;
           if (data.greeting_note) document.getElementById('greeting-note').value = data.greeting_note;
+          if (data.image_url) document.getElementById('image-url').value = data.image_url;
           updatePreview();
         }
       } catch (err) {
-        console.error('Detection failed:', err);
+        console.error('Detection/Generation failed:', err);
       } finally {
-        if (btn) btn.innerText = originalText;
+        if (btn) btn.innerText = originalText || "✨ Generate Festival Artwork & Greeting (AI)";
       }
+    }
+
+    async function detectOccasion(customVal) {
+      return generateFestivalArtworkAI(customVal);
     }
 
     function updatePreview() {
       const note = document.getElementById('greeting-note').value;
       const img = document.getElementById('image-url').value;
       document.getElementById('preview-caption').innerText = note;
-      document.getElementById('preview-img').src = img || 'https://images.unsplash.com/photo-1605379399642-870262d3d051?w=800&auto=format&fit=crop';
+      document.getElementById('preview-img').src = img || '/images/diwali_greeting_bedi_fashion.jpg';
     }
 
     document.getElementById('greeting-note').addEventListener('input', updatePreview);
