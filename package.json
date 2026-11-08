@@ -4,7 +4,7 @@
   "description": "Bedi Fashion™ — Milanese Luxury Maison Institutional Uniform Manufacturing Flagship",
   "main": "server.js",
   "scripts": {
-    "build": "echo 'Build successful'",
+    "build": "node -e \"const fs = require('fs'); fs.cpSync('frontend', 'public', {recursive: true}); console.log('Build completed: frontend synced to public');\"",
     "start": "node server.js",
     "dev": "python start.py",
     "test": "node frontend/test_platform.js",

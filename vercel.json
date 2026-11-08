@@ -1,18 +1,11 @@
 {
   "version": 2,
+  "outputDirectory": "public",
   "cleanUrls": true,
   "rewrites": [
     { "source": "/api/chat", "destination": "/api/chat.js" },
     { "source": "/api/inquiries", "destination": "/api/inquiries.js" },
     { "source": "/api/admin", "destination": "/api/admin.js" },
-    { "source": "/admin", "destination": "/frontend/admin.html" },
-    { "source": "/", "destination": "/frontend/index.html" },
-    { "source": "/about", "destination": "/frontend/about.html" },
-    { "source": "/css/(.*)", "destination": "/frontend/css/$1" },
-    { "source": "/js/(.*)", "destination": "/frontend/js/$1" },
-    { "source": "/models/(.*)", "destination": "/frontend/models/$1" },
-    { "source": "/images/(.*)", "destination": "/frontend/images/$1" },
-    { "source": "/data/(.*)", "destination": "/frontend/data/$1" },
-    { "source": "/(.*)", "destination": "/frontend/$1" }
+    { "source": "/admin", "destination": "/admin.html" }
   ]
 }
