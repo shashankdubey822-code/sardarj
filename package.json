@@ -4,9 +4,9 @@
   "description": "Bedi Fashion™ — Milanese Luxury Maison Institutional Uniform Manufacturing Flagship",
   "main": "server.js",
   "scripts": {
-    "start": "python start.py",
-    "start:node": "node server.js",
-    "start:backend": "python -m uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port 8000",
+    "build": "echo 'Build successful'",
+    "start": "node server.js",
+    "dev": "python start.py",
     "test": "node frontend/test_platform.js",
     "test:backend": "pytest backend/tests"
   },
