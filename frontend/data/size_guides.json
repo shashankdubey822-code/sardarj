@@ -1,0 +1,108 @@
+{
+  "school": [
+    {
+      "code": "Size 20",
+      "age": "3 - 4 Years",
+      "chest_in": 20,
+      "chest_cm": 51,
+      "waist_in": 19,
+      "waist_cm": 48,
+      "height_cm": "95 - 105"
+    },
+    {
+      "code": "Size 24",
+      "age": "5 - 6 Years",
+      "chest_in": 24,
+      "chest_cm": 61,
+      "waist_in": 22,
+      "waist_cm": 56,
+      "height_cm": "110 - 120"
+    },
+    {
+      "code": "Size 28",
+      "age": "7 - 8 Years",
+      "chest_in": 28,
+      "chest_cm": 71,
+      "waist_in": 24,
+      "waist_cm": 61,
+      "height_cm": "125 - 135"
+    },
+    {
+      "code": "Size 32",
+      "age": "9 - 11 Years",
+      "chest_in": 32,
+      "chest_cm": 81,
+      "waist_in": 26,
+      "waist_cm": 66,
+      "height_cm": "140 - 150"
+    },
+    {
+      "code": "Size 36",
+      "age": "12 - 14 Years",
+      "chest_in": 36,
+      "chest_cm": 91,
+      "waist_in": 30,
+      "waist_cm": 76,
+      "height_cm": "155 - 165"
+    },
+    {
+      "code": "Size 40",
+      "age": "15+ Senior",
+      "chest_in": 40,
+      "chest_cm": 102,
+      "waist_in": 34,
+      "waist_cm": 86,
+      "height_cm": "170 - 180"
+    }
+  ],
+  "adult_and_industrial": [
+    {
+      "size": "S",
+      "chest_in": 38,
+      "chest_cm": 96,
+      "waist_in": "30 - 32",
+      "shoulder_in": 17.5,
+      "fit_for": "Healthcare & Hotel Waiters"
+    },
+    {
+      "size": "M",
+      "chest_in": 40,
+      "chest_cm": 102,
+      "waist_in": "32 - 34",
+      "shoulder_in": 18.5,
+      "fit_for": "Standard Corporate & Security"
+    },
+    {
+      "size": "L",
+      "chest_in": 42,
+      "chest_cm": 107,
+      "waist_in": "34 - 36",
+      "shoulder_in": 19.5,
+      "fit_for": "Factory Maintenance & Supervisors"
+    },
+    {
+      "size": "XL",
+      "chest_in": 44,
+      "chest_cm": 112,
+      "waist_in": "36 - 38",
+      "shoulder_in": 20.5,
+      "fit_for": "Executive Chefs & Industrial Teams"
+    },
+    {
+      "size": "2XL",
+      "chest_in": 46,
+      "chest_cm": 117,
+      "waist_in": "38 - 40",
+      "shoulder_in": 21.5,
+      "fit_for": "Heavy-Duty Boiler Suits"
+    },
+    {
+      "size": "3XL - 5XL",
+      "chest_in": "48 - 54",
+      "chest_cm": "122 - 137",
+      "waist_in": "42 - 50",
+      "shoulder_in": 22.5,
+      "fit_for": "Custom Institutional Runs"
+    }
+  ]
+}

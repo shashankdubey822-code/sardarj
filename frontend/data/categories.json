@@ -1,0 +1,113 @@
+[
+  {
+    "id": "school",
+    "slug": "school-uniforms",
+    "name": "School",
+    "hindi_name": "स्कूल परिधान",
+    "description": "Premier K-12 school attire engineered for daily comfort, shape retention, and institutional pride.",
+    "hero_banner": "/images/banners/school-banner.jpg",
+    "product_count": 10,
+    "featured_items": [
+      "School Shirts",
+      "Pleated Skirts",
+      "School Blazers",
+      "House Tracksuits"
+    ],
+    "accent_color": "#1E3A8A"
+  },
+  {
+    "id": "corporate",
+    "slug": "corporate-wear",
+    "name": "Corporate Executive",
+    "hindi_name": "कॉर्पोरेट और एग्जीक्यूटिव परिधान",
+    "description": "Tailored executive shirts, structured business suits, and wrinkle-resistant office apparel.",
+    "hero_banner": "/images/banners/corporate-banner.jpg",
+    "product_count": 7,
+    "featured_items": [
+      "Formal Business Shirts",
+      "Executive Trousers",
+      "Business Suits",
+      "Corporate Polos"
+    ],
+    "accent_color": "#0F172A"
+  },
+  {
+    "id": "industrial",
+    "slug": "industrial-safety",
+    "name": "Industrial Safety",
+    "hindi_name": "औद्योगिक और सुरक्षा वर्कवियर",
+    "description": "Heavy-duty 100% cotton drill boiler suits, 3M reflective coveralls, and workshop protective wear.",
+    "hero_banner": "/images/banners/industrial-banner.jpg",
+    "product_count": 8,
+    "featured_items": [
+      "Boiler Suits",
+      "Reflective Coveralls",
+      "Cargo Trousers",
+      "Safety Jackets"
+    ],
+    "accent_color": "#D97706"
+  },
+  {
+    "id": "hospital",
+    "slug": "hospital-medical",
+    "name": "Medical Doctor",
+    "hindi_name": "चिकित्सा और डॉक्टर परिधान",
+    "description": "Autoclavable surgeon gowns, anti-microbial OT scrubs, doctor coats, and 200 TC hospital linens.",
+    "hero_banner": "/images/banners/hospital-banner.jpg",
+    "product_count": 10,
+    "featured_items": [
+      "OT Scrub Suits",
+      "Surgeon Gowns",
+      "Doctor Lab Coats",
+      "Hospital Bedsheets"
+    ],
+    "accent_color": "#0284C7"
+  },
+  {
+    "id": "hotel",
+    "slug": "hotel-hospitality",
+    "name": "Hotel Culinary",
+    "hindi_name": "होटल और शेफ यूनिफार्म",
+    "description": "Double-breasted executive chef coats, banquet service uniforms, and durable kitchen aprons.",
+    "hero_banner": "/images/banners/hotel-banner.jpg",
+    "product_count": 6,
+    "featured_items": [
+      "Executive Chef Coats",
+      "Waiter Uniforms",
+      "Culinary Aprons",
+      "Hospitality Vests"
+    ],
+    "accent_color": "#B45309"
+  },
+  {
+    "id": "security",
+    "slug": "security-guards",
+    "name": "Security Force",
+    "hindi_name": "सुरक्षा बल और गार्ड यूनिफार्म",
+    "description": "Epaulet guard shirts, tactical duty trousers, ceremonial wool berets, lanyards, and metal badges.",
+    "hero_banner": "/images/banners/security-banner.jpg",
+    "product_count": 11,
+    "featured_items": [
+      "Security Shirts",
+      "Safari Suits",
+      "Commando Sweaters",
+      "Woolen Berets"
+    ],
+    "accent_color": "#334155"
+  },
+  {
+    "id": "sports",
+    "slug": "sports-athletic",
+    "name": "Sports Athletic",
+    "hindi_name": "खेल और एथलेटिक पोशाक",
+    "description": "Moisture-wicking sublimated jerseys, breathable dry-fit tops, and micro-peach tracksuits.",
+    "hero_banner": "/images/banners/sports-banner.jpg",
+    "product_count": 4,
+    "featured_items": [
+      "Basketball Kits",
+      "Dry-Fit Training Tops",
+      "Athletic Tracksuits"
+    ],
+    "accent_color": "#16A34A"
+  }
+]

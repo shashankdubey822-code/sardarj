@@ -1,0 +1,32 @@
+[
+  {
+    "id": "test-01",
+    "client_name": "Chairman & Board of Trustees",
+    "institution": "Premier Senior Secondary School, Faridabad",
+    "sector": "Education",
+    "quote": "We have been partnering with Bedi Fashion, Faridabad for over 29 years. For our school of 2,400 students, their punctuality in delivering seasonal batches before the April session, combined with colorfast fabrics that last the entire academic year, makes them indispensable.",
+    "years_partnered": 29,
+    "avatar": "/images/testimonials/chairman.jpg",
+    "verified": true
+  },
+  {
+    "id": "test-02",
+    "client_name": "Dr. R. K. Singhal (Medical Superintendent)",
+    "institution": "Multi-Specialty Healthcare Network, Delhi NCR",
+    "sector": "Healthcare",
+    "quote": "Bedi Fashion's anti-microbial OT scrubs and autoclavable gowns passed our rigorous infection control committee standards with flying colors. Even after 40 autoclave cycles, the ceil blue color and seam integrity remain flawless.",
+    "years_partnered": 8,
+    "avatar": "/images/testimonials/doctor.jpg",
+    "verified": true
+  },
+  {
+    "id": "test-03",
+    "client_name": "Vikramaditya Oberoi (Plant GM)",
+    "institution": "Tier-1 Auto Ancillary Manufacturing Unit, Faridabad",
+    "sector": "Heavy Industry",
+    "quote": "We order 1,200 heavy-duty cotton boiler suits annually from Bedi Fashion. Their 3M reflective tape application and double-needle bar tacking give our shop floor workers safety and comfort that outlasts any other supplier in Haryana.",
+    "years_partnered": 14,
+    "avatar": "/images/testimonials/plant_gm.jpg",
+    "verified": true
+  }
+]

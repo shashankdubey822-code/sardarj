@@ -1,0 +1,23 @@
+{
+  "name": "bedi-fashion-platform",
+  "version": "2.0.0",
+  "description": "Bedi Fashion™ — Milanese Luxury Maison Institutional Uniform Manufacturing Flagship",
+  "main": "server.js",
+  "scripts": {
+    "start": "python start.py",
+    "start:node": "node server.js",
+    "start:backend": "python -m uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port 8000",
+    "test": "node frontend/test_platform.js",
+    "test:backend": "pytest backend/tests"
+  },
+  "keywords": [
+    "uniforms",
+    "manufacturing",
+    "threejs",
+    "gemini-ai",
+    "b2b",
+    "rfq"
+  ],
+  "author": "Bedi Fashion™",
+  "license": "UNLICENSED"
+}

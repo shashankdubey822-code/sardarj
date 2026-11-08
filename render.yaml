@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: bedi-fashion-whatsapp-bot
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: LOG_LEVEL
+        value: INFO
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: GRAPH_API_VERSION
+        value: v25.0
+      - key: WHATSAPP_TOKEN
+        sync: false
+      - key: PHONE_NUMBER_ID
+        sync: false
+      - key: VERIFY_TOKEN
+        sync: false
+      - key: META_APP_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        value: sqlite+aiosqlite:///./whatsapp_bot.db

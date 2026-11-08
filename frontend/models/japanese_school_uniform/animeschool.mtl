@@ -1,0 +1,58 @@
+# Blender MTL File: 'animeschool.blend'
+# Material Count: 4
+
+newmtl bow_FRONT_1123501
+Ns 28.763246
+Ka 1.000000 1.000000 1.000000
+Kd 0.613902 0.156480 0.156480
+Ks 0.075000 0.075000 0.075000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/bow_FRONT_1123501_Normal_OpenGL_1011.png
+map_Kd /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/bow_FRONT_1123501_Base_Color_1011.png
+map_Ns /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/bow_FRONT_1123501_Roughness_1011.png
+refl /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/bow_FRONT_1123501_Metallic_1011.png
+
+newmtl shirt_FRONT_539393
+Ns 28.763246
+Ka 1.000000 1.000000 1.000000
+Kd 0.819608 0.819608 0.819608
+Ks 0.075000 0.075000 0.075000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/shirt_FRONT_539393_Normal_OpenGL_1011.png
+map_Kd /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/shirt_FRONT_539393_Base_Color_1011.png
+map_Ns /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/shirt_FRONT_539393_Roughness_1011.png
+refl /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/shirt_FRONT_539393_Metallic_1011.png
+
+newmtl shirt_wrist_collar_FRONT_672717
+Ns 28.763246
+Ka 1.000000 1.000000 1.000000
+Kd 0.031254 0.053665 0.199277
+Ks 0.075000 0.075000 0.075000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/shirt_wrist_collar_FRONT_672717_Normal_OpenGL_1011.png
+map_Kd /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/shirt_wrist_collar_FRONT_672717_Base_Color_1011.png
+map_Ns /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/shirt_wrist_collar_FRONT_672717_Roughness_1011.png
+refl /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/shirt_wrist_collar_FRONT_672717_Metallic_1011.png
+
+newmtl skirt_FRONT_1119
+Ns 127.999985
+Ka 1.000000 1.000000 1.000000
+Kd 0.003777 0.069961 0.192849
+Ks 0.150000 0.150000 0.150000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/skirt_FRONT_1119_Normal_OpenGL_1001.png
+map_Kd /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/skirt_FRONT_1119_Base_Color_1001.png
+map_Ns /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/skirt_FRONT_1119_Roughness_1001.png
+refl /Users/shivayuce/Desktop/3D/Projects/Marvelous/Selling/substance/0textures/Anime_School/skirt_FRONT_1119_Metallic_1001.png
