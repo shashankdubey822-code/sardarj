@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bedi Fashion™ — Executive Admin & Holiday Broadcast Suite</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold-primary: #d4af37;
+      --gold-light: #f5d77f;
+      --bg-dark: #0a0b0e;
+      --surface-dark: #12141a;
+      --card-bg: #181b24;
+      --border-color: rgba(212, 175, 55, 0.2);
+      --text-main: #f0f2f5;
+      --text-muted: #9aa1b0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--surface-dark);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      color: var(--gold-primary);
+      letter-spacing: 1px;
+    }
+    .brand-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Auth Screen */
+    #auth-section {
+      max-width: 440px;
+      margin: 4rem auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2.5rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .auth-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: #0f1117;
+      border: 1px solid #2d3343;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.95rem;
+      margin: 1.2rem 0;
+    }
+    .auth-input:focus {
+      outline: none;
+      border-color: var(--gold-primary);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+      color: #000;
+      font-weight: 700;
+      border: none;
+      padding: 0.85rem 1.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .btn-gold:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 1px solid #232836;
+      margin-bottom: 2rem;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.75rem 1.25rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      color: var(--gold-primary);
+      border-color: var(--gold-primary);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid #232836;
+      border-radius: 12px;
+      padding: 1.8rem;
+      margin-bottom: 1.8rem;
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
+    }
+    .stat-card {
+      background: #11141c;
+      border: 1px solid #232836;
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .stat-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--gold-primary);
+      margin: 0.3rem 0;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Drag & Drop Area */
+    .drop-zone {
+      border: 2px dashed #3a4256;
+      border-radius: 10px;
+      padding: 2.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border 0.3s;
+      background: #12151e;
+    }
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: var(--gold-primary);
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 1.2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #232836;
+    }
+    th {
+      color: var(--text-muted);
+      font-weight: 600;
+      background: #11141c;
+    }
+
+    /* Inputs & Form Groups */
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text-muted);
+    }
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 0.85rem;
+      background: #10131a;
+      border: 1px solid #2d3343;
+      border-radius: 8px;
+      color: #fff;
+      font-family: inherit;
+    }
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* WhatsApp Preview */
+    .wa-preview {
+      background: #0b141a;
+      border-radius: 12px;
+      padding: 1rem;
+      max-width: 380px;
+      margin: 1.5rem auto;
+      border: 1px solid #202c33;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    }
+    .wa-bubble {
+      background: #005c4b;
+      color: #e9edef;
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 0.9rem;
+    }
+    .wa-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      background: #1a2227;
+    }
+    .wa-caption {
+      padding: 0.75rem;
+      white-space: pre-line;
+      line-height: 1.4;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+    .badge-gold { background: rgba(212, 175, 55, 0.2); color: #d4af37; }
+
+    .btn-secondary {
+      background: #232836;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      padding: 0.75rem 1.4rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <div class="brand-title">BEDI FASHION™</div>
+      <div class="brand-sub">Executive Admin Portal & Occasion Automation</div>
+    </div>
+    <div id="user-badge" style="display:none; font-size: 0.85rem; color: var(--gold-light);">
+      👤 Admin: <span id="admin-email-display"></span>
+    </div>
+  </header>
+
+  <!-- 1. LOGIN GATE -->
+  <section id="auth-section">
+    <div style="font-size: 2.5rem; margin-bottom: 0.8rem;">🔐</div>
+    <h2 style="font-family: 'Cinzel', serif; color: var(--gold-primary); margin-bottom: 0.5rem;">Admin Access</h2>
+    <p style="font-size: 0.85rem; color: var(--text-muted);">Please enter your authorized administrator email:</p>
+    <input type="email" id="email-input" class="auth-input" placeholder="shashankdubey822@gmail.com" value="shashankdubey822@gmail.com">
+    <button class="btn-gold" style="width: 100%;" onclick="authenticateAdmin()">Sign In to Admin Portal</button>
+    <div id="auth-msg" style="margin-top: 1rem; font-size: 0.85rem; color: var(--danger);"></div>
+  </section>
+
+  <!-- 2. MAIN ADMIN SUITE -->
+  <main class="container" id="admin-main" style="display:none;">
+    
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('contacts')">👥 Customer Database (CSV Upload)</button>
+      <button class="tab-btn" onclick="switchTab('broadcast')">🪔 Festive & Holiday Broadcast</button>
+      <button class="tab-btn" onclick="switchTab('system')">⚙️ System & WhatsApp Status</button>
+    </nav>
+
+    <!-- TAB 1: CSV CONTACTS & DEDUPLICATION -->
+    <div id="tab-contacts" class="tab-panel active">
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Unique Customers</div>
+          <div class="stat-val" id="stat-total-contacts">0</div>
+          <span class="badge badge-success">Deduplicated in Supabase</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Last Upload Batch</div>
+          <div class="stat-val" id="stat-last-added">0</div>
+          <span class="badge badge-gold">Newly Appended</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Duplicates Skipped</div>
+          <div class="stat-val" id="stat-duplicates-skipped">0</div>
+          <span class="badge" style="background:#222; color:#888;">Zero Redundancy</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📤 Upload ESO Customer Contacts CSV</div>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.2rem;">
+          Export your customers from ESO or Excel and upload here. Our system automatically parses names, formats phone numbers with country codes (91), and strictly appends <strong>only unique phone numbers</strong> into your Supabase database.
+        </p>
+
+        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('csv-file').click()">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
+          <div style="font-weight: 600;">Click to select or drag & drop CSV file</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem;">Supports .csv with columns: Name, Phone / Mobile, Organization</div>
+          <input type="file" id="csv-file" accept=".csv" style="display:none;" onchange="handleFileSelected(event)">
+        </div>
+
+        <div id="upload-status" style="margin-top: 1rem; display:none;"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📋 Stored Customer Directory (<span id="table-count">0</span>)</div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Phone Number</th>
+                <th>Name</th>
+                <th>Organization</th>
+                <th>Date Added</th>
+              </tr>
+            </thead>
+            <tbody id="contacts-table-body">
+              <tr><td colspan="5" style="text-align:center; color:var(--text-muted);">Loading contacts from Supabase...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 2: FESTIVE OCCASION BROADCAST -->
+    <div id="tab-broadcast" class="tab-panel">
+      
+      <div class="card">
+        <div class="card-title">🪔 AI Occasion Detector & Greeting Note</div>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.2rem;">
+          Our Gemini AI automatically checks today's date across all Indian cultural and religious celebrations (Diwali, Holi, Eid, Gurpurab, New Year, Christmas, Independence Day, etc.) and crafts an authentic 4-5 line heartfelt greeting note.
+        </p>
+
+        <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom: 1rem;">
+          <button class="btn-gold" onclick="detectOccasion(null)">🔮 Detect Today's Occasion (AI)</button>
+          <select id="quick-occasion" class="form-input" style="max-width:260px;" onchange="detectOccasion(this.value)">
+            <option value="">-- Or Choose Custom Occasion --</option>
+            <option value="Diwali 🪔">Diwali (Festival of Lights)</option>
+            <option value="Holi 🎨">Holi (Festival of Colors)</option>
+            <option value="Eid Mubarak 🌙">Eid ul-Fitr / Eid ul-Adha</option>
+            <option value="Gurpurab ੴ">Gurpurab (Guru Nanak Jayanti)</option>
+            <option value="New Year ✨">Happy New Year</option>
+            <option value="Independence Day 🇮🇳">Independence Day / Republic Day</option>
+            <option value="Raksha Bandhan 🧵">Raksha Bandhan</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Detected / Target Occasion:</label>
+          <input type="text" id="occasion-title" class="form-input" value="Auspicious Festive Greetings">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Greeting Message (4-5 lines):</label>
+          <textarea id="greeting-note" class="form-textarea">🙏 *Namaste & Heartfelt Festive Greetings!*
+
+May this auspicious occasion bring boundless happiness, good health, and abundant prosperity to you and your entire family.
+We deeply cherish your trust and partnership with us.
+
+Warmest regards & best wishes,
+*Mr. Bedi & The Entire Team at Bedi Fashion™ (Faridabad)*</textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Greeting Image URL (Your Namaste Photo or Festive Graphic):</label>
+          <input type="text" id="image-url" class="form-input" value="https://images.unsplash.com/photo-1605379399642-870262d3d051?w=800&auto=format&fit=crop" placeholder="https://...image.jpg">
+          <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.3rem;">Paste a link to your photo with joined hands (Indian greeting style) or festive banner.</p>
+        </div>
+
+        <!-- Live Preview -->
+        <div class="card-title" style="margin-top: 1.5rem;">📱 WhatsApp Recipient Live Preview</div>
+        <div class="wa-preview">
+          <div class="wa-bubble">
+            <img id="preview-img" class="wa-img" src="https://images.unsplash.com/photo-1605379399642-870262d3d051?w=800&auto=format&fit=crop" alt="Festive Greeting">
+            <div id="preview-caption" class="wa-caption"></div>
+          </div>
+        </div>
+
+        <!-- Dispatch Actions -->
+        <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top: 1.5rem; justify-content:center;">
+          <button class="btn-secondary" onclick="sendTestMessage()">📱 Send Test to My WhatsApp (+91 9205382254)</button>
+          <button class="btn-gold" onclick="broadcastToAll()">🚀 Broadcast to All Unique Customers</button>
+        </div>
+        <div id="broadcast-status" style="margin-top: 1rem; text-align:center; font-weight:600;"></div>
+
+      </div>
+
+    </div>
+
+    <!-- TAB 3: SYSTEM STATUS -->
+    <div id="tab-system" class="tab-panel">
+      <div class="card">
+        <div class="card-title">⚙️ Integration Coordinates</div>
+        <table style="margin-top:0.5rem;">
+          <tr><td><strong>Supabase Project:</strong></td><td><code>ovdvycumqsjgvlsickjy</code></td></tr>
+          <tr><td><strong>Official WhatsApp Line:</strong></td><td><code>+91 9211825699</code> (Bedi Fashion™)</td></tr>
+          <tr><td><strong>Meta Phone Number ID:</strong></td><td><code>1373460992523647</code></td></tr>
+          <tr><td><strong>Occasion AI Model:</strong></td><td><code>gemini-3.5-flash-lite</code></td></tr>
+          <tr><td><strong>Customer Database Table:</strong></td><td><code>customer_contacts</code> (Unique constraint on phone)</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const AUTHORIZED_ADMIN = "shashankdubey822@gmail.com";
+
+    function authenticateAdmin() {
+      const email = document.getElementById('email-input').value.trim().toLowerCase();
+      if (email === AUTHORIZED_ADMIN.toLowerCase()) {
+        document.getElementById('auth-section').style.display = 'none';
+        document.getElementById('admin-main').style.display = 'block';
+        document.getElementById('user-badge').style.display = 'block';
+        document.getElementById('admin-email-display').innerText = email;
+        loadContacts();
+        updatePreview();
+      } else {
+        document.getElementById('auth-msg').innerText = "Access restricted. Authorized admin: " + AUTHORIZED_ADMIN;
+      }
+    }
+
+    function switchTab(name) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('tab-' + name).classList.add('active');
+    }
+
+    // Load stored contacts
+    async function loadContacts() {
+      try {
+        const res = await fetch('/api/admin?action=get_contacts');
+        const data = await res.json();
+        if (data && data.contacts) {
+          document.getElementById('stat-total-contacts').innerText = data.total || data.contacts.length;
+          document.getElementById('table-count').innerText = data.total || data.contacts.length;
+          const tbody = document.getElementById('contacts-table-body');
+          if (data.contacts.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No contacts stored yet. Upload your ESO CSV above!</td></tr>';
+            return;
+          }
+          tbody.innerHTML = data.contacts.map(c => `
+            <tr>
+              <td>${c.id}</td>
+              <td><strong>+${c.phone}</strong></td>
+              <td>${c.name || 'Valued Customer'}</td>
+              <td>${c.organization || '—'}</td>
+              <td>${(c.created_at || '').slice(0, 10)}</td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) {
+        console.error('Failed to load contacts:', e);
+      }
+    }
+
+    // CSV Parse & Upload
+    function handleFileSelected(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const text = e.target.result;
+        const rows = text.split(/\r?\n/).map(r => r.trim()).filter(Boolean);
+        if (rows.length < 2) {
+          alert('CSV appears empty or has only header.');
+          return;
+        }
+
+        const headers = rows[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
+        const nameIdx = headers.findIndex(h => h.includes('name'));
+        const phoneIdx = headers.findIndex(h => h.includes('phone') || h.includes('mobile') || h.includes('number') || h.includes('contact'));
+        const orgIdx = headers.findIndex(h => h.includes('org') || h.includes('company') || h.includes('school'));
+
+        const contacts = [];
+        for (let i = 1; i < rows.length; i++) {
+          const cols = rows[i].split(',').map(c => c.trim().replace(/"/g, ''));
+          const phone = phoneIdx !== -1 ? cols[phoneIdx] : (cols[1] || cols[0]);
+          const name = nameIdx !== -1 ? cols[nameIdx] : (cols[0] || 'Customer');
+          const org = orgIdx !== -1 ? cols[orgIdx] : '';
+
+          if (phone) {
+            contacts.push({ name, phone, organization: org });
+          }
+        }
+
+        const statusDiv = document.getElementById('upload-status');
+        statusDiv.style.display = 'block';
+        statusDiv.innerHTML = `<span style="color:var(--gold-light);">⏳ Processing ${contacts.length} rows and deduplicating in Supabase...</span>`;
+
+        try {
+          const res = await fetch('/api/admin?action=upload_csv', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'upload_csv', contacts })
+          });
+          const result = await res.json();
+          if (result.success) {
+            statusDiv.innerHTML = `<span style="color:var(--success);">✅ Upload Complete! Added ${result.new_added} new unique customers. Skipped ${result.existing_skipped} existing duplicates.</span>`;
+            document.getElementById('stat-last-added').innerText = result.new_added;
+            document.getElementById('stat-duplicates-skipped').innerText = result.existing_skipped;
+            document.getElementById('stat-total-contacts').innerText = result.total_database;
+            loadContacts();
+          } else {
+            statusDiv.innerHTML = `<span style="color:var(--danger);">Error: ${result.error}</span>`;
+          }
+        } catch (err) {
+          statusDiv.innerHTML = `<span style="color:var(--danger);">Upload failed: ${err.message}</span>`;
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Occasion Detection
+    async function detectOccasion(customVal) {
+      const btn = event?.target;
+      const originalText = btn ? btn.innerText : '';
+      if (btn) btn.innerText = "⏳ Detecting with Gemini...";
+
+      try {
+        const res = await fetch('/api/admin?action=detect_occasion', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ custom_occasion: customVal })
+        });
+        const data = await res.json();
+        if (data) {
+          if (data.occasion) document.getElementById('occasion-title').value = data.occasion;
+          if (data.greeting_note) document.getElementById('greeting-note').value = data.greeting_note;
+          updatePreview();
+        }
+      } catch (err) {
+        console.error('Detection failed:', err);
+      } finally {
+        if (btn) btn.innerText = originalText;
+      }
+    }
+
+    function updatePreview() {
+      const note = document.getElementById('greeting-note').value;
+      const img = document.getElementById('image-url').value;
+      document.getElementById('preview-caption').innerText = note;
+      document.getElementById('preview-img').src = img || 'https://images.unsplash.com/photo-1605379399642-870262d3d051?w=800&auto=format&fit=crop';
+    }
+
+    document.getElementById('greeting-note').addEventListener('input', updatePreview);
+    document.getElementById('image-url').addEventListener('input', updatePreview);
+
+    // Send Test Message
+    async function sendTestMessage() {
+      const statusDiv = document.getElementById('broadcast-status');
+      statusDiv.innerHTML = `<span style="color:var(--gold-light);">⏳ Sending test greeting to +91 9205382254...</span>`;
+      try {
+        const res = await fetch('/api/admin?action=broadcast', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            imageUrl: document.getElementById('image-url').value,
+            greetingNote: document.getElementById('greeting-note').value,
+            testPhone: '919205382254'
+          })
+        });
+        const data = await res.json();
+        if (data.success && data.sent > 0) {
+          statusDiv.innerHTML = `<span style="color:var(--success);">✅ Test message delivered to +91 9205382254 via WhatsApp Cloud API! Check your phone.</span>`;
+        } else {
+          statusDiv.innerHTML = `<span style="color:var(--danger);">Failed to send test message: ${data.error || 'Check Meta token'}</span>`;
+        }
+      } catch (e) {
+        statusDiv.innerHTML = `<span style="color:var(--danger);">Error: ${e.message}</span>`;
+      }
+    }
+
+    // Broadcast to All Customers
+    async function broadcastToAll() {
+      const total = document.getElementById('stat-total-contacts').innerText;
+      if (!confirm(`Are you sure you want to broadcast this holiday greeting to all ${total} unique customers in your database?`)) {
+        return;
+      }
+
+      const statusDiv = document.getElementById('broadcast-status');
+      statusDiv.innerHTML = `<span style="color:var(--gold-light);">🚀 Broadcasting greeting to all customers via Meta WhatsApp API...</span>`;
+      try {
+        const res = await fetch('/api/admin?action=broadcast', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            imageUrl: document.getElementById('image-url').value,
+            greetingNote: document.getElementById('greeting-note').value
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          statusDiv.innerHTML = `<span style="color:var(--success);">🎉 Broadcast complete! Sent to ${data.sent} unique customers (${data.failed} failed).</span>`;
+        } else {
+          statusDiv.innerHTML = `<span style="color:var(--danger);">Broadcast error: ${data.error}</span>`;
+        }
+      } catch (e) {
+        statusDiv.innerHTML = `<span style="color:var(--danger);">Broadcast failed: ${e.message}</span>`;
+      }
+    }
+  </script>
+</body>
+</html>

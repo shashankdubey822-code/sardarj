@@ -339,6 +339,33 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Admin API Gateway
+  if (pathname.startsWith('/api/admin')) {
+    let bodyData = '';
+    req.on('data', chunk => bodyData += chunk);
+    req.on('end', () => {
+      try {
+        req.body = bodyData ? JSON.parse(bodyData) : {};
+      } catch (_) {
+        req.body = {};
+      }
+      req.query = parsedUrl.query || {};
+      const adminHandler = require('./api/admin.js');
+      adminHandler(req, res);
+    });
+    return;
+  }
+
+  // Admin Web Portal
+  if (pathname === '/admin') {
+    const adminPath = path.join(BASE_DIR, 'admin.html');
+    if (fs.existsSync(adminPath)) {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      fs.createReadStream(adminPath).pipe(res);
+      return;
+    }
+  }
+
   // Favicon Route
   if (pathname === '/favicon.ico') {
     const faviconPath = path.join(BASE_DIR, 'favicon.ico');
