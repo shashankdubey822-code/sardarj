@@ -1,17 +1,20 @@
 const https = require('https');
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://ovdvycumqsjgvlsickjy.supabase.co";
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92ZHZ5Y3VtcXNqZ3Zsc2lja2p5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc5Mzk1Njc2MywiZXhwIjoyMTA5NTMyNzYzfQ.UWW-Xb-40EtxaRJ-kisvmwQCjiDj_dvfUg1r2UM4Gos";
-const WHATSAPP_TOKEN = process.env.WHATSAPP_TOKEN || "EABBVGoZAyqooBS8KYAZCM6iGlLAfZBJAJulpRdwlUQO7TKZCtYaBKcWidRoF5DxTGZAJd48NgSMfi8TxEMU6BrMZBiJg23FenaDxteNhUI1auZCIBT6ZCH3PiXUkTRChT3ZBpk8wScm0euy8VrUzgSOjmg8C971p1fPLZAJrYZCPh7ZAyLYu8myUFy6cCOSZAJt3C1wZDZD";
+const SUPABASE_KEY =
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.SUPABASE_ANON_KEY ||
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92ZHZ5Y3VtcXNqZ3Zsc2lja2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NTY3NjMsImV4cCI6MjEwOTUzMjc2M30.5p8Mjo8WViCHWYeZ7i9qsJZ1ZVw9FaegYBtySvolnfs";
+const WHATSAPP_TOKEN = process.env.WHATSAPP_TOKEN || "";
 const PHONE_NUMBER_ID = process.env.PHONE_NUMBER_ID || "1373460992523647";
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "AQ.Ab8RN6JNRZTQJuTa3puHmniOLkk_t_6OSEyPkGO0Oo1Kc7LqiQ";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
 
 // Helper for Supabase REST requests
 async function supabaseFetch(endpoint, method = 'GET', body = null) {
   const url = `${SUPABASE_URL}/rest/v1/${endpoint}`;
   const headers = {
-    'apikey': SUPABASE_SERVICE_ROLE_KEY,
-    'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
     'Content-Type': 'application/json',
     'Prefer': 'return=representation'
   };
@@ -149,28 +152,34 @@ module.exports = async (req, res) => {
     const today = req.body?.date || new Date().toISOString().slice(0, 10);
     const customOccasion = req.body?.custom_occasion;
 
+    const DEFAULT_FESTIVE_IMAGE = "https://ovdvycumqsjgvlsickjy.supabase.co/storage/v1/object/public/broadcasts/diwali_greeting_bedi_fashion.jpg";
     let prompt = "";
     if (customOccasion) {
-      prompt = `Occasion: "${customOccasion}". Write an authentic, respectful 4-5 line festive greeting in Indian business English with rich celebratory emojis (🪔✨🌟🙏🌸). Represent the sender as "Sardar Guru Charan Singh Bedi & The Entire Family at Bedi Fashion™ (Faridabad)". Express heartfelt prayers for prosperity, health, and family happiness. Format as JSON: { "occasion": "${customOccasion}", "greeting_note": "4-5 lines note", "image_url": "/images/diwali_greeting_bedi_fashion.jpg" }`;
+      prompt = `Occasion: "${customOccasion}". Write an authentic, respectful 4-5 line festive greeting in Indian business English with rich celebratory emojis (🪔✨🌟🙏🌸). Represent the sender as "Sardar Guru Charan Singh Bedi & The Entire Family at Bedi Fashion™ (Faridabad)". Express heartfelt prayers for prosperity, health, and family happiness. Format as JSON: { "occasion": "${customOccasion}", "greeting_note": "4-5 lines note", "image_url": "${DEFAULT_FESTIVE_IMAGE}" }`;
     } else {
       prompt = `Today's date is ${today}. 
 1. Check major Indian celebrations (Hindu, Muslim, Sikh, Christian, National: Diwali, Holi, Eid, Gurpurab, New Year, Christmas, Independence Day, etc.). 
 2. If there is a holiday or upcoming festival, identify it. If none, select "Auspicious Festive Greetings".
 3. Write a respectful, warm 4-5 line greeting note with rich festive emojis representing "Sardar Guru Charan Singh Bedi & The Entire Family at Bedi Fashion™ (Faridabad)" wishing prosperity, joy, and peace.
-Format as JSON: { "occasion": "Festival Name", "greeting_note": "4-5 line note with emojis", "image_url": "/images/diwali_greeting_bedi_fashion.jpg" }`;
+Format as JSON: { "occasion": "Festival Name", "greeting_note": "4-5 line note with emojis", "image_url": "${DEFAULT_FESTIVE_IMAGE}" }`;
     }
 
     try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
       const payload = JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.3, maxOutputTokens: 350 }
+        model: "gemini-3.8-flash",
+        input: prompt,
+        generation_config: { max_output_tokens: 400 }
       });
 
       const aiRes = await new Promise((resolve, reject) => {
-        const req = https.request(new URL(url), {
+        const req = https.request(new URL("https://generativelanguage.googleapis.com/v1beta/interactions"), {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(payload) }
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': GEMINI_API_KEY,
+            'Api-Revision': '2026-05-20',
+            'Content-Length': Buffer.byteLength(payload)
+          }
         }, (r) => {
           let str = '';
           r.on('data', d => str += d);
@@ -182,7 +191,13 @@ Format as JSON: { "occasion": "Festival Name", "greeting_note": "4-5 line note w
       });
 
       const parsed = JSON.parse(aiRes);
-      let text = parsed.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      let text = parsed.output_text || '';
+      if (!text && Array.isArray(parsed.steps)) {
+        text = parsed.steps
+          .filter(s => s?.type === 'model_output')
+          .flatMap(s => (s.content || []).filter(c => c?.type === 'text').map(c => c.text))
+          .join('\n');
+      }
       
       // Clean JSON if returned in markdown code blocks
       text = text.replace(/```json/g, '').replace(/```/g, '').trim();
@@ -192,20 +207,20 @@ Format as JSON: { "occasion": "Festival Name", "greeting_note": "4-5 line note w
       } catch (_) {
         resJson = {
           occasion: customOccasion || "Diwali 🪔",
-          image_url: "/images/diwali_greeting_bedi_fashion.jpg",
+          image_url: DEFAULT_FESTIVE_IMAGE,
           greeting_note: text || `🪔✨ *शुभ दीपावली | Festive Greetings from Bedi Fashion™* ✨🪔\n\n🙏 Warmest Diwali greetings and heartfelt blessings to you and your beloved family!\n🌟 May the divine glow of Diwali fill your life with boundless joy, prosperity, peace, and vibrant health.\n🌸 We deeply cherish your trusted relationship with us.\n\n🎆 *With sincere respect, warm prayers & festive regards,*\n*Sardar Guru Charan Singh Bedi & The Entire Family at Bedi Fashion™ (Faridabad)* 🇮🇳🙏`
         };
       }
 
-      if (!resJson.image_url) {
-        resJson.image_url = "/images/diwali_greeting_bedi_fashion.jpg";
+      if (!resJson.image_url || resJson.image_url.startsWith('/images/')) {
+        resJson.image_url = DEFAULT_FESTIVE_IMAGE;
       }
 
       return res.status(200).json(resJson);
     } catch (e) {
       return res.status(200).json({
         occasion: customOccasion || "Diwali 🪔",
-        image_url: "/images/diwali_greeting_bedi_fashion.jpg",
+        image_url: DEFAULT_FESTIVE_IMAGE,
         greeting_note: `🪔✨ *शुभ दीपावली | Festive Greetings from Bedi Fashion™* ✨🪔\n\n🙏 Warmest Diwali greetings and heartfelt blessings to you and your beloved family!\n🌟 May the divine glow of Diwali fill your life with boundless joy, prosperity, peace, and vibrant health.\n🌸 We deeply cherish your trusted relationship with us.\n\n🎆 *With sincere respect, warm prayers & festive regards,*\n*Sardar Guru Charan Singh Bedi & The Entire Family at Bedi Fashion™ (Faridabad)* 🇮🇳🙏`
       });
     }

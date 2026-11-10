@@ -1,4 +1,4 @@
-﻿/**
+/**
  * BEDI FASHION™ — GEMINI BEDIBOT AI CONCIERGE
  * Dual-Mode Execution: Google Gemini API (/api/chat) with High-Fidelity Offline Knowledge Base Fallback
  * Bilingual English / Hindi (हिंदी) • Lead Qualification • Direct WhatsApp Handoff
@@ -10,31 +10,32 @@
   let isOpen = false;
   let chatHistory = [];
   let userLang = 'en';
+  let previousInteractionId = null;
 
   const KNOWLEDGE_BASE = {
-    founder: 'Mr. Bedi',
-    heritage: '29+ years of uniform manufacturing heritage (Founded 1997 in Faridabad, Haryana)',
+    founder: 'Mr. Guru Charan Singh Bedi',
+    heritage: '39+ years of institutional uniform heritage (Est. 1987)',
     head_office: 'Plot No - 125, Sector-18, Faridabad, Haryana - 121002',
-    factory_unit: 'Plot No- 12, Block-1, Springfield Colony (DLF), Sec-31/32, Faridabad',
+    shop_address: 'Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303',
     phones: ['+91 9211825699', '+91 9811825699', '+91 9899114052'],
     primary_wa: '919211825699',
     email: 'info@bedifashion.in',
     moq_stock: '25 pieces for ready-made standard stock inventory',
-    moq_custom: '100 pieces for custom institutional orders (custom dyes, patterns, and bullion crest embroidery)',
-    lead_time: '3 to 7 working days for ready stock; 14 to 21 days for custom institutional contracts'
+    moq_custom: '100 pieces for customized institutional orders (custom dyes, patterns, and bullion crest embroidery)',
+    lead_time: '3 to 7 working days for ready stock; 14 to 21 days for customized institutional contracts'
   };
 
-  const initialGreetingEn = `Namaste! I am **BediBot**, senior manufacturing concierge at Bedi Fashion™ (Faridabad). 
+  const initialGreetingEn = `Namaste! I am **BediBot**, senior concierge at Bedi Fashion™ (Proprietor: Mr. Guru Charan Singh Bedi). 
 
-With **29+ years of heritage (est. 1997)**, we supply schools, multi-specialty hospitals, industrial plants, and hotels across Delhi NCR and India.
+With **39+ years of heritage (est. 1987)**, we supply schools, multi-specialty hospitals, corporate enterprises, and institutions across Delhi NCR and India.
 
-How may I assist your institution today? You can ask about our **56 products, fabric GSM, MOQ, sizing drives, or physical sample swatch delivery**.`;
+How may I assist your institution today? You can ask about our **56+ products, fabric GSM, MOQ, sizing drives, or physical sample swatch delivery**.`;
 
-  const initialGreetingHi = `नमस्ते! मैं **बेदीबॉट (BediBot)** हूँ, बेदी फैशन™ (फरीदाबाद) का वरिष्ठ विनिर्माण सलाहकार।
+  const initialGreetingHi = `नमस्ते! मैं **बेदीबॉट (BediBot)** हूँ, बेदी फैशन™ (प्रोप्राइटर: श्री गुरु चरण सिंह बेदी) का सलाहकार।
 
-**29+ वर्षों के अनुभव (स्थापना 1997)** के साथ, हम दिल्ली एनसीआर और पूरे भारत में स्कूलों, अस्पतालों, उद्योगों और होटलों को सर्वोत्तम यूनिफार्म प्रदान करते हैं।
+**39+ वर्षों के अनुभव (स्थापना 1987)** के साथ, हम दिल्ली एनसीआर और पूरे भारत में स्कूलों, अस्पतालों, कॉर्पोरेट्स और संस्थानों को सर्वोत्तम यूनिफार्म प्रदान करते हैं।
 
-मैं आपकी क्या सहायता कर सकता हूँ? आप हमारे **56 उत्पादों, फैब्रिक GSM, न्यूनतम ऑर्डर (MOQ), या सैंपल स्वाच** के बारे में पूछ सकते हैं।`;
+मैं आपकी क्या सहायता कर सकता हूँ? आप हमारे **उत्पादों, फैब्रिक GSM, न्यूनतम ऑर्डर (MOQ), या सैंपल स्वाच** के बारे में पूछ सकते हैं।`;
 
   function initBediBot() {
     setupChatElements();
@@ -112,14 +113,15 @@ How may I assist your institution today? You can ask about our **56 products, fa
     const typingId = showTypingIndicator();
 
     try {
-      // 1. Try Live Gemini API Route
+      // 1. Try Live Gemini + Supabase API Route
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: message,
           history: chatHistory,
-          lang: userLang
+          lang: userLang,
+          previousInteractionId: previousInteractionId
         })
       });
 
@@ -128,6 +130,9 @@ How may I assist your institution today? You can ask about our **56 products, fa
       if (response.ok) {
         const data = await response.json();
         if (data && data.reply) {
+          if (data.interactionId) {
+            previousInteractionId = data.interactionId;
+          }
           appendMessage('bot', data.reply);
           chatHistory.push({ role: 'assistant', content: data.reply });
           return;
@@ -243,24 +248,26 @@ Would you like us to dispatch an autoclave test sample to your Infection Control
 Ready stock is available for quick dispatch. <a href="https://wa.me/919211825699?text=Hello%20Bedi%20Fashion,%20inquiring%20about%20industrial%20boiler%20suits%20and%203M%20coveralls." target="_blank">Inquire Industrial Workwear on WhatsApp →</a>`;
     }
 
-    // 5. Factory Location & Contact Coordinates
-    if (q.includes('address') || q.includes('location') || q.includes('kahan') || q.includes('factory') || q.includes('faridabad') || q.includes('कहाँ') || q.includes('पता')) {
+    // 5. Locations, Shop & Contact Coordinates
+    if (q.includes('address') || q.includes('location') || q.includes('kahan') || q.includes('shop') || q.includes('noida') || q.includes('faridabad') || q.includes('factory') || q.includes('कहाँ') || q.includes('पता')) {
       if (isHindi) {
-        return `हमारी विनिर्माण इकाइयाँ फरीदाबाद (हरियाणा) में स्थित हैं:
-- **मुख्य कार्यालय (Head Office)**: प्लॉट नं. 125, सेक्टर-18, फरीदाबाद - 121002
-- **विनिर्माण इकाई (Unit I)**: प्लॉट नं. 12, ब्लॉक-1, स्प्रिंगफील्ड कॉलोनी (DLF), सेक्टर-31/32, फरीदाबाद
+        return `हमारे कार्यालय और शॉप के पते:
+- **मुख्य कार्यालय (Head Office)**: प्लॉट नं. 125, सेक्टर-18, फरीदाबाद, हरियाणा - 121002
+- **शॉप (Bedi Creation)**: बेदी क्रिएशन, गली नंबर 3, पंजाब नेशनल बैंक के सामने, RS ब्यूटी पार्लर के पास, F ब्लॉक, सेक्टर 44, नोएडा, उत्तर प्रदेश - 201303
+- **प्रोप्राइटर**: श्री गुरु चरण सिंह बेदी (स्थापना 1987)
 - **संपर्क सूत्र**: +91 9211825699 | +91 9811825699
 - **ईमेल**: info@bedifashion.in
 
-आप हमारे कारखाने में आकर कटिंग व सिलाई यूनिट का प्रत्यक्ष निरीक्षण कर सकते हैं। <a href="https://wa.me/919211825699?text=Hello%20Mr.%20Bedi,%20we%20would%20like%20to%20visit%20your%20Faridabad%20factory." target="_blank">कारखाना विजिट शेड्यूल करें →</a>`;
+<a href="https://wa.me/919211825699?text=Hello%20Mr.%20Guru%20Charan%20Singh%20Bedi,%20we%20would%20like%20to%20visit%20your%20office%20or%20shop." target="_blank">व्हाट्सएप पर अपॉइंटमेंट शेड्यूल करें →</a>`;
       }
-      return `Our manufacturing facilities are centrally located in Faridabad, Delhi NCR:
+      return `Our Office & Retail Shop Locations across Delhi NCR:
 - **Head Office**: Plot No - 125, Sector-18, Faridabad, Haryana - 121002
-- **Manufacturing Unit I**: Plot No- 12, Block-1, Springfield Colony (DLF), Sec-31/32, Faridabad
+- **Shop (Bedi Creation)**: Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303
+- **Proprietor**: Mr. Guru Charan Singh Bedi (Est. 1987)
 - **Direct Phone**: +91 9211825699 | +91 9811825699
 - **Email**: info@bedifashion.in
 
-Procurement heads are welcome to visit our industrial cutting tables and embroidery units. <a href="https://wa.me/919211825699?text=Hello%20Mr.%20Bedi,%20we%20want%20to%20visit%20your%20Faridabad%20factory." target="_blank">Schedule a Factory Visit on WhatsApp →</a>`;
+Procurement heads are welcome to visit our Head Office or Noida Shop. <a href="https://wa.me/919211825699?text=Hello%20Mr.%20Guru%20Charan%20Singh%20Bedi,%20we%20want%20to%20visit%20your%20Head%20Office%20or%20Noida%20Shop." target="_blank">Schedule a Visit on WhatsApp →</a>`;
     }
 
     // 6. Sizing & Custom Measurements
@@ -274,13 +281,13 @@ You can also view our digital matrix via the **"Size Guide"** button above!`;
     }
 
     // 7. General Inquiry & Lead Capture
-    return `Thank you for your inquiry regarding Bedi Fashion's manufacturing capabilities. 
+    return `Thank you for your inquiry regarding Bedi Fashion's capabilities. 
 
-We specialize in precision institutional bulk contracts with **29+ years of operational trust (est. 1997)** in Faridabad.
+We specialize in precision institutional bulk contracts with **39+ years of operational trust (est. 1987)** across Faridabad and Noida.
 
-To provide you with an exact wholesale quotation and dispatch physical fabric swatches to your office, may I connect you directly with **Mr. Bedi**?
+To provide you with an exact wholesale quotation and dispatch physical fabric swatches to your office, may I connect you directly with Proprietor **Mr. Guru Charan Singh Bedi**?
 
-<a href="https://wa.me/919211825699?text=Hello%20Mr.%20Bedi,%20I%20am%20inquiring%20about%20uniform%20manufacturing%20for%20our%20institution.%20Please%20guide%20us." target="_blank" style="display:inline-block; margin-top:8px; background:#25D366; color:#FFF; padding:8px 16px; border-radius:6px; font-weight:700; text-decoration:none;">💬 Chat with Mr. Bedi on WhatsApp (+91 9211825699)</a>`;
+<a href="https://wa.me/919211825699?text=Hello%20Mr.%20Guru%20Charan%20Singh%20Bedi,%20I%20am%20inquiring%20about%20uniform%20requirements%20for%20our%20institution.%20Please%20guide%20us." target="_blank" style="display:inline-block; margin-top:8px; background:#25D366; color:#FFF; padding:8px 16px; border-radius:6px; font-weight:700; text-decoration:none;">💬 Chat with Mr. Guru Charan Singh Bedi on WhatsApp (+91 9211825699)</a>`;
   }
 
   // Public API

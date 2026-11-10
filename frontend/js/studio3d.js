@@ -1637,7 +1637,7 @@
     ctx.fillText('BF', 128, 150);
 
     ctx.font = 'bold 18px sans-serif';
-    ctx.fillText('EST. 1997', 128, 220);
+    ctx.fillText('EST. 1987', 128, 220);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.needsUpdate = true;
@@ -2308,7 +2308,7 @@
     ctx.fillText('B', 128, 110);
 
     ctx.font = 'bold 24px sans-serif';
-    ctx.fillText('EST. 1997', 128, 185);
+    ctx.fillText('EST. 1987', 128, 185);
 
     const texture = customLogoTexture || new THREE.CanvasTexture(canvas);
     const logoMat = new THREE.MeshStandardMaterial({

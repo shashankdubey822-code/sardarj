@@ -1,4 +1,4 @@
-﻿/**
+/**
  * BEDI FASHION™ — CORE APPLICATION CONTROLLER
  * Seasonal Timeline Engine • Bilingual Engine • Milestone Counters • Before/After Slider • Size Guide Modal • PDF Engine
  */
@@ -17,13 +17,13 @@
       nav_sizing: 'Universal Size Matrix',
       nav_rfq: 'Bulk RFQ Estimator',
       nav_faq: 'Institutional FAQ',
-      nav_contact: 'Facilities & Contact',
+      nav_contact: 'Locations & Contact',
       btn_call: '📞 +91 9211825699',
       btn_wa: 'Direct WhatsApp Inquiry',
-      hero_badge: 'Twenty-Nine Years of Manufacturing Authority (Est. 1997)',
+      hero_badge: 'Thirty-Nine Years of Excellence & Trust (Est. 1987)',
       hero_title_1: 'Sartorial Precision.',
       hero_title_2: 'Built For Institutions.',
-      hero_lead: 'Supplying premier schools, multi-specialty healthcare networks, and industrial manufacturing plants across Delhi NCR with over 50,000+ precision-stitched garments annually.',
+      hero_lead: 'Supplying premier schools, multi-specialty healthcare networks, and corporate enterprises across Delhi NCR with over 50,000+ precision-stitched garments annually.',
       btn_browse_catalog: 'Browse 56-Product Archive',
       btn_launch_3d: 'Launch 3D Tactile Studio',
       btn_request_rfq: 'Instant Institutional RFQ',
@@ -40,10 +40,10 @@
       nav_sizing: 'साइज चार्ट',
       nav_rfq: 'थोक कोटेशन (RFQ)',
       nav_faq: 'अक्सर पूछे जाने वाले प्रश्न',
-      nav_contact: 'कारखाना व संपर्क',
+      nav_contact: 'कार्यालय व दुकान पता',
       btn_call: '📞 +91 9211825699',
       btn_wa: 'सीधे व्हाट्सएप संपर्क',
-      hero_badge: '29 वर्षों का अटूट विनिर्माण विश्वास (स्थापना 1997)',
+      hero_badge: '39 वर्षों का अटूट विश्वास (स्थापना 1987)',
       hero_title_1: 'संस्थागत प्रतिष्ठा।',
       hero_title_2: 'विश्वसनीय विनिर्माण।',
       hero_lead: 'फरीदाबाद से संचालित, हम दिल्ली-एनसीआर के 500+ शीर्ष स्कूलों, मल्टी-स्पेशियलिटी अस्पतालों और औद्योगिक संयंत्रों को प्रतिवर्ष 50,000+ उच्च-गुणवत्ता वाली वर्दियां प्रदान करते हैं।',

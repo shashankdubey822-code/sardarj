@@ -8,7 +8,7 @@ declare const EdgeRuntime: {
 const VERIFY_TOKEN = Deno.env.get("VERIFY_TOKEN") || "my_whatsapp_secret_token_2026";
 const WHATSAPP_TOKEN = Deno.env.get("WHATSAPP_TOKEN") || "";
 const PHONE_NUMBER_ID = Deno.env.get("PHONE_NUMBER_ID") || "1373460992523647";
-const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY") || "AQ.Ab8RN6JNRZTQJuTa3puHmniOLkk_t_6OSEyPkGO0Oo1Kc7LqiQ";
+const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY") || "";
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") || "";
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 
@@ -16,13 +16,160 @@ const supabase = (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY)
   ? createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
   : null;
 
-// Send Meta Interactive Buttons
+interface ProductRow {
+  id: number;
+  item_code: string;
+  name: string;
+  category: string;
+  color: string;
+  available_sizes: string;
+  base_price: number;
+  tax_percentage: number;
+  final_price: number;
+  stock_quantity: number;
+  is_in_stock: boolean;
+  description: string;
+}
+
+const CATEGORY_META: Record<string, { id: string; title: string; subtitle: string; fabricNote: string; moq: string }> = {
+  "Coat": {
+    id: "cat_coat",
+    title: "🧥 Coats & Blazers",
+    subtitle: "Winter blazers & tailored institutional coats",
+    fabricNote: "Serge & Wool-Blend Matty",
+    moq: "25 pcs"
+  },
+  "Belt_pant": {
+    id: "cat_belt_pant",
+    title: "👖 School Pants",
+    subtitle: "Tailored Blue & White belt trousers",
+    fabricNote: "Heavy-duty O.C. & Twill Cotton",
+    moq: "50 pcs"
+  },
+  "T-shirt": {
+    id: "cat_tshirt",
+    title: "👕 School T-Shirts",
+    subtitle: "100% Super-combed cotton house T-shirts",
+    fabricNote: "Pre-shrunk, bio-washed cotton",
+    moq: "50 pcs"
+  },
+  "Shoes": {
+    id: "cat_shoes",
+    title: "👞 School Shoes",
+    subtitle: "Durable Black & White school footwear",
+    fabricNote: "Action / Goldstar / Standard",
+    moq: "30 pairs"
+  },
+  "Tunics": {
+    id: "cat_tunics",
+    title: "👗 Girls Tunics",
+    subtitle: "Box-pleated school uniform tunics",
+    fabricNote: "Wrinkle-resistant Poly-Viscose",
+    moq: "30 pcs"
+  },
+  "Devider": {
+    id: "cat_devider",
+    title: "🩳 Sports Dividers",
+    subtitle: "School & sports divided skirts",
+    fabricNote: "Comfort stretch blend",
+    moq: "50 pcs"
+  },
+  "Cycling_shorts": {
+    id: "cat_cycling_shorts",
+    title: "🩳 Cycling Shorts",
+    subtitle: "Innerwear & sports cycling shorts",
+    fabricNote: "Stretch cotton & Lycra blend",
+    moq: "50 pcs"
+  },
+  "Belt": {
+    id: "cat_belt",
+    title: "🥋 School Belts",
+    subtitle: "Official crest uniform belts",
+    fabricNote: "Custom school buckle weaving",
+    moq: "100 pcs"
+  },
+  "Tie": {
+    id: "cat_tie",
+    title: "👔 School Ties",
+    subtitle: "Formal school crest neckties",
+    fabricNote: "Woven striped micro-jacquard",
+    moq: "100 pcs"
+  },
+  "Table": {
+    id: "cat_table",
+    title: "🪵 Study Tables",
+    subtitle: "Institutional & home study furniture",
+    fabricNote: "Heavy-duty utility build",
+    moq: "10 units"
+  }
+};
+
+function getCategoryMeta(rawCat: string) {
+  if (CATEGORY_META[rawCat]) return CATEGORY_META[rawCat];
+  const slug = rawCat.toLowerCase().replace(/[^a-z0-9]+/g, "_");
+  return {
+    id: `cat_${slug}`,
+    title: `🛍️ ${rawCat.replace(/_/g, " ")}`.slice(0, 24),
+    subtitle: `${rawCat.replace(/_/g, " ")} institutional collection`,
+    fabricNote: "Premium Bedi Fashion™ quality",
+    moq: "25 pcs"
+  };
+}
+
+// Fetch live products from Supabase so every change reflects immediately
+async function fetchLiveProducts(): Promise<ProductRow[]> {
+  if (!supabase) return [];
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .select("id, item_code, name, category, color, available_sizes, base_price, tax_percentage, final_price, stock_quantity, is_in_stock, description")
+      .order("id", { ascending: true })
+      .limit(500);
+    if (error) {
+      console.warn("Supabase products query error:", error.message);
+      return [];
+    }
+    return (data || []) as ProductRow[];
+  } catch (err) {
+    console.warn("Failed fetching live products:", err);
+    return [];
+  }
+}
+
+// Format a live Supabase rate card message for a category
+function buildDynamicCategoryCard(rawCat: string, items: ProductRow[]): string {
+  const meta = getCategoryMeta(rawCat);
+  const lines = [
+    `*${meta.title}* (Bedi Fashion™)`,
+    `${meta.subtitle} (5% GST incl.)\n`,
+    `📏 *Live Rates & Sizes (Supabase):*`
+  ];
+
+  for (const p of items.slice(0, 14)) {
+    const price = Number(p.final_price || p.base_price || 0).toFixed(2);
+    const colorNote = p.color && p.color !== "Standard" ? ` (${p.color})` : "";
+    const stockTag = Number(p.stock_quantity || 0) > 0 && p.is_in_stock !== false
+      ? `✅ ${p.stock_quantity} pcs`
+      : `⏳ Order`;
+    lines.push(`• *${p.name}*${colorNote} — Size ${p.available_sizes}: *₹${price}* [${stockTag}]`);
+  }
+
+  if (items.length > 14) {
+    lines.push(`• ...plus ${items.length - 14} more sizes available.`);
+  }
+
+  lines.push(`\n✨ *Spec:* ${meta.fabricNote}`);
+  lines.push(`📦 *Wholesale MOQ:* ${meta.moq}`);
+  return lines.join("\n");
+}
+
+// Send Meta Interactive Buttons (titles capped at 20 chars)
 async function sendWhatsAppButtons(
   to: string,
   bodyText: string,
   buttons: Array<{ id: string; title: string }>,
   headerText: string = "Bedi Fashion™",
-  footerText: string = "Faridabad • Est. 1997"
+  footerText: string = "Faridabad & Noida • Est. 1987"
 ) {
   if (!WHATSAPP_TOKEN || !PHONE_NUMBER_ID) return;
 
@@ -68,8 +215,8 @@ async function sendWhatsAppList(
   bodyText: string,
   buttonLabel: string,
   sections: Array<{ title: string; rows: Array<{ id: string; title: string; description?: string }> }>,
-  headerText: string = "Product Catalog",
-  footerText: string = "Tap to view rates & sizes"
+  headerText: string = "Live Product Catalog",
+  footerText: string = "Tap a category for live rates"
 ) {
   if (!WHATSAPP_TOKEN || !PHONE_NUMBER_ID) return;
 
@@ -86,7 +233,7 @@ async function sendWhatsAppList(
       footer: { text: footerText.slice(0, 60) },
       action: {
         button: buttonLabel.slice(0, 20),
-        sections: sections.map((s) => ({
+        sections: sections.slice(0, 10).map((s) => ({
           title: s.title.slice(0, 24),
           rows: s.rows.slice(0, 10).map((r) => ({
             id: r.id.slice(0, 200),
@@ -114,148 +261,98 @@ async function sendWhatsAppList(
   }
 }
 
-// Ultra-short AI helper with session context (max 20 words)
-async function getConciseAIAnswer(userMessage: string, historyContext: string): Promise<string> {
-  if (!GEMINI_API_KEY) {
-    return "Please choose an option below to proceed:";
+// Extract text from Gemini Interactions API response
+function extractInteractionText(data: any): string {
+  if (!data) return "";
+  if (typeof data.output_text === "string" && data.output_text.trim()) {
+    return data.output_text.trim();
   }
-
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
-  const systemText = `You are BediBot at Bedi Fashion™ (Faridabad, uniform & institutional manufacturer).
-Rules:
-1. Answer in 1 short polite sentence (MAXIMUM 20 WORDS).
-2. DO NOT greet again if already speaking.
-3. DO NOT output long paragraphs, questionnaires, or lists.
-4. If asked about rates or products, advise them to select from the options below.
-${historyContext ? `Previous Context: ${historyContext}` : ""}`;
-
-  const payload = {
-    systemInstruction: { parts: [{ text: systemText }] },
-    contents: [{ role: "user", parts: [{ text: userMessage }] }],
-    generationConfig: {
-      temperature: 0.2,
-      maxOutputTokens: 50
-    }
-  };
-
-  try {
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    if (res.ok) {
-      const data = await res.json();
-      let reply = "";
-      if (data.candidates?.[0]?.content?.parts) {
-        for (const p of data.candidates[0].content.parts) {
-          if (p.text) reply += p.text;
+  if (Array.isArray(data.steps)) {
+    const parts: string[] = [];
+    for (const step of data.steps) {
+      if (step?.type === "model_output" && Array.isArray(step.content)) {
+        for (const c of step.content) {
+          if (c?.type === "text" && typeof c.text === "string") parts.push(c.text);
         }
       }
-      if (reply.trim()) return reply.trim();
     }
-  } catch (err) {
-    console.error("AI prompt error:", err);
+    if (parts.length > 0) return parts.join("\n").trim();
   }
-
-  return "What would you like to explore next? Please select an option:";
+  return "";
 }
 
-// Category Rate Cards
-const CATEGORY_CARDS: Record<string, string> = {
-  cat_coats: `🧥 *Coats & Blazers (Bedi Fashion™)*
-Winter crested blazers & school coats (5% GST incl.)
+// Generous Official Gemini AI Concierge backed by Live Supabase Products
+async function getGeminiDatabaseAnswer(userMessage: string, historyContext: string, products: ProductRow[]): Promise<string> {
+  const inventoryLines = products.map((p) => {
+    const stockNote = Number(p.stock_quantity || 0) > 0 ? `Stock:${p.stock_quantity}` : "OnOrder";
+    return `${p.name} (${p.category}, Size:${p.available_sizes}, Price:₹${Number(p.final_price || p.base_price).toFixed(2)}, ${stockNote})`;
+  });
 
-📏 *Size & Rate Card:*
-• Size 26–28: ₹1,050.00
-• Size 30: ₹1,102.50
-• Size 32: ₹1,181.25
-• Size 34: ₹1,233.75
-• Size 36: ₹1,286.25
-• Size 38: ₹1,365.00
-• Size 40: ₹1,443.75
-• Size 42: ₹1,522.50
+  if (GEMINI_API_KEY) {
+    const systemInstruction = `You are BediBot, the warm, generous, and articulate client advisor for Bedi Fashion™.
+BUSINESS PROFILE:
+- Proprietor: Mr. Guru Charan Singh Bedi (Established 1987 — 39+ years heritage)
+- Head Office: Plot No - 125, Sector-18, Faridabad, Haryana - 121002
+- Shop (Bedi Creation): Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303
+- Phone / WhatsApp: +91 9211825699 | +91 9811825699 | +91 9899114052
+- Email: info@bedifashion.in
+- Customized Uniforms: Bespoke school, corporate, and hospital uniforms with custom crest embroidery & bulk pricing.
+- NEVER mention any factory or DLF Sector 31/32 unit.
 
-✨ *Fabric:* Serge / Wool-Blend Matty
-📦 *Wholesale MOQ:* 25 pcs`,
+LIVE SUPABASE PRODUCT INVENTORY (${products.length} items, rates incl. 5% GST):
+${inventoryLines.join("\n")}
 
-  cat_pants: `👖 *School Pants & Trousers (Bedi Fashion™)*
-Tailored Blue & White belt pants (5% GST incl.)
+RULES:
+1. Be generous, gracious, warm, and grammatically clear (2–4 concise WhatsApp lines).
+2. Always quote exact live prices and availability from the LIVE SUPABASE PRODUCT INVENTORY above.
+3. Encourage tapping the buttons below to browse categories, place a Customized Uniform order, or contact Proprietor Mr. Guru Charan Singh Bedi directly.`;
 
-📏 *Size & Rate Card:*
-• Size 34: ₹409.50 – ₹435.75
-• Size 36: ₹430.50 – ₹456.75
-• Size 38: ₹451.50 – ₹477.75
-• Size 40: ₹472.50 – ₹498.75
-• Size 42: ₹493.50 – ₹519.75
+    const inputPrompt = historyContext
+      ? `Recent Context: ${historyContext}\n\nCustomer Inquiry: ${userMessage}`
+      : userMessage;
 
-✨ *Fabric:* Heavy-duty O.C. & Twill Cotton
-📦 *Wholesale MOQ:* 50 pcs`,
+    for (const model of ["gemini-3.8-flash", "gemini-3.5-flash-lite"]) {
+      try {
+        const res = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": GEMINI_API_KEY,
+            "Api-Revision": "2026-05-20"
+          },
+          body: JSON.stringify({
+            model,
+            system_instruction: systemInstruction,
+            input: inputPrompt,
+            generation_config: { max_output_tokens: 350 }
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const text = extractInteractionText(data);
+          if (text) return text;
+        }
+      } catch (err) {
+        console.warn(`WhatsApp Gemini (${model}) error:`, err);
+      }
+    }
+  }
 
-  cat_tshirts: `👕 *School & House T-Shirts (Bedi Fashion™)*
-100% Super-combed cotton (5% GST incl.)
+  // Live Supabase intelligent fallback if Gemini key is unavailable
+  const m = userMessage.toLowerCase();
+  const stopWords = new Set(["want", "some", "need", "price", "rate", "cost", "buy", "from", "have", "what", "with", "this", "that", "uniform", "uniforms", "school"]);
+  const words = m.split(/\s+/).filter((w) => w.length >= 3 && !stopWords.has(w));
+  const matched = words.length > 0
+    ? products.filter((p) => `${p.name} ${p.category} ${p.color} ${p.available_sizes} ${p.description}`.toLowerCase().includes(words[0]))
+    : [];
 
-📏 *Size & Rate Card:*
-• Size 26–28: ₹273.00 – ₹288.75
-• Size 30–32: ₹304.50 – ₹320.25
-• Size 34–36: ₹336.00 – ₹357.00
-• Size 38–40: ₹378.00 – ₹399.00
-• Size 42: ₹420.00
+  if (matched.length > 0 && matched.length <= 12) {
+    const itemsText = matched.slice(0, 6).map((p) => `• *${p.name}* (Size ${p.available_sizes}): *₹${Number(p.final_price || p.base_price).toFixed(2)}*`).join("\n");
+    return `We would be glad to help! Here are live rates from our catalog:\n${itemsText}\n\nTap *Browse Products* or *Custom Uniforms* below for complete details.`;
+  }
 
-✨ *Features:* Pre-shrunk, bio-washed, house colors
-📦 *Wholesale MOQ:* 50 pcs`,
-
-  cat_shoes: `👞 *Uniform Shoes (Bedi Fashion™)*
-Durable Black & White school shoes (5% GST incl.)
-
-📏 *Size & Rate Card:*
-• Size 10/11: ₹420.00
-• Size 12/13: ₹430.50
-• Size 1/2: ₹451.50
-• Size 3/4: ₹467.25
-• Size 5/6/7: ₹535.50
-• Size 8/9/10: ₹603.75
-
-✨ *Brands:* Action / Goldstar / Standard
-📦 *Wholesale MOQ:* 30 pairs`,
-
-  cat_tunics: `👗 *Girls Tunics & Skirts (Bedi Fashion™)*
-Box-pleated school uniform tunics (5% GST incl.)
-
-📏 *Size & Rate Card:*
-• Size 24–26: ₹304.50 – ₹325.50
-• Size 28–30: ₹346.50 – ₹367.50
-• Size 32–34: ₹388.50 – ₹409.50
-• Size 36: ₹430.50
-
-✨ *Fabric:* Wrinkle-resistant Poly-Viscose
-📦 *Wholesale MOQ:* 30 pcs`,
-
-  cat_bottoms: `🩳 *Dividers & Cycling Shorts (Bedi Fashion™)*
-Sports dividers & inner cycling shorts (5% GST incl.)
-
-📏 *Size & Rate Card:*
-• Cycling Shorts (S/M): ₹131.25
-• Dividers Size 16–18: ₹325.50 – ₹346.50
-• Dividers Size 20–22: ₹367.50 – ₹388.50
-• Dividers Size 24: ₹409.50
-
-✨ *Fabric:* Stretch cotton & Lycra blend
-📦 *Wholesale MOQ:* 50 pcs`,
-
-  cat_accessories: `👔 *Belts & Ties (Bedi Fashion™)*
-Official school crest belts & ties (5% GST incl.)
-
-📏 *Rate Card:*
-• School Belt (Size S): ₹73.50
-• School Belt (Size M): ₹84.00
-• School Belt (Size L): ₹105.00
-• Uniform Tie (14" / 16"): ₹63.00
-• Uniform Tie (48" Full): ₹84.00
-
-✨ *Customization:* School crest buckle & woven logo
-📦 *Wholesale MOQ:* 100 pcs`
-};
+  return "Thank you for reaching out to *Bedi Fashion™* (Proprietor: Mr. Guru Charan Singh Bedi, Est. 1987)! Please tap a button below to explore live catalog rates, Customized Uniforms, or our Faridabad & Noida locations:";
+}
 
 // Asynchronous message processor
 async function handleIncomingMessage(msg: any) {
@@ -272,7 +369,7 @@ async function handleIncomingMessage(msg: any) {
     }
   }
 
-  // 2. Persistent Deduplication: Check if this Meta message ID was already processed in Supabase DB
+  // 2. Persistent Deduplication via Supabase
   if (supabase && msgId) {
     try {
       const { data: existing } = await supabase
@@ -304,11 +401,9 @@ async function handleIncomingMessage(msg: any) {
   } else if (msg.type === "text") {
     userText = (msg.text?.body || "").trim();
   } else {
-    // Non-text/non-interactive event (media, reactions, etc.)
     return;
   }
 
-  // Accidental single character noise filter (e.g. accidental "h" keypress)
   if (!userAction && userText.length <= 1 && !["hi", "ok"].includes(userText.toLowerCase())) {
     console.log(`[NOISE_DROP] Ignoring single-character noise: "${userText}"`);
     return;
@@ -317,7 +412,15 @@ async function handleIncomingMessage(msg: any) {
   if (from && (userAction || userText)) {
     console.log(`[PROCESSING] From: ${from} | Action: "${userAction}" | Text: "${userText}"`);
 
-    // Retrieve Recent Session History from Supabase
+    // Always pull live Supabase products + session history
+    const products = await fetchLiveProducts();
+    const byCategory = new Map<string, ProductRow[]>();
+    for (const p of products) {
+      const cat = p.category || "Other";
+      if (!byCategory.has(cat)) byCategory.set(cat, []);
+      byCategory.get(cat)!.push(p);
+    }
+
     let sessionHistoryText = "";
     let hasActiveSession = false;
 
@@ -347,11 +450,9 @@ async function handleIncomingMessage(msg: any) {
     }
 
     const lower = userText.toLowerCase().replace(/[.,!?;:]/g, "").trim();
-
-    // Quick acknowledgements
     const isAck = ["ok", "okay", "thanks", "thank you", "sure", "done", "got it", "theek hai", "thik hai", "accha"].includes(lower);
 
-    // Resolve action from text if not an explicit button/list click
+    // Map legacy or text triggers cleanly
     if (!userAction) {
       if (isAck) {
         userAction = "acknowledgement";
@@ -362,25 +463,26 @@ async function handleIncomingMessage(msg: any) {
         lower.includes("price") ||
         lower.includes("menu") ||
         lower.includes("category") ||
-        lower.includes("view") ||
-        lower.includes("buy")
+        lower.includes("view")
       ) {
-        if (lower.includes("coat") || lower.includes("blazer")) userAction = "cat_coats";
-        else if (lower.includes("pant") || lower.includes("trouser")) userAction = "cat_pants";
-        else if (lower.includes("tshirt") || lower.includes("t-shirt") || lower.includes("polo")) userAction = "cat_tshirts";
+        if (lower.includes("coat") || lower.includes("blazer")) userAction = "cat_coat";
+        else if (lower.includes("pant") || lower.includes("trouser")) userAction = "cat_belt_pant";
+        else if (lower.includes("tshirt") || lower.includes("t-shirt") || lower.includes("polo")) userAction = "cat_tshirt";
         else if (lower.includes("shoe")) userAction = "cat_shoes";
         else if (lower.includes("tunic") || lower.includes("skirt")) userAction = "cat_tunics";
-        else if (lower.includes("divider") || lower.includes("short")) userAction = "cat_bottoms";
-        else if (lower.includes("belt") || lower.includes("tie")) userAction = "cat_accessories";
+        else if (lower.includes("divider")) userAction = "cat_devider";
+        else if (lower.includes("cycling") || lower.includes("short")) userAction = "cat_cycling_shorts";
+        else if (lower.includes("belt")) userAction = "cat_belt";
+        else if (lower.includes("tie")) userAction = "cat_tie";
+        else if (lower.includes("table")) userAction = "cat_table";
         else userAction = "btn_catalog";
       } else if (
-        lower.includes("service") ||
         lower.includes("custom") ||
+        lower.includes("service") ||
         lower.includes("form") ||
         lower.includes("rfq") ||
         lower.includes("bulk") ||
-        lower.includes("embroidery") ||
-        lower.includes("fabric")
+        lower.includes("embroidery")
       ) {
         userAction = "btn_services";
       } else if (
@@ -389,6 +491,9 @@ async function handleIncomingMessage(msg: any) {
         lower.includes("phone") ||
         lower.includes("address") ||
         lower.includes("location") ||
+        lower.includes("shop") ||
+        lower.includes("noida") ||
+        lower.includes("faridabad") ||
         lower.includes("owner") ||
         lower.includes("bedi")
       ) {
@@ -405,48 +510,92 @@ async function handleIncomingMessage(msg: any) {
       }
     }
 
-    // DISPATCH FLOW BASED ON CONTEXT & SELECTION
+    // Legacy category ID compatibility mapping
+    const legacyMap: Record<string, string> = {
+      cat_coats: "cat_coat",
+      cat_pants: "cat_belt_pant",
+      cat_tshirts: "cat_tshirt",
+      cat_bottoms: "cat_devider",
+      cat_accessories: "cat_tie"
+    };
+    if (legacyMap[userAction]) {
+      userAction = legacyMap[userAction];
+    }
+
+    // Standard cleanly phrased buttons (<= 20 chars each so nothing is truncated!)
+    const STD_BUTTONS = [
+      { id: "btn_catalog", title: "🛍️ Browse Products" },
+      { id: "btn_services", title: "💼 Custom Uniforms" },
+      { id: "btn_contact", title: "📞 Contact Direct" }
+    ];
+
     if (userAction === "btn_catalog") {
+      // Dynamically build sections directly from live Supabase categories
+      const rows: Array<{ id: string; title: string; description: string }> = [];
+      for (const [rawCat, items] of byCategory.entries()) {
+        const meta = getCategoryMeta(rawCat);
+        const prices = items.map((i) => Number(i.final_price || i.base_price || 0)).filter((v) => v > 0);
+        const minPrice = prices.length ? Math.min(...prices).toFixed(0) : "—";
+        const sizes = Array.from(new Set(items.map((i) => i.available_sizes).filter(Boolean))).slice(0, 4).join(", ");
+        rows.push({
+          id: meta.id,
+          title: meta.title,
+          description: `${items.length} variants • Sizes: ${sizes || "Std"} • From ₹${minPrice}`
+        });
+      }
+
+      if (rows.length === 0) {
+        rows.push({ id: "btn_services", title: "💼 Custom Uniforms", description: "Request live catalog rates directly" });
+      }
+
       await sendWhatsAppList(
         from,
-        "Please select a category below to view our instant size & wholesale rate card:",
+        "Please select a product category below to view live rates, sizes, and stock availability:",
         "Select Category",
         [
           {
-            title: "Uniforms & Apparel",
-            rows: [
-              { id: "cat_coats", title: "🧥 Coats & Blazers", description: "Sizes 26-42 • Wool & Matty • from ₹1,050" },
-              { id: "cat_pants", title: "👖 School Pants", description: "Sizes 24-42 • Blue & White • from ₹409" },
-              { id: "cat_tshirts", title: "👕 School T-Shirts", description: "Sizes 26-42 • 100% Cotton • from ₹273" },
-              { id: "cat_shoes", title: "👞 School Shoes", description: "Sizes 9C-11 • Action/Goldstar • from ₹399" },
-              { id: "cat_tunics", title: "👗 Girls Tunics", description: "Sizes 24-36 • Tailored pleats • from ₹304" },
-              { id: "cat_bottoms", title: "🩳 Dividers & Shorts", description: "Sizes 16-24 • Sports & inner • from ₹131" },
-              { id: "cat_accessories", title: "👔 Belts & Ties", description: "School crest belts & ties • from ₹63" }
-            ]
+            title: "Uniforms & Accessories",
+            rows: rows.slice(0, 10)
           }
         ],
-        "Bedi Fashion™ Products",
-        "Tap to select category"
+        "Bedi Fashion™ Catalog",
+        "Live rates incl. 5% GST"
       );
-    } else if (userAction.startsWith("cat_") && CATEGORY_CARDS[userAction]) {
+    } else if (userAction.startsWith("cat_")) {
+      // Match the live category from Supabase
+      let matchedCat = "";
+      let matchedItems: ProductRow[] = [];
+      for (const [rawCat, items] of byCategory.entries()) {
+        if (getCategoryMeta(rawCat).id === userAction) {
+          matchedCat = rawCat;
+          matchedItems = items;
+          break;
+        }
+      }
+
+      const cardBody = matchedItems.length > 0
+        ? buildDynamicCategoryCard(matchedCat, matchedItems)
+        : "Sorry, items for this category are currently being updated. Tap *Custom Uniforms* to request a custom quotation!";
+
       await sendWhatsAppButtons(
         from,
-        CATEGORY_CARDS[userAction],
+        cardBody,
         [
           { id: "btn_catalog", title: "🛍️ Other Products" },
-          { id: "btn_services", title: "📋 Custom Order / RFQ" }
+          { id: "btn_services", title: "💼 Custom Uniforms" }
         ],
-        "Bedi Fashion™ Rates",
-        "Tap button to continue"
+        "Bedi Fashion™ Live Rates",
+        "Tap a button to continue"
       );
     } else if (userAction === "btn_services") {
-      const serviceMsg = `💼 *Custom Uniforms & Institutional Services*
+      const serviceMsg = `💼 *Customized Uniforms & Bulk Orders*
 
-For institutional orders, school crest embroidery, or bulk fabric:
-👉 *Fill Requirement Form:*
+We gladly tailor *Customized Uniforms* for schools, hospitals, corporates, and organizations—including school crest embroidery, custom fabric colors, and full sizing sets.
+
+👉 *Submit Your Requirement Here:*
 https://forms.gle/BediFashionUniformsRFQ
 
-Our team will review your specs and contact you directly with samples & wholesale quotation.`;
+Or reach Proprietor *Mr. Guru Charan Singh Bedi* (+91 9211825699) directly for fabric swatches and bulk quotations.`;
 
       await sendWhatsAppButtons(
         from,
@@ -455,78 +604,66 @@ Our team will review your specs and contact you directly with samples & wholesal
           { id: "btn_catalog", title: "🛍️ View Products" },
           { id: "btn_contact", title: "📞 Contact Us" }
         ],
-        "Bedi Fashion™ Services",
-        "Tap button to choose"
+        "Customized Uniforms",
+        "Tap a button to choose"
       );
     } else if (userAction === "btn_contact") {
       const contactMsg = `📞 *Bedi Fashion™ Contact Coordinates*
 
-• Phone / WhatsApp: +91 9211825699
-• Email: info@bedifashion.in
-• Head Office: Plot No - 125, Sec-18, Faridabad - 121002
-• Factory: Sector 31-32 DLF Industrial Area, Faridabad
-• Proprietor: Mr. Bedi (Est. 1997)`;
+• *Proprietor:* Mr. Guru Charan Singh Bedi (Est. 1987)
+• *Phone / WhatsApp:* +91 9211825699
+• *Email:* info@bedifashion.in
+• *Head Office:* Plot No - 125, Sector-18, Faridabad, Haryana - 121002
+• *Shop (Bedi Creation):* Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303`;
 
       await sendWhatsAppButtons(
         from,
         contactMsg,
         [
           { id: "btn_catalog", title: "🛍️ View Products" },
-          { id: "btn_services", title: "💼 Custom Services" }
+          { id: "btn_services", title: "💼 Custom Uniforms" }
         ],
         "Direct Assistance",
-        "Tap button to choose"
+        "Faridabad & Noida • Est. 1987"
       );
     } else if (userAction === "acknowledgement") {
       await sendWhatsAppButtons(
         from,
-        "Glad to assist! What would you like to check next?",
-        [
-          { id: "btn_catalog", title: "🛍️ Browse Products" },
-          { id: "btn_services", title: "💼 Custom Services" },
-          { id: "btn_contact", title: "📞 Contact Direct" }
-        ],
+        "Always glad to help! What would you like to explore next?",
+        STD_BUTTONS,
         "Bedi Fashion™",
         "Please select an option"
       );
     } else if (userAction === "greeting") {
       const greetingText = hasActiveSession
-        ? "Namaste ji! How else may we assist you today?"
-        : "Namaste ji! Welcome to Bedi Fashion™ (Faridabad, Est. 1997). Please choose an option below:";
+        ? "Namaste ji! How else may *Bedi Fashion™* assist you today?"
+        : "Namaste ji! Welcome to *Bedi Fashion™* (Proprietor: Mr. Guru Charan Singh Bedi, Est. 1987). Please choose an option below:";
 
       await sendWhatsAppButtons(
         from,
         greetingText,
-        [
-          { id: "btn_catalog", title: "🛍️ Browse Products" },
-          { id: "btn_services", title: "💼 Custom Services" },
-          { id: "btn_contact", title: "📞 Contact Direct" }
-        ],
+        STD_BUTTONS,
         "Bedi Fashion™",
-        "Please select an option"
+        "Faridabad & Noida • Est. 1987"
       );
     } else {
-      const shortAnswer = await getConciseAIAnswer(userText, sessionHistoryText);
+      const aiAnswer = await getGeminiDatabaseAnswer(userText, sessionHistoryText, products);
 
       await sendWhatsAppButtons(
         from,
-        shortAnswer,
-        [
-          { id: "btn_catalog", title: "🛍️ Browse Products" },
-          { id: "btn_services", title: "💼 Custom Services" },
-          { id: "btn_contact", title: "📞 Contact Direct" }
-        ],
+        aiAnswer,
+        STD_BUTTONS,
         "Bedi Fashion™",
-        "Please select an option"
+        "Faridabad & Noida • Est. 1987"
       );
     }
 
-    // Record interaction in Supabase DB with unique message status for deduplication
+    // Record interaction in Supabase DB
     if (supabase) {
       try {
         await supabase.from("b2b_inquiries").insert({
           sender_id: from,
-          requirement: `In: "${userAction || userText}" | Mode: interactive_selective`,
+          requirement: `In: "${userAction || userText}" | Mode: live_supabase_interactive`,
           status: msgId ? `msg_${msgId}` : "active_session"
         });
       } catch (dbErr) {
@@ -562,16 +699,13 @@ serve(async (req) => {
       if (change?.messages && change.messages.length > 0) {
         const msg = change.messages[0];
 
-        // Process in background and return 200 OK immediately so Meta NEVER times out or retries!
         if (typeof EdgeRuntime !== "undefined" && EdgeRuntime?.waitUntil) {
           EdgeRuntime.waitUntil(handleIncomingMessage(msg));
         } else {
-          // Fallback if EdgeRuntime.waitUntil is not available in local test environment
           handleIncomingMessage(msg).catch((e) => console.error("Async handler error:", e));
         }
       }
 
-      // Return 200 OK immediately in <10ms
       return new Response("EVENT_RECEIVED", { status: 200 });
     } catch (err) {
       console.error("Webhook processing error:", err);

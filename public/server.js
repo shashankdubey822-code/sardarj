@@ -36,16 +36,16 @@ const MIME_TYPES = {
   '.wasm': 'application/wasm'
 };
 
-const BEDIBOT_SYSTEM_PROMPT = `You are "BediBot", the senior manufacturing concierge and technical sales consultant at Bedi Fashion™ (Faridabad, Delhi NCR, India).
+const BEDIBOT_SYSTEM_PROMPT = `You are "BediBot", the senior technical sales consultant at Bedi Fashion™ (Faridabad & Noida, Delhi NCR, India).
 
-Founded in 1997, Bedi Fashion is North India's premier uniform manufacturer and institutional garment contractor with 29+ years of operational trust.
+Founded in 1987 by Proprietor Mr. Guru Charan Singh Bedi, Bedi Fashion is North India's trusted institutional uniform outfitter with 39+ years of operational trust.
 
 BUSINESS COORDINATES:
 - Head Office: Plot No - 125, Sec-18, Faridabad, Haryana - 121002
-- Manufacturing Unit I: Plot No- 12, Block-1, Basement Right Side Spring Field Colony (DLF), Sec-31, 32, Faridabad
+- Shop (Bedi Creation): Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303
 - Phone Numbers: +91 9211825699 | +91 9811825699 | +91 9899114052
 - Email Addresses: info@bedifashion.in | garments@bedifashion.in
-- Founder/Owner: Mr. Bedi
+- Proprietor: Mr. Guru Charan Singh Bedi (Est. 1987)
 
 CORE CAPABILITIES:
 1. School Uniforms (10 products): Shirts, trousers, pleated skirts, crested blazers, tracksuits, winter sweaters, house sports kits, PE polos, cardigans.
@@ -236,17 +236,17 @@ function generateSmartLocalReply(msg) {
     return `Our standard MOQ is 25–50 pieces for in-stock catalog cuts and 100 pieces for bespoke mill dye batches. What quantities is your institution planning? Let's discuss on WhatsApp: +91 9211825699.`;
   }
 
-  if (m.includes('contact') || m.includes('phone') || m.includes('address') || m.includes('location') || m.includes('factory') || m.includes('पता') || m.includes('फोन')) {
+  if (m.includes('contact') || m.includes('phone') || m.includes('address') || m.includes('location') || m.includes('shop') || m.includes('noida') || m.includes('factory') || m.includes('पता') || m.includes('फोन')) {
     if (isHindi) {
-      return `बेदी फैशन™ के निर्देशांक:\n• प्रधान कार्यालय: प्लॉट नं. 125, सेक्टर-18, फरीदाबाद, हरियाणा - 121002\n• विनिर्माण इकाई: स्प्रिंगफील्ड कॉलोनी, सेक्टर 31/32, फरीदाबाद\n• फोन/व्हाट्सएप: +91 9211825699 / +91 9811825699\n• ईमेल: info@bedifashion.in`;
+      return `बेदी फैशन™ के संपर्क निर्देशांक:\n• मुख्य कार्यालय: प्लॉट नं. 125, सेक्टर-18, फरीदाबाद, हरियाणा - 121002\n• शॉप (Bedi Creation): गली नंबर 3, पंजाब नेशनल बैंक के सामने, RS ब्यूटी पार्लर के पास, F ब्लॉक, सेक्टर 44, नोएडा, उत्तर प्रदेश - 201303\n• प्रोप्राइटर: श्री गुरु चरण सिंह बेदी (स्थापना 1987)\n• फोन/व्हाट्सएप: +91 9211825699 / +91 9811825699\n• ईमेल: info@bedifashion.in`;
     }
-    return `Bedi Fashion™ Coordinates:\n• Head Office: Plot No - 125, Sector-18, Faridabad, Haryana - 121002\n• Manufacturing Unit I: Springfield Colony, Sec-31/32, Faridabad\n• Direct Line / WhatsApp: +91 9211825699\n• Email: info@bedifashion.in | garments@bedifashion.in`;
+    return `Bedi Fashion™ Coordinates:\n• Head Office: Plot No - 125, Sector-18, Faridabad, Haryana - 121002\n• Shop (Bedi Creation): Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303\n• Proprietor: Mr. Guru Charan Singh Bedi (Est. 1987)\n• Direct Line / WhatsApp: +91 9211825699\n• Email: info@bedifashion.in | garments@bedifashion.in`;
   }
 
   if (isHindi) {
-    return `बेदी फैशन™ (फरीदाबाद, स्थापना 1997) 29+ वर्षों से प्रीमियम संस्थागत वर्दी विनिर्माता है। क्या आप अपनी संस्था के लिए श्री बेदी जी से सीधे व्हाट्सएप (+91 9211825699) पर बात करना और फैब्रिक सैंपल प्राप्त करना चाहेंगे?`;
+    return `बेदी फैशन™ (स्थापना 1987, प्रोप्राइटर: श्री गुरु चरण सिंह बेदी) 39+ वर्षों से प्रीमियम संस्थागत वर्दी प्रदाता है। क्या आप अपनी संस्था के लिए श्री बेदी जी से सीधे व्हाट्सएप (+91 9211825699) पर बात करना और फैब्रिक सैंपल प्राप्त करना चाहेंगे?`;
   }
-  return `Bedi Fashion™ (Faridabad, Founded 1997) has 29+ years of uniform manufacturing heritage. Would you like to connect directly with Mr. Bedi on WhatsApp (+91 9211825699) to discuss your institutional requirements and receive physical fabric swatches?`;
+  return `Bedi Fashion™ (Founded 1987, Proprietor: Mr. Guru Charan Singh Bedi) has 39+ years of institutional uniform heritage. Would you like to connect directly with Mr. Guru Charan Singh Bedi on WhatsApp (+91 9211825699) to discuss your institutional requirements and receive physical fabric swatches?`;
 }
 
 function handleInquiriesPost(req, res) {
@@ -418,7 +418,7 @@ if (require.main === module) {
     console.log(`🧵 BEDI FASHION™ — MILANESE LUXURY MAISON PLATFORM`);
     console.log(`🚀 Live on: http://localhost:${PORT}`);
     console.log(`📍 Head Office: Plot No - 125, Sector-18, Faridabad`);
-    console.log(`🏭 Manufacturing Unit I: Springfield Colony, Sec-31/32`);
+    console.log(`🏬 Shop (Bedi Creation): Sector 44, Noida, UP - 201303`);
     console.log(`=======================================================`);
   });
 } else {

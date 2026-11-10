@@ -5,9 +5,9 @@ declare const EdgeRuntime: {
   waitUntil: (promise: Promise<unknown>) => void;
 };
 
-const WHATSAPP_TOKEN = Deno.env.get("WHATSAPP_TOKEN") || "EABBVGoZAyqooBS8KYAZCM6iGlLAfZBJAJulpRdwlUQO7TKZCtYaBKcWidRoF5DxTGZAJd48NgSMfi8TxEMU6BrMZBiJg23FenaDxteNhUI1auZCIBT6ZCH3PiXUkTRChT3ZBpk8wScm0euy8VrUzgSOjmg8C971p1fPLZAJrYZCPh7ZAyLYu8myUFy6cCOSZAJt3C1wZDZD";
+const WHATSAPP_TOKEN = Deno.env.get("WHATSAPP_TOKEN") || "";
 const PHONE_NUMBER_ID = Deno.env.get("PHONE_NUMBER_ID") || "1373460992523647";
-const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY") || "AQ.Ab8RN6JNRZTQJuTa3puHmniOLkk_t_6OSEyPkGO0Oo1Kc7LqiQ";
+const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY") || "";
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") || "";
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 
