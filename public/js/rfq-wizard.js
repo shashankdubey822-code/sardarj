@@ -1,6 +1,6 @@
-﻿/**
+/**
  * BEDI FASHION™ — 4-STEP INSTITUTIONAL BULK ESTIMATOR & RFQ ENGINE
- * Real-Time Discount Tiering • Instant WhatsApp Generation • Local JSON Ingestion
+ * Real-Time Discount Tiering • Supabase Database Persistence (`institutional_rfqs`) • Optional Google Form Redirect • WhatsApp Generation
  */
 
 (function () {
@@ -8,20 +8,55 @@
 
   let currentStep = 1;
   let selectedItems = [];
+  let configuredGoogleFormUrl = '';
 
   const rfqState = {
-    institutionType: 'School',
+    institutionType: 'K-12 School / Academy',
     institutionName: '',
     contactPerson: '',
     phone: '',
+    email: '',
     city: 'Faridabad / Delhi NCR',
     targetDate: '',
-    customization: 'School / Corporate Crest Embroidery',
+    customization: 'Customized School Crest Bullion Machine Embroidery',
+    swatchNeeded: true,
+    requirementNotes: '',
     totalQuantity: 150
   };
 
   function initRFQWizard() {
     setupWizardListeners();
+    loadRemoteRFQConfig();
+    handleDeepLinkRFQ();
+  }
+
+  async function loadRemoteRFQConfig() {
+    try {
+      const res = await fetch('/api/inquiries?config=1');
+      if (!res.ok) return;
+      const cfg = await res.json();
+      if (cfg && cfg.google_form_url && /^https?:\/\//i.test(cfg.google_form_url)) {
+        configuredGoogleFormUrl = cfg.google_form_url.trim();
+        window.BEDI_RFQ_FORM_URL = configuredGoogleFormUrl;
+        const bar = document.getElementById('rfq-google-form-bar');
+        const link = document.getElementById('rfq-google-form-link');
+        if (bar && link) {
+          link.href = configuredGoogleFormUrl;
+          bar.style.display = 'block';
+        }
+      }
+    } catch (_) {}
+  }
+
+  function handleDeepLinkRFQ() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('open') === 'rfq' || window.location.hash === '#rfq') {
+        setTimeout(() => {
+          openRFQModal();
+        }, 350);
+      }
+    } catch (_) {}
   }
 
   function setupWizardListeners() {
@@ -29,6 +64,10 @@
     openBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
+        if (configuredGoogleFormUrl && selectedItems.length === 0) {
+          window.open(configuredGoogleFormUrl, '_blank', 'noopener,noreferrer');
+          return;
+        }
         openRFQModal();
       });
     });
@@ -42,7 +81,6 @@
       });
     }
 
-    // Step Nav buttons
     const stepBtns = document.querySelectorAll('.rfq-step-btn');
     stepBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -51,7 +89,6 @@
       });
     });
 
-    // Next / Prev buttons
     const nextBtn = document.getElementById('btn-rfq-next');
     const prevBtn = document.getElementById('btn-rfq-prev');
     const submitBtn = document.getElementById('btn-rfq-submit-wa');
@@ -72,7 +109,6 @@
       submitBtn.addEventListener('click', handleSubmitRFQ);
     }
 
-    // Live quantity input
     const qtyInput = document.getElementById('rfq-total-qty');
     if (qtyInput) {
       qtyInput.addEventListener('input', (e) => {
@@ -99,17 +135,14 @@
   function goToStep(step) {
     currentStep = step;
 
-    // Update tab indicators
     document.querySelectorAll('.rfq-step-btn').forEach((btn) => {
       btn.classList.toggle('active', parseInt(btn.dataset.step, 10) === currentStep);
     });
 
-    // Show step container
     document.querySelectorAll('.rfq-step-pane').forEach((pane) => {
       pane.style.display = parseInt(pane.dataset.step, 10) === currentStep ? 'block' : 'none';
     });
 
-    // Update Prev / Next / Submit button visibility
     const prevBtn = document.getElementById('btn-rfq-prev');
     const nextBtn = document.getElementById('btn-rfq-next');
     const submitBtn = document.getElementById('btn-rfq-submit-wa');
@@ -129,18 +162,24 @@
     const instNameEl = document.getElementById('rfq-institution-name');
     const contactEl = document.getElementById('rfq-contact-name');
     const phoneEl = document.getElementById('rfq-contact-phone');
+    const emailEl = document.getElementById('rfq-contact-email');
     const cityEl = document.getElementById('rfq-contact-city');
     const targetDateEl = document.getElementById('rfq-target-date');
     const customEl = document.getElementById('rfq-customization-select');
+    const swatchEl = document.getElementById('rfq-swatch-needed');
+    const notesEl = document.getElementById('rfq-requirement-notes');
     const qtyEl = document.getElementById('rfq-total-qty');
 
     if (instTypeEl) rfqState.institutionType = instTypeEl.value;
     if (instNameEl) rfqState.institutionName = instNameEl.value.trim() || 'Premier Institution';
     if (contactEl) rfqState.contactPerson = contactEl.value.trim() || 'Procurement Incharge';
-    if (phoneEl) rfqState.phone = phoneEl.value.trim();
+    if (phoneEl) rfqState.phone = phoneEl.value.trim() || 'Provided on WhatsApp';
+    if (emailEl) rfqState.email = emailEl.value.trim();
     if (cityEl) rfqState.city = cityEl.value.trim() || 'Delhi NCR';
-    if (targetDateEl) rfqState.targetDate = targetDateEl.value || 'Within 30 Days';
+    if (targetDateEl) rfqState.targetDate = targetDateEl.value.trim() || 'Within 30 Days';
     if (customEl) rfqState.customization = customEl.value;
+    if (swatchEl) rfqState.swatchNeeded = swatchEl.value !== 'no';
+    if (notesEl) rfqState.requirementNotes = notesEl.value.trim();
     if (qtyEl) rfqState.totalQuantity = parseInt(qtyEl.value, 10) || 100;
   }
 
@@ -199,57 +238,73 @@
     collectFormFields();
     const qty = rfqState.totalQuantity || 100;
 
-    // Build Formatted WhatsApp Message
     const itemsSummary = selectedItems.length > 0
       ? selectedItems.map((i) => `${i.name} (${i.quantity || 50} pcs)`).join(', ')
       : `${qty} Uniform Sets across ${rfqState.institutionType} category`;
 
+    let savedRef = '';
+    try {
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source_channel: 'website',
+          institution_name: rfqState.institutionName,
+          institution_category: rfqState.institutionType,
+          category: rfqState.institutionType,
+          contact_person: rfqState.contactPerson,
+          phone: rfqState.phone,
+          email: rfqState.email,
+          city: rfqState.city,
+          total_quantity: qty,
+          target_date: rfqState.targetDate,
+          items: selectedItems.length > 0 ? selectedItems : [{ product_name: `${rfqState.institutionType} Standard Set`, quantity: qty }],
+          customization: rfqState.customization,
+          swatch_sample_needed: rfqState.swatchNeeded,
+          requirement_notes: rfqState.requirementNotes,
+          status: 'submitted_via_web_rfq'
+        })
+      });
+      if (res.ok) {
+        const resData = await res.json();
+        savedRef = resData.inquiry_id || '';
+      }
+    } catch (e) {
+      console.warn('RFQ backend save handled gracefully:', e);
+    }
+
     const waText = encodeURIComponent(
-      `*🏛️ NEW INSTITUTIONAL BULK RFQ — BEDI FASHION™*\n\n` +
-      `*Institution:* ${rfqState.institutionName} (${rfqState.institutionType})\n` +
-      `*Contact:* ${rfqState.contactPerson} (${rfqState.phone || 'Provided on chat'})\n` +
+      `*🏛️ NEW INSTITUTIONAL BULK RFQ — BEDI FASHION™*` +
+      (savedRef ? `\n*Ref ID:* ${savedRef}` : '') +
+      `\n\n*Institution:* ${rfqState.institutionName} (${rfqState.institutionType})\n` +
+      `*Contact:* ${rfqState.contactPerson} (${rfqState.phone})\n` +
+      (rfqState.email ? `*Email:* ${rfqState.email}\n` : '') +
       `*City/Region:* ${rfqState.city}\n` +
       `*Projected Quantity:* ${qty} Pieces\n` +
       `*Selected Items:* ${itemsSummary}\n` +
       `*Customization:* ${rfqState.customization}\n` +
+      `*Physical Swatch Kit:* ${rfqState.swatchNeeded ? 'Yes' : 'No'}\n` +
+      (rfqState.requirementNotes ? `*Specs/Notes:* ${rfqState.requirementNotes}\n` : '') +
       `*Required Delivery:* ${rfqState.targetDate}\n\n` +
-      `Please provide formal factory quotation & dispatch sample fabric cards.`
+      `Please share formal wholesale quotation.`
     );
 
     const waUrl = `https://wa.me/919211825699?text=${waText}`;
 
-    // Log Inquiry to Local API
-    try {
-      await fetch('/api/inquiries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          institution_name: rfqState.institutionName,
-          category: rfqState.institutionType,
-          contact_person: rfqState.contactPerson,
-          phone: rfqState.phone,
-          city: rfqState.city,
-          target_date: rfqState.targetDate,
-          items: selectedItems.length > 0 ? selectedItems : [{ product_name: `${rfqState.institutionType} Standard Set`, quantity: qty }],
-          customization: rfqState.customization,
-          status: 'Quote Generated via Web Wizard'
-        })
-      });
-    } catch (e) {
-      console.warn('Local inquiry logging handled gracefully:', e);
-    }
-
-    // Save to localStorage for client reference
     const savedInquiries = JSON.parse(localStorage.getItem('bedi_rfq_history') || '[]');
     savedInquiries.push({
+      ref: savedRef,
       timestamp: new Date().toISOString(),
       institution: rfqState.institutionName,
       qty: qty
     });
     localStorage.setItem('bedi_rfq_history', JSON.stringify(savedInquiries));
 
-    // Redirect to WhatsApp Direct
-    window.open(waUrl, '_blank');
+    if (window.BediApp && window.BediApp.showToast) {
+      window.BediApp.showToast(savedRef ? `RFQ ${savedRef} saved! Opening WhatsApp...` : 'RFQ saved! Opening WhatsApp...');
+    }
+
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
     closeRFQModal();
   }
 
@@ -261,18 +316,15 @@
     openRFQModal();
     goToStep(2);
 
-    // Show toast
     if (window.BediApp && window.BediApp.showToast) {
       window.BediApp.showToast(`Added "${productName}" to Bulk Estimator`);
     }
   }
 
-  // Escape key closes modal
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeRFQModal();
   });
 
-  // Public API
   window.BediRFQ = {
     init: initRFQWizard,
     open: openRFQModal,

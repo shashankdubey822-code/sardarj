@@ -447,8 +447,11 @@
       shop: {
         title: 'Bedi Creation — Noida Retail Shop',
         address: 'Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303',
-        coords: '📍 28.5533° N, 77.3372° E • Near PNB Sector 44 • Scroll & zoom',
-        query: 'Bedi Creation, Gali Number 3, Opposite Punjab National Bank, F Block, Sector 44, Noida, Uttar Pradesh 201303'
+        coords: '📍 28.5524° N, 77.3370° E (H82P+XR Noida) • Scroll & zoom',
+        query: 'Bedi Creation, F Block, Sector 44, Noida, Uttar Pradesh 201303',
+        embedUrl: 'https://maps.google.com/maps?q=Bedi+Creation,+Gali+Number+3,+Beside+RS+Beauty+Parlour,+F+Block,+Sector+44,+Noida,+Uttar+Pradesh+201303&ll=28.5524195,77.3370199&t=&z=17&ie=UTF8&iwloc=&output=embed',
+        pinUrl: 'https://www.google.com/maps/place/Bedi+Creation/@28.5524195,77.3370199,17z/data=!3m1!4b1!4m6!3m5!1s0x390ce5802828131b:0x681d773511aae8!8m2!3d28.5524195!4d77.3370199',
+        dirUrl: 'https://www.google.com/maps/dir/?api=1&destination=Bedi+Creation,+F+Block,+Sector+44,+Noida,+Uttar+Pradesh+201303'
       }
     };
 
@@ -457,9 +460,9 @@
       if (!loc) return;
 
       const encoded = encodeURIComponent(loc.query);
-      const embedUrl = `https://maps.google.com/maps?q=${encoded}&t=&z=17&ie=UTF8&iwloc=&output=embed`;
-      const pinUrl = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
-      const dirUrl = `https://www.google.com/maps/dir/?api=1&destination=${encoded}`;
+      const embedUrl = loc.embedUrl || `https://maps.google.com/maps?q=${encoded}&t=&z=17&ie=UTF8&iwloc=&output=embed`;
+      const pinUrl = loc.pinUrl || `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+      const dirUrl = loc.dirUrl || `https://www.google.com/maps/dir/?api=1&destination=${encoded}`;
 
       if (mapFrame.getAttribute('src') !== embedUrl) {
         mapFrame.setAttribute('src', embedUrl);

@@ -11,6 +11,7 @@ const PHONE_NUMBER_ID = Deno.env.get("PHONE_NUMBER_ID") || "1373460992523647";
 const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY") || "";
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") || "";
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+const RFQ_FORM_URL = Deno.env.get("RFQ_FORM_URL") || "https://sardarj.vercel.app/?open=rfq";
 
 const supabase = (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY)
   ? createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
@@ -351,7 +352,7 @@ BUSINESS PROFILE:
 - Email: info@bedifashion.in
 - Head Office: Plot No - 125, Sector-18, Faridabad, Haryana - 121002
 - Shop (Bedi Creation): Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303
-- Customize Uniforms: Tailored institutional uniforms with custom school crest embroidery, fabric colors & sizes (14–21 days delivery). Inspect live at https://sardarj.vercel.app/#studio.
+- Customize Uniforms / Institutional Orders: For institutional orders in school crest embroidery or bulk fabric, share this requirement form link: ${RFQ_FORM_URL} (live 3D studio preview: https://sardarj.vercel.app/#studio)
 - NEVER mention internal systems, databases, architecture, Supabase, APIs, or factories. Speak naturally as a showroom representative.
 
 OFFICIAL PRODUCT CATALOG (${products.length} items, rates incl. 5% GST):
@@ -360,8 +361,8 @@ ${inventoryLines.join("\n")}
 RULES:
 1. Be generous, gracious, warm, and grammatically spotless (2–4 concise WhatsApp lines).
 2. Always refer to customization as "Customize Uniforms" or "Customized Uniforms" (never "Custom Uniform").
-3. Quote exact live rates and availability from the Official Product Catalog above.
-4. Guide the user smoothly to tap Browse Products, Customize Uniforms, or Contact Direct below.`;
+3. For any question about school crest, embroidery, bulk fabric, institutional bulk order, or custom requirements, tell the user: "For institutional orders in school crest, embroidery or bulk fabric, please fill this requirement form: ${RFQ_FORM_URL}"
+4. Quote exact live rates and availability from the Official Product Catalog above and invite them to tap Browse Products, Customize Uniforms, or Contact Direct below.`;
 
     const inputPrompt = historyContext
       ? `Recent Conversation Context: ${historyContext}\n\nCustomer Message: ${userMessage}`
@@ -398,6 +399,9 @@ RULES:
 
   // Dynamic live catalog fallback without exposing internal words
   const m = userMessage.toLowerCase();
+  if (m.includes("crest") || m.includes("embroid") || m.includes("custom") || m.includes("rfq") || m.includes("form") || m.includes("bulk") || m.includes("fabric")) {
+    return `✨ *Customize Uniforms & Institutional Orders*\n\nFor institutional orders in *school crest embroidery* or *bulk fabric*, please fill out our requirement form:\n📝 ${RFQ_FORM_URL}\n\nOr call our desk at +91 9310825699 | +91 9811825699 | +91 9899114052.`;
+  }
   const stopWords = new Set(["want", "some", "need", "price", "rate", "cost", "buy", "from", "have", "what", "with", "this", "that", "size", "uniform", "uniforms", "school"]);
   const words = m.replace(/[^a-z0-9.\s-]/g, " ").split(/\s+/).filter((w) => w.length >= 2 && !stopWords.has(w) && !/^(is|am|are|the|for|can|you|get|all|any|do|me|my)$/.test(w));
   const matched = words.length > 0
@@ -646,7 +650,7 @@ async function handleIncomingMessage(msg: any) {
     } else if (userAction === "btn_customize") {
       await sendWhatsAppList(
         from,
-        "We tailor *Customized Uniforms* with school crest embroidery, custom fabric colors, and full size sets. Choose your sector below to view customization options:",
+        `✨ *Customize Uniforms & Institutional Orders*\n\nFor institutional orders in *school crest embroidery* or *bulk fabric*, please fill out this requirement form:\n📝 ${RFQ_FORM_URL}\n\nYou can also select a sector below for tailored uniform details:`,
         "Customize Sector",
         [
           {
@@ -667,7 +671,7 @@ async function handleIncomingMessage(msg: any) {
       const cust = CUSTOMIZATION_OPTIONS[userAction];
       await sendWhatsAppButtons(
         from,
-        cust.details,
+        `${cust.details}\n\n📝 *Requirement Form (Crest / Bulk Fabric):*\n${RFQ_FORM_URL}`,
         [
           { id: "btn_catalog", title: "🛍️ View Products" },
           { id: "btn_contact", title: "📞 Contact Direct" }

@@ -112,7 +112,8 @@ assert(fs.existsSync(path.join(BASE_DIR, 'images/bedi_logo_3d.jpg')), `images/be
 assert(indexContent.includes('bedi_emblem_3d.jpg'), `index.html uses the high-contrast 3D emblem in navbar`);
 assert(fs.existsSync(path.join(BASE_DIR, 'images/bedi_emblem_3d.jpg')), `images/bedi_emblem_3d.jpg exists`);
 assert(indexContent.includes('js/heritage.js'), `index.html includes automatic 1987 heritage year calculation script`);
-assert(indexContent.includes('tab-map-headoffice') && indexContent.includes('tab-map-shop'), `index.html contains Head Office and Shop interactive Google Map tabs`);
+const appJsContent = fs.readFileSync(path.join(BASE_DIR, 'js', 'app.js'), 'utf-8');
+assert(appJsContent.includes('28.5524195') && appJsContent.includes('77.3370199'), `app.js pins exact Bedi Creation Noida shop coordinates (28.5524195, 77.3370199)`);
 assert(indexContent.includes('location-google-map') && indexContent.includes('map-go-link'), `index.html embeds scrollable Google Map and Go navigation button`);
 assert(fs.existsSync(path.join(BASE_DIR, 'js/heritage.js')), `js/heritage.js exists`);
 assert(indexContent.includes('+91 9310825699'), `index.html contains contact phone +91 9310825699`);
@@ -124,6 +125,7 @@ assert(indexContent.includes('webgl-canvas-container'), `index.html contains web
 assert(indexContent.includes('bedibot-window'), `index.html contains bedibot-window`);
 assert(indexContent.includes('size-guide-modal-overlay'), `index.html contains size-guide-modal-overlay`);
 assert(indexContent.includes('rfq-modal-overlay'), `index.html contains rfq-modal-overlay`);
+assert(indexContent.includes('rfq-swatch-needed') && indexContent.includes('rfq-contact-email') && indexContent.includes('rfq-requirement-notes'), `index.html contains full Institutional RFQ form fields`);
 assert(indexContent.includes('cinematic-intro-curtain'), `index.html contains cinematic-intro-curtain`);
 assert(indexContent.includes('faq-section'), `index.html contains faq-section accordion`);
 assert(indexContent.includes('data-archetype="school"'), `index.html contains School tab`);

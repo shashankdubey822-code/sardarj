@@ -1116,16 +1116,32 @@
               <option value="Customized School Crest Bullion Machine Embroidery">School Crest Bullion Machine Embroidery</option>
               <option value="Silkscreen Corporate House Logo Print">Silkscreen Corporate House Logo Print</option>
               <option value="3M Certified High-Visibility Reflective Tape Application">3M Certified Reflective Tape Application</option>
+              <option value="Custom Fabric Dyeing & Swatches">Custom Fabric Dyeing &amp; Bulk Fabric Supply</option>
               <option value="Standard Plain Uniforms (Ready Stock)">Standard Plain Uniforms (Ready Stock)</option>
             </select>
           </div>
           <div class="rfq-form-group">
+            <label>Physical Fabric Swatch Kit &amp; Sizing Set Needed?</label>
+            <select id="rfq-swatch-needed">
+              <option value="yes">Yes — Dispatch complimentary fabric swatches &amp; fitting set</option>
+              <option value="no">No — Only formal quotation required right now</option>
+            </select>
+          </div>
+          <div class="rfq-form-group">
+            <label>Crest / Embroidery / Fabric GSM Notes (Optional)</label>
+            <textarea id="rfq-requirement-notes" rows="2" placeholder="e.g. Gold bullion crest on blazer chest, 240 GSM navy twill, sizes 26–40" style="width:100%; padding:10px 12px; border:1px solid var(--border-hairline); border-radius:8px; font-family:inherit; font-size:13px;"></textarea>
+          </div>
+          <div class="rfq-form-group">
             <label>Target Delivery Deadline</label>
-            <input type="text" id="rfq-target-date" placeholder="e.g. Before 15th April 2026 session" />
+            <input type="text" id="rfq-target-date" placeholder="e.g. Before 15th April 2027 session" />
           </div>
           <div class="rfq-form-group">
             <label>Phone / WhatsApp Number</label>
-            <input type="tel" id="rfq-contact-phone" placeholder="e.g. +91 98101XXXXX" />
+            <input type="tel" id="rfq-contact-phone" placeholder="e.g. +91 9310825699" />
+          </div>
+          <div class="rfq-form-group">
+            <label>Official Email Address (for Formal Quotation)</label>
+            <input type="email" id="rfq-contact-email" placeholder="e.g. principal@school.edu.in" />
           </div>
         </div>
 
@@ -1136,9 +1152,12 @@
             <p id="rfq-tier-discount" style="font-weight:700; margin-bottom:6px;">12% - 18% Institutional Volume Discount</p>
             <p id="rfq-tier-perks">Perks: Complimentary institutional chest crest setup + free physical fabric swatch pack.</p>
           </div>
-          <p style="font-size:13px; color:var(--text-body); line-height:1.55; margin-bottom:16px;">
-            Clicking below will format your complete institutional specifications and open direct WhatsApp communication with Proprietor Mr. Guru Charan Singh Bedi (+91 9211825699).
+          <p style="font-size:13px; color:var(--text-body); line-height:1.55; margin-bottom:14px;">
+            Clicking submit saves your institutional specifications directly to our database and opens WhatsApp communication with Proprietor Mr. Guru Charan Singh Bedi (+91 9211825699).
           </p>
+          <div id="rfq-google-form-bar" style="display:none; background:#FAF7F2; border:1px solid var(--border-hairline); border-radius:8px; padding:10px 14px; font-size:12.5px; margin-bottom:8px;">
+            Prefer our linked Google Form? <a id="rfq-google-form-link" href="#" target="_blank" rel="noopener noreferrer" style="color:var(--accent-saffron); font-weight:700; text-decoration:underline;">Open Google Form Version ↗</a>
+          </div>
         </div>
 
         <!-- Navigation Buttons -->

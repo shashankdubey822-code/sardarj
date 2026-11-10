@@ -205,9 +205,9 @@ a {
   border-radius: 12px;
   object-fit: cover;
   flex-shrink: 0;
-  background: #FAF6EE;
-  border: 1.5px solid rgba(212, 175, 55, 0.55);
-  box-shadow: 0 6px 16px rgba(28, 25, 23, 0.14);
+  background: #FFFFFF;
+  border: 1.5px solid rgba(28, 25, 23, 0.14);
+  box-shadow: 0 4px 14px rgba(28, 25, 23, 0.10);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 

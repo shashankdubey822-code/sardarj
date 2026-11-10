@@ -99,7 +99,12 @@ How may I assist your institution today? Ask about our **56+ products, live pric
           if (targetEl) {
             e.preventDefault();
             targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
           }
+        }
+        if (/open=rfq/i.test(href) && window.BediRFQ && typeof window.BediRFQ.open === 'function') {
+          e.preventDefault();
+          window.BediRFQ.open();
         }
       });
     }

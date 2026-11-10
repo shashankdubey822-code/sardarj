@@ -12,6 +12,7 @@ const SUPABASE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92ZHZ5Y3VtcXNqZ3Zsc2lja2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NTY3NjMsImV4cCI6MjEwOTUzMjc2M30.5p8Mjo8WViCHWYeZ7i9qsJZ1ZVw9FaegYBtySvolnfs";
 
 const FOUNDING_YEAR = 1987;
+const RFQ_FORM_URL = process.env.RFQ_FORM_URL || "https://sardarj.vercel.app/?open=rfq";
 const CATALOG_CACHE_TTL_MS = 60 * 1000;
 let catalogCache = { products: [], fetchedAt: 0 };
 
@@ -33,9 +34,10 @@ LOCATIONS:
 - Head Office: Plot No - 125, Sector-18, Faridabad, Haryana - 121002
 - Shop (Bedi Creation): Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303
 
-CUSTOMIZE UNIFORMS & SERVICES:
+CUSTOMIZE UNIFORMS, BULK FABRIC & RFQ (Request for Quotation):
 - Ready-stock supply & Customized Institutional Uniforms (Schools, Corporate, Hospitals, Security, Hospitality, Sports)
-- Customers can interactively customize fabrics, collars, house stripes, bullion school crest embroidery, and custom sizing in the [3D Uniform Studio](https://sardarj.vercel.app/#studio).
+- Customers can interactively design uniforms in [3D Uniform Studio](https://sardarj.vercel.app/#studio) or submit a formal bulk quote via [Fill Institutional Requirement Form](${RFQ_FORM_URL}).
+- For institutional orders in school crest embroidery or bulk fabric swatches: direct the visitor cleanly to [Fill Institutional Requirement Form](${RFQ_FORM_URL}).
 - Ready stock dispatch: 3–7 working days; Customized institutional orders: 14–21 working days with complimentary swatch kits and on-site sizing drives.
 `;
 }
@@ -261,8 +263,8 @@ function buildLiveCatalogFallbackReply(message, products, lang) {
       : `Welcome to **Bedi Fashion™** (Established **${FOUNDING_YEAR}** • **${heritageYears}+ Years** • Proprietor: **Mr. Guru Charan Singh Bedi**).\n\n• **Head Office:** Plot No - 125, Sector-18, Faridabad, Haryana - 121002\n• **Shop (Bedi Creation):** Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303\n• **Contact Mobile:** +91 9310825699 | +91 9811825699 | +91 9899114052\n• **WhatsApp Desk:** +91 9211825699\n• **Email:** info@bedifashion.in`;
   }
 
-  if (m.includes("customiz") || m.includes("custom") || m.includes("embroider") || m.includes("tailor") || m.includes("logo")) {
-    return `We would be delighted to tailor **Customized Uniforms** to your institution's exact specifications!\n\n• **What You Can Customize:** School crest bullion embroidery, custom house stripes/Pantone dye colors, bespoke collar cuts, and sizes 20 to 54.\n• **MOQ & Turnaround:** 25 pcs for stocked customization; 100 pcs for bespoke fabric runs (14–21 days), with complimentary fabric swatch kits.\n• **Try Online Now:** Design interactively in our [3D Uniform Studio](https://sardarj.vercel.app/#studio).\n\nCall or WhatsApp **+91 9310825699**, **+91 9811825699**, **+91 9899114052** *(WhatsApp: +91 9211825699)*.`;
+  if (m.includes("rfq") || m.includes("customiz") || m.includes("custom") || m.includes("embroider") || m.includes("tailor") || m.includes("logo") || m.includes("crest") || m.includes("fabric") || m.includes("form")) {
+    return `We would be delighted to tailor **Customized Uniforms** to your institution's exact specifications!\n\n• **Institutional Order Requirement Form (RFQ):** For institutional orders in school crest embroidery or bulk fabric swatches, please complete our requirement form: [Fill Institutional Requirement Form](${RFQ_FORM_URL})\n• **What You Can Customize:** School crest bullion embroidery, custom house stripes/Pantone dye colors, bespoke collar cuts, and sizes 20 to 54.\n• **MOQ & Turnaround:** 25 pcs for stocked customization; 100 pcs for bespoke fabric runs (14–21 days), with complimentary fabric swatch kits.\n• **Interactive Preview:** Inspect garments in our [3D Uniform Studio](https://sardarj.vercel.app/#studio).\n\nCall or WhatsApp **+91 9310825699**, **+91 9811825699**, **+91 9899114052** *(WhatsApp: +91 9211825699)*.`;
   }
 
   const stopWords = new Set(["want", "some", "need", "price", "rate", "rates", "cost", "buy", "from", "have", "what", "with", "this", "that", "size", "sizes", "uniform", "uniforms", "school", "show", "tell", "give", "much", "available", "stock"]);
