@@ -193,3 +193,27 @@ function onBediRfqFormSubmit(e) {
     Logger.log("RFQ Sync Error: " + err);
   }
 }
+
+// Redirects any browser visiting the Web App URL directly to the live Google Form
+function doGet(e) {
+  try {
+    const files = DriveApp.getFilesByName("Bedi Fashion™ — Institutional Bulk Order & Customization RFQ");
+    if (files.hasNext()) {
+      const file = files.next();
+      const form = FormApp.openById(file.getId());
+      const formUrl = form.getPublishedUrl();
+      return HtmlService.createHtmlOutput(
+        '<!DOCTYPE html><html><head>' +
+        '<meta http-equiv="refresh" content="0; url=' + formUrl + '">' +
+        '<script>window.location.replace("' + formUrl + '");</script>' +
+        '</head><body style="font-family:sans-serif; text-align:center; padding:40px; color:#1C1917;">' +
+        '<h2>Redirecting to Bedi Fashion™ Institutional RFQ...</h2>' +
+        '<p><a href="' + formUrl + '" style="color:#DA251C; font-weight:bold; font-size:1.1rem;">Click here to open form</a></p>' +
+        '</body></html>'
+      );
+    }
+  } catch (err) {
+    return HtmlService.createHtmlOutput("<p>Error redirecting to form: " + err + "</p>");
+  }
+  return HtmlService.createHtmlOutput("<p>Bedi Fashion™ RFQ Form ready. Open via forms.google.com</p>");
+}
