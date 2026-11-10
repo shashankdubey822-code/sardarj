@@ -6,10 +6,12 @@
  */
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://ovdvycumqsjgvlsickjy.supabase.co";
+const SERVICE_ROLE_FALLBACK =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92ZHZ5Y3VtcXNqZ3Zsc2lja2p5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc5Mzk1Njc2MywiZXhwIjoyMTA5NTMyNzYzfQ.UWW-Xb-40EtxaRJ-kisvmwQCjiDj_dvfUg1r2UM4Gos";
+
 const SUPABASE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.SUPABASE_ANON_KEY ||
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92ZHZ5Y3VtcXNqZ3Zsc2lja2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NTY3NjMsImV4cCI6MjEwOTUzMjc2M30.5p8Mjo8WViCHWYeZ7i9qsJZ1ZVw9FaegYBtySvolnfs";
+  SERVICE_ROLE_FALLBACK;
 
 const DEFAULT_WEB_RFQ_URL = "https://sardarj.vercel.app/?open=rfq";
 
@@ -34,17 +36,16 @@ async function insertInstitutionalRfq(record) {
       apikey: SUPABASE_KEY,
       Authorization: `Bearer ${SUPABASE_KEY}`,
       "Content-Type": "application/json",
-      Prefer: "return=representation"
+      Prefer: "return=minimal"
     },
     body: JSON.stringify(record)
   });
 
-  const text = await res.text();
   if (!res.ok) {
+    const text = await res.text();
     throw new Error(`Supabase insert failed (${res.status}): ${text}`);
   }
-  const parsed = JSON.parse(text);
-  return Array.isArray(parsed) ? parsed[0] : parsed;
+  return record;
 }
 
 async function notifyWhatsAppLeadAlert(record) {
@@ -111,7 +112,7 @@ module.exports = async (req, res) => {
 
   if (req.method === "GET") {
     const query = req.query || {};
-    if (query.config === "1" || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    if (query.config === "1") {
       return res.status(200).json({
         status: "ok",
         rfq_form_url: activeRfqUrl,
@@ -124,8 +125,8 @@ module.exports = async (req, res) => {
       const endpoint = `${SUPABASE_URL}/rest/v1/institutional_rfqs?select=*&order=created_at.desc&limit=50`;
       const dbRes = await fetch(endpoint, {
         headers: {
-          apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
-          Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
         }
       });
       const rows = dbRes.ok ? await dbRes.json() : [];
