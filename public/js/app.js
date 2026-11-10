@@ -8,19 +8,25 @@
 
   let currentLang = 'en';
 
+  const _h = (typeof window !== 'undefined' && window.BEDI_HERITAGE) || {
+    foundingYear: 1987,
+    years: Math.max(1, new Date().getFullYear() - 1987),
+    yearsWords: String(Math.max(1, new Date().getFullYear() - 1987))
+  };
+
   const translations = {
     en: {
-      nav_portals: 'The Portals',
+      nav_portals: 'Portals',
       nav_studio: '3D Studio',
-      nav_catalog: '56-Product Catalog',
-      nav_materials: 'Materials Lab',
-      nav_sizing: 'Universal Size Matrix',
-      nav_rfq: 'Bulk RFQ Estimator',
-      nav_faq: 'Institutional FAQ',
-      nav_contact: 'Locations & Contact',
+      nav_catalog: '56+ Catalog',
+      nav_materials: 'Materials',
+      nav_sizing: 'Size Matrix',
+      nav_rfq: 'Bulk RFQ',
+      nav_faq: 'FAQ',
+      nav_contact: 'Locations',
       btn_call: '📞 +91 9310825699',
-      btn_wa: 'Direct WhatsApp Inquiry',
-      hero_badge: 'Thirty-Nine Years of Excellence & Trust (Est. 1987)',
+      btn_wa: 'Direct WhatsApp',
+      hero_badge: `${_h.yearsWords} Years of Excellence & Trust (Est. ${_h.foundingYear})`,
       hero_title_1: 'Sartorial Precision.',
       hero_title_2: 'Built For Institutions.',
       hero_lead: 'Supplying premier schools, multi-specialty healthcare networks, and corporate enterprises across Delhi NCR with over 50,000+ precision-stitched garments annually.',
@@ -33,17 +39,17 @@
       metric_washes: 'Commercial Wash Durability'
     },
     hi: {
-      nav_portals: 'दो द्वार (Portals)',
+      nav_portals: 'दो द्वार',
       nav_studio: '3D स्टूडियो',
-      nav_catalog: '56 उत्पाद सूची',
-      nav_materials: 'कपड़ा व तकनीक',
+      nav_catalog: '56+ उत्पाद',
+      nav_materials: 'फैब्रिक लैब',
       nav_sizing: 'साइज चार्ट',
-      nav_rfq: 'थोक कोटेशन (RFQ)',
-      nav_faq: 'अक्सर पूछे जाने वाले प्रश्न',
-      nav_contact: 'कार्यालय व दुकान पता',
+      nav_rfq: 'थोक RFQ',
+      nav_faq: 'प्रश्न',
+      nav_contact: 'पता व संपर्क',
       btn_call: '📞 +91 9310825699',
-      btn_wa: 'सीधे व्हाट्सएप संपर्क',
-      hero_badge: '39 वर्षों का अटूट विश्वास (स्थापना 1987)',
+      btn_wa: 'व्हाट्सएप संपर्क',
+      hero_badge: `${_h.years} वर्षों का अटूट विश्वास (स्थापना ${_h.foundingYear})`,
       hero_title_1: 'संस्थागत प्रतिष्ठा।',
       hero_title_2: 'विश्वसनीय विनिर्माण।',
       hero_lead: 'फरीदाबाद से संचालित, हम दिल्ली-एनसीआर के 500+ शीर्ष स्कूलों, मल्टी-स्पेशियलिटी अस्पतालों और औद्योगिक संयंत्रों को प्रतिवर्ष 50,000+ उच्च-गुणवत्ता वाली वर्दियां प्रदान करते हैं।',
@@ -109,11 +115,14 @@
     const counters = document.querySelectorAll('.counter-val');
     if (!counters.length) return;
 
+    const liveYears = _h.years;
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const el = entry.target;
-          const target = parseInt(el.getAttribute('data-target'), 10);
+          const target = el.hasAttribute('data-heritage-counter')
+            ? liveYears
+            : parseInt(el.getAttribute('data-target'), 10);
           const suffix = el.getAttribute('data-suffix') || '';
           animateCounter(el, 0, target, 1800, suffix);
           obs.unobserve(el);

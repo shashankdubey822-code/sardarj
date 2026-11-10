@@ -36,9 +36,11 @@ const MIME_TYPES = {
   '.wasm': 'application/wasm'
 };
 
+const HERITAGE_YEARS = Math.max(1, new Date().getFullYear() - 1987);
+
 const BEDIBOT_SYSTEM_PROMPT = `You are "BediBot", the senior technical sales consultant at Bedi Fashion™ (Faridabad & Noida, Delhi NCR, India).
 
-Founded in 1987 by Proprietor Mr. Guru Charan Singh Bedi, Bedi Fashion is North India's trusted institutional uniform outfitter with 39+ years of operational trust.
+Founded in 1987 by Proprietor Mr. Guru Charan Singh Bedi, Bedi Fashion is North India's trusted institutional uniform outfitter with ${HERITAGE_YEARS}+ years of operational trust.
 
 BUSINESS COORDINATES:
 - Head Office: Plot No - 125, Sec-18, Faridabad, Haryana - 121002
@@ -245,9 +247,9 @@ function generateSmartLocalReply(msg) {
   }
 
   if (isHindi) {
-    return `बेदी फैशन™ (स्थापना 1987, प्रोप्राइटर: श्री गुरु चरण सिंह बेदी) 39+ वर्षों से प्रीमियम संस्थागत वर्दी प्रदाता है। क्या आप अपनी संस्था के लिए श्री बेदी जी से सीधे व्हाट्सएप (+91 9211825699) पर बात करना और फैब्रिक सैंपल प्राप्त करना चाहेंगे?`;
+    return `बेदी फैशन™ (स्थापना 1987, प्रोप्राइटर: श्री गुरु चरण सिंह बेदी) ${HERITAGE_YEARS}+ वर्षों से प्रीमियम संस्थागत वर्दी प्रदाता है। क्या आप अपनी संस्था के लिए श्री बेदी जी से सीधे व्हाट्सएप (+91 9211825699) पर बात करना और फैब्रिक सैंपल प्राप्त करना चाहेंगे?`;
   }
-  return `Bedi Fashion™ (Founded 1987, Proprietor: Mr. Guru Charan Singh Bedi) has 39+ years of institutional uniform heritage. Would you like to connect directly with Mr. Guru Charan Singh Bedi on WhatsApp (+91 9211825699) to discuss your institutional requirements and receive physical fabric swatches?`;
+  return `Bedi Fashion™ (Founded 1987, Proprietor: Mr. Guru Charan Singh Bedi) has ${HERITAGE_YEARS}+ years of institutional uniform heritage. Would you like to connect directly with Mr. Guru Charan Singh Bedi on WhatsApp (+91 9211825699) to discuss your institutional requirements and receive physical fabric swatches?`;
 }
 
 function handleInquiriesPost(req, res) {

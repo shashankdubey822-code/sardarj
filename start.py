@@ -34,9 +34,11 @@ processes = []
 
 
 def banner():
-    print("""
+    from datetime import datetime
+    heritage_years = max(1, datetime.now().year - 1987)
+    print(f"""
 ================================================================================
-  🧵 BEDI FASHION™ — UNIFIED FULL-STACK PRODUCTION PLATFORM (EST. 1987)
+  🧵 BEDI FASHION™ — UNIFIED FULL-STACK PRODUCTION PLATFORM (EST. 1987 • {heritage_years}+ YRS)
   Integrated Frontend • FastAPI Backend • Supabase • 24x7 WhatsApp Bot
 ================================================================================
 """)

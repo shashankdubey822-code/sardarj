@@ -53,6 +53,7 @@
 
   <!-- Milanese Luxury Maison Stylesheet -->
   <link rel="stylesheet" href="css/milanese-maison.css" />
+  <script src="js/heritage.js"></script>
   
   <!-- Schema.org FAQPage JSON-LD -->
   <script type="application/ld+json">
@@ -110,7 +111,7 @@
     <div class="curtain-content">
       <div class="needle-stitch-wrapper">
         <img src="/images/bedi_logo_3d.jpg" alt="Bedi Fashion™ 3D Crest" style="width:92px; height:92px; border-radius:16px; object-fit:cover; box-shadow:0 10px 30px rgba(0,0,0,0.45); border:2px solid rgba(252,211,77,0.45);" />
-        <div class="stitch-badge">39 YEARS</div>
+        <div class="stitch-badge" data-heritage="years-badge">39 YEARS</div>
       </div>
       <h2 class="curtain-brand-title font-serif">Bedi Fashion™</h2>
       <p class="curtain-slogan">Crafting Institutional Pride Across North India Since 1987</p>
@@ -131,23 +132,23 @@
   <header class="site-header" id="site-header">
     <div class="nav-container">
       <a href="#hero" class="brand-block">
-        <img src="/images/bedi_logo_3d.jpg" alt="Bedi Fashion™ 3D Emblem" class="brand-logo-3d" style="width:50px; height:50px; border-radius:10px; object-fit:cover; box-shadow:0 4px 12px rgba(28,25,23,0.12); border:1px solid rgba(212,175,55,0.3);" />
+        <img src="/images/bedi_emblem_3d.jpg" alt="Bedi Fashion™ 3D Emblem" class="brand-logo-3d" />
         <div class="brand-text">
-          <span class="brand-title">Bedi Fashion<span style="color:var(--accent-saffron); font-size:18px;">™</span></span>
-          <span class="brand-subtitle">Faridabad & Noida • Est. 1987</span>
+          <span class="brand-title">Bedi Fashion<span style="color:var(--accent-saffron); font-size:17px;">™</span></span>
+          <span class="brand-subtitle">Faridabad &amp; Noida • Est. 1987</span>
         </div>
       </a>
 
       <!-- Desktop Navigation Menu -->
       <ul class="nav-links" id="site-nav-links">
-        <li><a href="#portals" class="nav-link" data-i18n="nav_portals">The Portals</a></li>
+        <li><a href="#portals" class="nav-link" data-i18n="nav_portals">Portals</a></li>
         <li><a href="#studio" class="nav-link" data-i18n="nav_studio">3D Studio</a></li>
-        <li><a href="#catalog" class="nav-link" data-i18n="nav_catalog">56-Product Catalog</a></li>
-        <li><a href="#materials" class="nav-link" data-i18n="nav_materials">Materials Lab</a></li>
-        <li><a href="#comparison" class="nav-link">Quality Audit</a></li>
-        <li><a href="#trust" class="nav-link">Trust Wall</a></li>
-        <li><a href="#faq" class="nav-link" data-i18n="nav_faq">Institutional FAQ</a></li>
-        <li><a href="#contact" class="nav-link" data-i18n="nav_contact">Locations & Contact</a></li>
+        <li><a href="#catalog" class="nav-link" data-i18n="nav_catalog">56+ Catalog</a></li>
+        <li><a href="#materials" class="nav-link" data-i18n="nav_materials">Materials</a></li>
+        <li><a href="#comparison" class="nav-link">Quality</a></li>
+        <li><a href="#trust" class="nav-link">Trust</a></li>
+        <li><a href="#faq" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+        <li><a href="#contact" class="nav-link" data-i18n="nav_contact">Locations</a></li>
       </ul>
 
       <!-- Action Buttons & Bilingual Toggle -->
@@ -172,7 +173,7 @@
       <div class="container">
         <div class="hero-grid">
           <div class="hero-left">
-            <span class="hero-meta" data-i18n="hero_badge">Thirty-Nine Years of Excellence & Trust (Est. 1987)</span>
+            <span class="hero-meta" data-i18n="hero_badge" data-heritage="years-hero-badge">Thirty-Nine Years of Excellence & Trust (Est. 1987)</span>
             <h1 class="hero-title">
               <span data-i18n="hero_title_1">Sartorial Precision.</span><br />
               <em data-i18n="hero_title_2">Built For Institutions.</em>
@@ -195,7 +196,7 @@
             <!-- Live Milestone Counters -->
             <div class="hero-metrics">
               <div class="metric-item">
-                <strong class="counter-val" data-target="39" data-suffix="+">39+</strong>
+                <strong class="counter-val" data-target="39" data-suffix="+" data-heritage-counter="1987">39+</strong>
                 <span data-i18n="metric_years">Years Operating Heritage</span>
               </div>
               <div class="metric-item">
@@ -576,7 +577,7 @@
       <div class="container">
         <div class="section-head">
           <span class="section-eyebrow">Real Institutional Contrast</span>
-          <h2 class="section-title">Cheap Market Uniforms vs. Bedi Fashion 39-Year Standard</h2>
+          <h2 class="section-title" data-heritage="years-compare-title">Cheap Market Uniforms vs. Bedi Fashion 39-Year Standard</h2>
           <p class="section-subtitle">
             Drag the slider horizontally to inspect why leading institutions trust Bedi Fashion™ (Est. 1987) over local traders.
           </p>
@@ -586,7 +587,7 @@
           <div class="comparison-wrapper" id="comparison-wrapper">
             <!-- After Layer (Bedi Fashion Standard) -->
             <div class="comparison-image compare-after">
-              <span class="compare-badge">Bedi Fashion Standard (39+ Years)</span>
+              <span class="compare-badge" data-heritage="years-compare-badge">Bedi Fashion Standard (39+ Years)</span>
               <h3 class="compare-title font-serif">Engineered Sartorial Integrity</h3>
               <ul class="compare-points">
                 <li>✨ Razor-sharp permanent fused collar roll</li>
@@ -634,14 +635,14 @@
           <div class="testimonial-card">
             <div>
               <div class="quote-icon">“</div>
-              <p class="testimonial-quote">
+              <p class="testimonial-quote" data-heritage="years-testimonial">
                 We have partnered with Bedi Fashion, Faridabad for over 39 years. For our school of 2,400 students, their punctuality in delivering seasonal batches before the April session, combined with colorfast fabrics that last the entire academic year, makes them indispensable.
               </p>
             </div>
             <div class="testimonial-author">
               <strong>Chairman & Board of Trustees</strong>
               <span>Premier Senior Secondary School, Faridabad</span>
-              <span class="partner-tenure">Partner Since 1987 (39+ Years)</span>
+              <span class="partner-tenure" data-heritage="partner-since">Partner Since 1987 (39+ Years)</span>
             </div>
           </div>
 
@@ -882,7 +883,7 @@
       </div>
 
       <div class="footer-bottom">
-        <div>
+        <div data-heritage="footer-copyright">
           © 1987 – 2026 Bedi Fashion™. All Rights Reserved. Faridabad & Noida, Delhi NCR, India.
         </div>
         <div style="font-size:12px; color:#78716C;">
@@ -1088,7 +1089,7 @@
 
   <!-- Floating Gemini BediBot AI Concierge Widget -->
   <div class="bedibot-launcher" id="bedibot-launcher">
-    <div class="bedibot-bubble-prompt" id="bedibot-bubble-prompt">
+    <div class="bedibot-bubble-prompt" id="bedibot-bubble-prompt" data-heritage="yr-concierge">
       Ask BediBot AI • 39-Yr Concierge
     </div>
     <button class="bedibot-toggle-btn" id="btn-toggle-bedibot" aria-label="Open BediBot AI Concierge">

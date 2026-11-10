@@ -12,9 +12,15 @@
   let userLang = 'en';
   let previousInteractionId = null;
 
+  const _heritage = (typeof window !== 'undefined' && window.BEDI_HERITAGE) || {
+    foundingYear: 1987,
+    years: Math.max(1, new Date().getFullYear() - 1987)
+  };
+  const HERITAGE_YEARS = _heritage.years;
+
   const KNOWLEDGE_BASE = {
     founder: 'Mr. Guru Charan Singh Bedi',
-    heritage: '39+ years of institutional uniform heritage (Est. 1987)',
+    heritage: `${HERITAGE_YEARS}+ years of institutional uniform heritage (Est. 1987)`,
     head_office: 'Plot No - 125, Sector-18, Faridabad, Haryana - 121002',
     shop_address: 'Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303',
     phones: ['+91 9310825699', '+91 9811825699', '+91 9899114052'],
@@ -25,17 +31,17 @@
     lead_time: '3 to 7 working days for ready stock; 14 to 21 days for customized institutional contracts'
   };
 
-  const initialGreetingEn = `Namaste! I am **BediBot**, senior concierge at Bedi Fashion™ (Proprietor: Mr. Guru Charan Singh Bedi). 
+  const initialGreetingEn = `Namaste! I am **BediBot**, client advisor at Bedi Fashion™ (Proprietor: Mr. Guru Charan Singh Bedi). 
 
-With **39+ years of heritage (est. 1987)**, we supply schools, multi-specialty hospitals, corporate enterprises, and institutions across Delhi NCR and India.
+With **${HERITAGE_YEARS}+ years of heritage (est. 1987)**, we supply schools, hospitals, corporate teams, and institutions across Delhi NCR and India.
 
-How may I assist your institution today? You can ask about our **56+ products, fabric GSM, MOQ, sizing drives, or physical sample swatch delivery**.`;
+How may I assist your institution today? Ask about our **56+ products, live prices, Customize Uniforms, fabric GSM, MOQ, or sample swatches**.`;
 
   const initialGreetingHi = `नमस्ते! मैं **बेदीबॉट (BediBot)** हूँ, बेदी फैशन™ (प्रोप्राइटर: श्री गुरु चरण सिंह बेदी) का सलाहकार।
 
-**39+ वर्षों के अनुभव (स्थापना 1987)** के साथ, हम दिल्ली एनसीआर और पूरे भारत में स्कूलों, अस्पतालों, कॉर्पोरेट्स और संस्थानों को सर्वोत्तम यूनिफार्म प्रदान करते हैं।
+**${HERITAGE_YEARS}+ वर्षों के अनुभव (स्थापना 1987)** के साथ, हम दिल्ली एनसीआर और पूरे भारत में स्कूलों, अस्पतालों, कॉर्पोरेट्स और संस्थानों को सर्वोत्तम यूनिफार्म प्रदान करते हैं।
 
-मैं आपकी क्या सहायता कर सकता हूँ? आप हमारे **उत्पादों, फैब्रिक GSM, न्यूनतम ऑर्डर (MOQ), या सैंपल स्वाच** के बारे में पूछ सकते हैं।`;
+मैं आपकी क्या सहायता कर सकता हूँ? आप हमारे **उत्पादों, लाइव रेट्स, कस्टम यूनिफॉर्म, फैब्रिक GSM या सैंपल स्वाच** के बारे में पूछ सकते हैं।`;
 
   function initBediBot() {
     setupChatElements();
@@ -80,6 +86,23 @@ How may I assist your institution today? You can ask about our **56+ products, f
         handleUserSend();
       });
     });
+
+    const msgContainer = document.getElementById('bedibot-messages');
+    if (msgContainer) {
+      msgContainer.addEventListener('click', (e) => {
+        const anchor = e.target.closest('a');
+        if (!anchor) return;
+        const href = anchor.getAttribute('href') || '';
+        const hashMatch = href.match(/^(?:https?:\/\/sardarj\.vercel\.app\/?)?(#.+)$/);
+        if (hashMatch) {
+          const targetEl = document.querySelector(hashMatch[1]);
+          if (targetEl) {
+            e.preventDefault();
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    }
   }
 
   function toggleChatWindow(forceState) {
@@ -157,7 +180,7 @@ How may I assist your institution today? You can ask about our **56+ products, f
     div.className = 'chat-bubble bot';
     div.style.color = '#78716C';
     div.style.fontStyle = 'italic';
-    div.innerHTML = 'BediBot is evaluating fabric specifications...';
+    div.innerHTML = 'BediBot is checking live rates...';
     container.appendChild(div);
     container.scrollTop = container.scrollHeight;
     return id;
@@ -169,6 +192,26 @@ How may I assist your institution today? You can ask about our **56+ products, f
     if (el) el.remove();
   }
 
+  function formatInlineMarkdown(str) {
+    // Handle Markdown links [Label](url) before bare URLs
+    let out = str.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|#[a-zA-Z0-9_-]+)\)/g, function (_, label, url) {
+      if (url.startsWith('#')) {
+        return `<a href="${url}" class="chat-anchor-link">${label}</a>`;
+      }
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+    });
+
+    // Linkify bare https:// URLs that aren't already inside an href attribute
+    out = out.replace(/(^|[\s(])(https?:\/\/[^\s<)"]+)/g, function (_, prefix, url) {
+      return `${prefix}<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+
+    // **bold** and safe single-line *italic* (ignoring trailing/currency asterisks)
+    out = out.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+    out = out.replace(/(^|[\s(])\*([^*\s₹\n][^*\n]*?)\*(?=[.,!?\s)]|$)/g, '$1<em>$2</em>');
+    return out;
+  }
+
   function appendMessage(role, text) {
     const container = document.getElementById('bedibot-messages');
     if (!container) return;
@@ -176,13 +219,50 @@ How may I assist your institution today? You can ask about our **56+ products, f
     const div = document.createElement('div');
     div.className = `chat-bubble ${role}`;
 
-    // Convert basic markdown: **bold**, *italic*, \n to <br>
-    let formatted = text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/\n/g, '<br/>');
+    const rawText = String(text || '').trim();
+    // Preserve intentional offline CTA HTML links cleanly if preformatted
+    if (/<a\s+href=/i.test(rawText)) {
+      div.innerHTML = rawText
+        .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br/>');
+    } else {
+      const escaped = rawText
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
 
-    div.innerHTML = formatted;
+      const lines = escaped.split(/\r?\n/);
+      const htmlParts = [];
+      let prevBlank = false;
+
+      for (let i = 0; i < lines.length; i++) {
+        const trimmed = lines[i].trim();
+        if (!trimmed || /^-{3,}$/.test(trimmed)) {
+          if (!prevBlank && htmlParts.length > 0) {
+            htmlParts.push('<div style="height:6px;"></div>');
+          }
+          prevBlank = true;
+          continue;
+        }
+        prevBlank = false;
+
+        if (/^#{1,4}\s+/.test(trimmed)) {
+          const title = trimmed.replace(/^#{1,4}\s+/, '');
+          htmlParts.push(`<div class="chat-heading">${formatInlineMarkdown(title)}</div>`);
+        } else if (/^[-*•]\s+/.test(trimmed)) {
+          const item = trimmed.replace(/^[-*•]\s+/, '');
+          htmlParts.push(`<div class="chat-bullet"><span class="chat-dot">•</span><span>${formatInlineMarkdown(item)}</span></div>`);
+        } else if (/^\d+\.\s+/.test(trimmed)) {
+          const m = trimmed.match(/^(\d+\.)\s+(.*)$/);
+          htmlParts.push(`<div class="chat-bullet"><span class="chat-num-badge">${m[1]}</span><span>${formatInlineMarkdown(m[2])}</span></div>`);
+        } else {
+          htmlParts.push(`<div>${formatInlineMarkdown(trimmed)}</div>`);
+        }
+      }
+
+      div.innerHTML = htmlParts.join('');
+    }
+
     container.appendChild(div);
     container.scrollTop = container.scrollHeight;
   }
@@ -211,7 +291,7 @@ Would you like to connect directly with Proprietor Mr. Guru Charan Singh Bedi? <
     // 2. School Uniforms
     if (q.includes('school') || q.includes('blazer') || q.includes('skirt') || q.includes('tracksuit') || q.includes('स्कूल')) {
       if (isHindi) {
-        return `बेदी फैशन 39+ वर्षों से दिल्ली-एनसीआर के 500+ प्रतिष्ठित स्कूलों को वर्दी प्रदान कर रहा है:
+        return `बेदी फैशन ${HERITAGE_YEARS}+ वर्षों से दिल्ली-एनसीआर के 500+ प्रतिष्ठित स्कूलों को वर्दी प्रदान कर रहा है:
 - **शर्ट**: 65/35 पॉली-कॉटन पॉपलिन (150 GSM), रिंकल-फ्री कॉलर।
 - **ट्राउजर व स्कर्ट**: 240 GSM हैवी टेरी-कॉटन ट्विल, डबल-नीडल सिलाई।
 - **ब्लेज़र**: प्रीमियम वूल-सर्ज फैब्रिक, हैंड-एम्ब्रॉयडर्ड बुलियन क्रेस्ट।
@@ -219,7 +299,7 @@ Would you like to connect directly with Proprietor Mr. Guru Charan Singh Bedi? <
 
 हम आपकी स्कूल प्रबंध समिति को **मुफ्त फैब्रिक स्वाच व साइजिंग सेट** भेज सकते हैं। <a href="https://wa.me/919211825699?text=Hello%20Bedi%20Fashion,%20we%20need%20School%20Uniform%20samples%20for%20our%20management%20committee." target="_blank">स्कूल सैंपल मँगवाएं →</a>`;
       }
-      return `Bedi Fashion is a trusted school uniform supplier in North India with 39+ years of school trust (Est. 1987):
+      return `Bedi Fashion is a trusted school uniform supplier in North India with ${HERITAGE_YEARS}+ years of school trust (Est. 1987):
 - **Oxford & Poplin Shirts**: 65/35 Poly-Cotton (150 GSM), fused permanent collar.
 - **Trousers & Skirts**: 240 GSM high-durability Terry-Cotton, Teflon stain resist.
 - **Wool Serge Blazers**: Hand-finished bullion institutional monograms and gold crest buttons.
@@ -285,7 +365,7 @@ You can also view our digital matrix via the **"Size Guide"** button above!`;
     // 7. General Inquiry & Lead Capture
     return `Thank you for your inquiry regarding Bedi Fashion's capabilities. 
 
-We specialize in precision institutional bulk contracts with **39+ years of operational trust (est. 1987)** across Faridabad and Noida.
+We specialize in precision institutional bulk contracts with **${HERITAGE_YEARS}+ years of operational trust (est. 1987)** across Faridabad and Noida.
 
 To provide you with an exact wholesale quotation and dispatch physical fabric swatches to your office, may I connect you directly with Proprietor **Mr. Guru Charan Singh Bedi**?
 

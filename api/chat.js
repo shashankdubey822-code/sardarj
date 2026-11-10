@@ -1,7 +1,8 @@
 /**
  * BEDI FASHION™ — OFFICIAL GEMINI + LIVE CATALOG CONCIERGE (/api/chat)
- * Fetches real-time inventory, prices, sizes, and stock directly from live catalog,
- * and powers generous conversational responses via the Google Gemini Interactions API.
+ * Fetches real-time inventory, prices, sizes, and stock directly from live catalog (with 60s warm cache),
+ * dynamically calculates heritage years from Est. 1987, serves instant clean greetings,
+ * and powers complete, well-formatted responses via Google Gemini Interactions API.
  */
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://ovdvycumqsjgvlsickjy.supabase.co";
@@ -10,9 +11,19 @@ const SUPABASE_KEY =
   process.env.SUPABASE_ANON_KEY ||
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92ZHZ5Y3VtcXNqZ3Zsc2lja2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NTY3NjMsImV4cCI6MjEwOTUzMjc2M30.5p8Mjo8WViCHWYeZ7i9qsJZ1ZVw9FaegYBtySvolnfs";
 
-const BUSINESS_PROFILE = `
+const FOUNDING_YEAR = 1987;
+const CATALOG_CACHE_TTL_MS = 60 * 1000;
+let catalogCache = { products: [], fetchedAt: 0 };
+
+function getHeritageYears() {
+  return Math.max(1, new Date().getFullYear() - FOUNDING_YEAR);
+}
+
+function getBusinessProfile() {
+  const heritageYears = getHeritageYears();
+  return `
 BRAND & LEADERSHIP:
-- Firm: Bedi Fashion™ (Established 1987 — 39+ Years of Heritage)
+- Firm: Bedi Fashion™ (Established ${FOUNDING_YEAR} — ${heritageYears}+ Years of Heritage)
 - Proprietor: Mr. Guru Charan Singh Bedi
 - Contact Mobile Numbers: +91 9310825699 | +91 9811825699 | +91 9899114052
 - Official WhatsApp Desk: +91 9211825699
@@ -24,9 +35,10 @@ LOCATIONS:
 
 CUSTOMIZE UNIFORMS & SERVICES:
 - Ready-stock supply & Customized Institutional Uniforms (Schools, Corporate, Hospitals, Security, Hospitality, Sports)
-- Customers can interactively customize fabrics, collars, house stripes, bullion school crest embroidery, and custom sizing via our 3D Uniform Studio (https://sardarj.vercel.app/#studio) or Institutional Bulk Estimator.
+- Customers can interactively customize fabrics, collars, house stripes, bullion school crest embroidery, and custom sizing in the [3D Uniform Studio](https://sardarj.vercel.app/#studio).
 - Ready stock dispatch: 3–7 working days; Customized institutional orders: 14–21 working days with complimentary swatch kits and on-site sizing drives.
 `;
+}
 
 function formatCategoryLabel(rawCat) {
   const map = {
@@ -44,9 +56,44 @@ function formatCategoryLabel(rawCat) {
   return map[rawCat] || String(rawCat || "Other Items").replace(/_/g, " ");
 }
 
+function cleanProductName(name) {
+  return String(name || "").replace(/\bCoat\.(\d+)\b/gi, "Coat Size $1").trim();
+}
+
+function isPureGreeting(message) {
+  const cleaned = String(message || "").trim().toLowerCase().replace(/[!.,?।]+/g, "").trim();
+  return /^(hi+|hello+|hey+|hlo+|helo+|namaste|namaskar|hola|greetings|good\s*(morning|afternoon|evening))$/.test(cleaned);
+}
+
+function buildFastGreetingReply(message, lang) {
+  const heritageYears = getHeritageYears();
+  const isHindi = lang === "hi" || /[\u0900-\u097F]/.test(message);
+
+  if (isHindi) {
+    return `नमस्ते! **बेदी फैशन™** (स्थापना ${FOUNDING_YEAR} • **${heritageYears}+ वर्षों का अनुभव**) में आपका स्वागत है। प्रोप्राइटर: **श्री गुरु चरण सिंह बेदी**।
+
+मैं आपकी किस प्रकार सहायता कर सकता हूँ?
+• **उत्पाद और लाइव रेट्स:** स्कूल शर्ट, पैंट, ट्यूनिक, ब्लेज़र, जूते आदि की कीमत व स्टॉक पूछें
+• **Customize Uniforms:** स्कूल लोगो कढ़ाई, कस्टम रंग व साइजिंग के लिए [3D Uniform Studio](https://sardarj.vercel.app/#studio) देखें
+• **संपर्क:** +91 9310825699 | +91 9811825699 | +91 9899114052 *(WhatsApp: +91 9211825699)*`;
+  }
+
+  return `Namaste! Welcome to **Bedi Fashion™** (Est. ${FOUNDING_YEAR} • **${heritageYears}+ Years of Heritage** • Proprietor: **Mr. Guru Charan Singh Bedi**).
+
+How may I help you today?
+• **Catalog & Live Rates:** Ask for any school uniform item, size, or price
+• **Customize Uniforms:** Explore crest embroidery & fabrics in our [3D Uniform Studio](https://sardarj.vercel.app/#studio)
+• **Direct Contact:** +91 9310825699 | +91 9811825699 | +91 9899114052 *(WhatsApp: +91 9211825699)*`;
+}
+
 async function fetchLiveProducts() {
+  const now = Date.now();
+  if (catalogCache.products.length > 0 && now - catalogCache.fetchedAt < CATALOG_CACHE_TTL_MS) {
+    return catalogCache.products;
+  }
+
   try {
-    const endpoint = `${SUPABASE_URL}/rest/v1/products?select=item_code,name,category,color,available_sizes,base_price,tax_percentage,final_price,stock_quantity,is_in_stock,description&order=id.asc&limit=500`;
+    const endpoint = `${SUPABASE_URL}/rest/v1/products?select=item_code,name,category,color,available_sizes,base_price,tax_percentage,final_price,stock_quantity,is_in_stock&order=id.asc&limit=500`;
     const res = await fetch(endpoint, {
       method: "GET",
       headers: {
@@ -55,21 +102,25 @@ async function fetchLiveProducts() {
         "Content-Type": "application/json"
       }
     });
-    if (!res.ok) return [];
+    if (!res.ok) return catalogCache.products || [];
     const data = await res.json();
-    return Array.isArray(data) ? data : [];
+    if (Array.isArray(data) && data.length > 0) {
+      catalogCache = { products: data, fetchedAt: now };
+      return data;
+    }
+    return [];
   } catch (err) {
     console.warn("Live catalog fetch warning:", err.message);
-    return [];
+    return catalogCache.products || [];
   }
 }
 
 function buildCatalogContext(products) {
   if (!products || products.length === 0) {
-    return "LIVE PRODUCT CATALOG: Catalog temporarily unavailable; offer general guidance and invite the visitor to call Proprietor Mr. Guru Charan Singh Bedi on +91 9310825699, +91 9811825699, or +91 9899114052.";
+    return "LIVE PRODUCT CATALOG: Share general guidance and invite the customer to call Proprietor Mr. Guru Charan Singh Bedi on +91 9310825699, +91 9811825699, or +91 9899114052.";
   }
 
-  const lines = [`BEDI FASHION™ OFFICIAL PRODUCT CATALOG (${products.length} items, prices in INR incl. GST):`];
+  const lines = [`BEDI FASHION™ OFFICIAL PRODUCT CATALOG (${products.length} items, final INR prices incl. 5% GST):`];
   const byCategory = new Map();
 
   for (const p of products) {
@@ -79,15 +130,14 @@ function buildCatalogContext(products) {
   }
 
   for (const [catName, items] of byCategory.entries()) {
-    lines.push(`\n[${catName}] (${items.length} variants):`);
+    lines.push(`\n[${catName}] (${items.length} items):`);
     for (const item of items) {
       const stockTxt = Number(item.stock_quantity || 0) > 0 && item.is_in_stock !== false
-        ? `In Stock (${item.stock_quantity} pcs)`
-        : "Available on Customized Order";
+        ? `${item.stock_quantity} ready`
+        : "Customized Order";
       const price = Number(item.final_price || item.base_price || 0).toFixed(2);
-      const color = item.color && item.color !== "Standard" ? ` | Color: ${item.color}` : "";
       lines.push(
-        `  • Code ${item.item_code || "-"} | ${item.name} | Size: ${item.available_sizes || "Std"}${color} | Final Price: ₹${price} (Base ₹${item.base_price} + ${item.tax_percentage || 5}% GST) | ${stockTxt}`
+        `• ${cleanProductName(item.name)} | Sz:${item.available_sizes || "Std"} | ₹${price} | ${stockTxt}`
       );
     }
   }
@@ -124,26 +174,26 @@ function extractInteractionText(data) {
 async function callGeminiInteractions(apiKey, systemInstruction, message, history, previousInteractionId) {
   const historyLines = Array.isArray(history)
     ? history
-        .slice(-8, -1)
+        .slice(-6, -1)
         .map((m) => `${m.role === "user" ? "Customer" : "BediBot"}: ${m.content}`)
         .join("\n")
     : "";
 
   const inputPrompt = !previousInteractionId && historyLines
-    ? `Recent Conversation Context:\n${historyLines}\n\nLatest Customer Message:\n${message}`
+    ? `Recent Context:\n${historyLines}\n\nLatest Question:\n${message}`
     : message;
 
-  // Put responsive gemini-3.5-flash-lite first with seamless fallback to 3.8 / 3.1
-  const models = ["gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-3.1-flash-lite", "gemini-3.5-flash"];
+  const models = ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite-preview", "gemini-3.8-flash"];
 
-  for (const model of models.slice(0, 3)) {
+  for (const model of models) {
     try {
       const payload = {
         model,
         system_instruction: systemInstruction,
         input: inputPrompt,
         generation_config: {
-          max_output_tokens: 700
+          thinking_level: "minimal",
+          max_output_tokens: 2048
         }
       };
       if (previousInteractionId) {
@@ -184,6 +234,7 @@ async function callGeminiInteractions(apiKey, systemInstruction, message, histor
 function buildLiveCatalogFallbackReply(message, products, lang) {
   const m = String(message || "").toLowerCase();
   const isHindi = lang === "hi" || /[\u0900-\u097F]/.test(message);
+  const heritageYears = getHeritageYears();
 
   const byCategory = new Map();
   for (const p of products) {
@@ -206,12 +257,12 @@ function buildLiveCatalogFallbackReply(message, products, lang) {
     m.includes("पता")
   ) {
     return isHindi
-      ? `**बेदी फैशन™** (स्थापना **1987** • प्रोप्राइटर: **श्री गुरु चरण सिंह बेदी**) में आपका हार्दिक स्वागत है!\n\n• **मुख्य कार्यालय (Head Office):** प्लॉट नं. 125, सेक्टर-18, फरीदाबाद, हरियाणा - 121002\n• **शॉप (Bedi Creation):** गली नंबर 3, पंजाब नेशनल बैंक के सामने, RS ब्यूटी पार्लर के पास, F ब्लॉक, सेक्टर 44, नोएडा, उत्तर प्रदेश - 201303\n• **संपर्क मोबाइल:** +91 9310825699 | +91 9811825699 | +91 9899114052\n• **व्हाट्सएप:** +91 9211825699\n• **ईमेल:** info@bedifashion.in`
-      : `You are most welcome at **Bedi Fashion™** (Established **1987** • Proprietor: **Mr. Guru Charan Singh Bedi**).\n\n• **Head Office:** Plot No - 125, Sector-18, Faridabad, Haryana - 121002\n• **Shop (Bedi Creation):** Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303\n• **Contact Mobile:** +91 9310825699 | +91 9811825699 | +91 9899114052\n• **WhatsApp Desk:** +91 9211825699\n• **Email:** info@bedifashion.in`;
+      ? `**बेदी फैशन™** (स्थापना **${FOUNDING_YEAR}** • **${heritageYears}+ वर्षों का विश्वास** • प्रोप्राइटर: **श्री गुरु चरण सिंह बेदी**) में आपका हार्दिक स्वागत है!\n\n• **मुख्य कार्यालय (Head Office):** प्लॉट नं. 125, सेक्टर-18, फरीदाबाद, हरियाणा - 121002\n• **शॉप (Bedi Creation):** गली नंबर 3, पंजाब नेशनल बैंक के सामने, RS ब्यूटी पार्लर के पास, F ब्लॉक, सेक्टर 44, नोएडा, उत्तर प्रदेश - 201303\n• **संपर्क मोबाइल:** +91 9310825699 | +91 9811825699 | +91 9899114052\n• **व्हाट्सएप:** +91 9211825699\n• **ईमेल:** info@bedifashion.in`
+      : `Welcome to **Bedi Fashion™** (Established **${FOUNDING_YEAR}** • **${heritageYears}+ Years** • Proprietor: **Mr. Guru Charan Singh Bedi**).\n\n• **Head Office:** Plot No - 125, Sector-18, Faridabad, Haryana - 121002\n• **Shop (Bedi Creation):** Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303\n• **Contact Mobile:** +91 9310825699 | +91 9811825699 | +91 9899114052\n• **WhatsApp Desk:** +91 9211825699\n• **Email:** info@bedifashion.in`;
   }
 
   if (m.includes("customiz") || m.includes("custom") || m.includes("embroider") || m.includes("tailor") || m.includes("logo")) {
-    return `We would be delighted to tailor **Customized Uniforms** to your institution's exact specifications!\n\n• **What You Can Customize:** School crest bullion embroidery, custom house stripes/Pantone dye colors, bespoke collar cuts, and sizes from 20 (Junior) to 54 (5XL).\n• **MOQ & Turnaround:** 25 pcs for stocked customization; 100 pcs for bespoke fabric runs (14–21 days), with complimentary fabric swatch kits.\n• **Try Online Now:** Inspect fabrics in our **3D Uniform Studio** on this page or open the **Bulk Estimator & RFQ**.\n\nCall or message us directly on **+91 9310825699**, **+91 9811825699**, **+91 9899114052** *(WhatsApp: +91 9211825699)*.`;
+    return `We would be delighted to tailor **Customized Uniforms** to your institution's exact specifications!\n\n• **What You Can Customize:** School crest bullion embroidery, custom house stripes/Pantone dye colors, bespoke collar cuts, and sizes 20 to 54.\n• **MOQ & Turnaround:** 25 pcs for stocked customization; 100 pcs for bespoke fabric runs (14–21 days), with complimentary fabric swatch kits.\n• **Try Online Now:** Design interactively in our [3D Uniform Studio](https://sardarj.vercel.app/#studio).\n\nCall or WhatsApp **+91 9310825699**, **+91 9811825699**, **+91 9899114052** *(WhatsApp: +91 9211825699)*.`;
   }
 
   const stopWords = new Set(["want", "some", "need", "price", "rate", "rates", "cost", "buy", "from", "have", "what", "with", "this", "that", "size", "sizes", "uniform", "uniforms", "school", "show", "tell", "give", "much", "available", "stock"]);
@@ -219,13 +270,13 @@ function buildLiveCatalogFallbackReply(message, products, lang) {
   let matched = [];
   if (words.length > 0) {
     const strictMatched = products.filter((p) => {
-      const hay = `${p.item_code} ${p.name} ${formatCategoryLabel(p.category)} ${p.category} ${p.color} ${p.description} ${p.available_sizes}`.toLowerCase();
+      const hay = `${p.item_code} ${p.name} ${formatCategoryLabel(p.category)} ${p.category} ${p.color} ${p.available_sizes}`.toLowerCase();
       return words.every((k) => hay.includes(k));
     });
     matched = strictMatched.length > 0
       ? strictMatched
       : products.filter((p) => {
-          const hay = `${p.item_code} ${p.name} ${formatCategoryLabel(p.category)} ${p.category} ${p.color} ${p.description} ${p.available_sizes}`.toLowerCase();
+          const hay = `${p.item_code} ${p.name} ${formatCategoryLabel(p.category)} ${p.category} ${p.color} ${p.available_sizes}`.toLowerCase();
           return words.some((k) => hay.includes(k));
         });
   }
@@ -235,10 +286,10 @@ function buildLiveCatalogFallbackReply(message, products, lang) {
     const rows = top
       .map((p) => {
         const stockNote = Number(p.stock_quantity || 0) > 0 ? `${p.stock_quantity} pcs ready` : "Available on customized order";
-        return `• **${p.name}** (${formatCategoryLabel(p.category)}, Size ${p.available_sizes}): **₹${Number(p.final_price || p.base_price).toFixed(2)}** *(incl. 5% GST • ${stockNote})*`;
+        return `• **${cleanProductName(p.name)}** (${formatCategoryLabel(p.category)}, Size ${p.available_sizes}): **₹${Number(p.final_price || p.base_price).toFixed(2)}** *(incl. 5% GST • ${stockNote})*`;
       })
       .join("\n");
-    return `We would be delighted to help you with that! Here are live items currently available:\n\n${rows}\n\nWe also craft **Customized Uniforms** tailored to your institutional requirements (**Mr. Guru Charan Singh Bedi**, Est. 1987). Reach us on **+91 9310825699**, **+91 9811825699**, **+91 9899114052** *(WhatsApp: +91 9211825699)*!`;
+    return `Here are our live items matching your request:\n\n${rows}\n\nWe also craft **Customized Uniforms** (**Mr. Guru Charan Singh Bedi**, Est. ${FOUNDING_YEAR} • ${heritageYears}+ Years). Reach us on **+91 9310825699**, **+91 9811825699**, **+91 9899114052** *(WhatsApp: +91 9211825699)*!`;
   }
 
   if (products.length > 0) {
@@ -251,10 +302,10 @@ function buildLiveCatalogFallbackReply(message, products, lang) {
       const rangeStr = minP === maxP ? `₹${minP}` : `₹${minP} – ₹${maxP}`;
       catLines.push(`• **${cat}** (${optLabel}): **${rangeStr}** *(incl. GST)*`);
     }
-    return `Namaste! Welcome to **Bedi Fashion™** (Proprietor: **Mr. Guru Charan Singh Bedi**, Est. 1987). We would be thrilled to assist with your uniform needs!\n\nHere is our current range:\n${catLines.join("\n")}\n\nLet us know which product, size, or **Customized Uniforms** requirement you have — or call **+91 9310825699 | +91 9811825699 | +91 9899114052**!`;
+    return `Namaste! Welcome to **Bedi Fashion™** (Est. ${FOUNDING_YEAR} • **${heritageYears}+ Years** • Proprietor: **Mr. Guru Charan Singh Bedi**).\n\nHere is our current catalog:\n${catLines.join("\n")}\n\nAsk for any exact item size/price, explore [3D Uniform Studio](https://sardarj.vercel.app/#studio) for **Customized Uniforms**, or call **+91 9310825699 | +91 9811825699 | +91 9899114052**!`;
   }
 
-  return `Namaste! Welcome to **Bedi Fashion™** (Proprietor: **Mr. Guru Charan Singh Bedi**, Est. 1987). Please let us know what uniform items or **Customized Uniforms** requirements we can help with — call **+91 9310825699**, **+91 9811825699**, or **+91 9899114052** *(WhatsApp: +91 9211825699)*.`;
+  return `Namaste! Welcome to **Bedi Fashion™** (Est. ${FOUNDING_YEAR} • **${heritageYears}+ Years** • Proprietor: **Mr. Guru Charan Singh Bedi**). Let us know which uniform items or **Customized Uniforms** requirements we can help with — call **+91 9310825699**, **+91 9811825699**, or **+91 9899114052** *(WhatsApp: +91 9211825699)*.`;
 }
 
 module.exports = async (req, res) => {
@@ -294,23 +345,33 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: "Message is required" });
   }
 
+  // Instant clean response for pure short greetings ("hi", "hello", "namaste")
+  if (isPureGreeting(message)) {
+    return res.status(200).json({
+      reply: buildFastGreetingReply(message, lang),
+      productsCount: catalogCache.products.length || 61,
+      source: "concierge_fast"
+    });
+  }
+
   const products = await fetchLiveProducts();
   const catalogContext = buildCatalogContext(products);
 
-  const systemInstruction = `You are "BediBot", the warm, generous, and articulate client advisor for Bedi Fashion™.
-Your goal is to delight institutional buyers, schools, businesses, and parents with gracious service, clear grammar, and accurate product rates.
+  const systemInstruction = `You are "BediBot", the warm, gracious, and concise client advisor for Bedi Fashion™.
+Your goal is to delight institutional buyers, schools, businesses, and parents with crisp, accurate, readable answers.
 
-${BUSINESS_PROFILE}
+${getBusinessProfile()}
 
 ${catalogContext}
 
 CONVERSATION GUIDELINES:
-1. Be warm, generous, welcoming, and polite in English or Hindi (Devanagari) matching the customer's language.
-2. NEVER mention internal backend systems, databases, architecture, Supabase, APIs, or technical words. Speak naturally as a showroom representative of Bedi Fashion™.
-3. Always use "Customized Uniforms" / "Customize Uniforms" (never "Custom Uniform") with crystal-clear grammar.
-4. Quote exact product names, sizes, final GST-inclusive prices, and stock availability directly from the official catalog above. If an item is currently out of stock, kindly note it is available via Customized Order.
-5. For Customize Uniform inquiries, walk the customer through sector choice (School/Corporate/Hospital/Industrial), embroidery/fabric swatches, sizing, and invite them to try the 3D Uniform Studio or contact us.
-6. Never reference any factory or Sector 31/32 unit—share our Faridabad Sector 18 Head Office, Noida Sector 44 Shop (Bedi Creation), Contact Mobile (+91 9310825699, +91 9811825699, +91 9899114052), and WhatsApp (+91 9211825699).`;
+1. Be warm, helpful, and grammatically flawless in English or Hindi (Devanagari) matching the customer's language (write "absolutely delighted", never "absolute delighted").
+2. NEVER mention internal backend systems, databases, architecture, Supabase, APIs, or technical words.
+3. Always use "Customized Uniforms" / "Customize Uniforms" (never "Custom Uniform").
+4. Keep answers clean, structured, and concise (under ~180 words unless the customer explicitly asks for every single size listed out).
+5. When asked broadly "what products do you have", summarize ALL categories cleanly with bullet points showing item type, size range, and final INR price range (incl. 5% GST)—never dump 60 separate size lines or leave any sentence unfinished.
+6. Format links neatly as [Open 3D Uniform Studio](https://sardarj.vercel.app/#studio) — never drop bare URLs inside parentheses or horizontal rule dashes (---).
+7. Share our Faridabad Sector-18 Head Office, Noida Sector 44 Shop (Bedi Creation), Contact Mobile (+91 9310825699, +91 9811825699, +91 9899114052), and WhatsApp (+91 9211825699) when helpful; never reference any factory or Sector 31/32 unit.`;
 
   const geminiApiKey = process.env.GEMINI_API_KEY || "";
   if (geminiApiKey) {

@@ -109,6 +109,10 @@ assert(!indexContent.includes('1997'), `index.html has zero stale 1997 reference
 assert(!indexContent.includes('btn-nav-admin'), `index.html has no public Admin navbar button`);
 assert(indexContent.includes('bedi_logo_3d.jpg'), `index.html uses the custom 3D logo image`);
 assert(fs.existsSync(path.join(BASE_DIR, 'images/bedi_logo_3d.jpg')), `images/bedi_logo_3d.jpg exists`);
+assert(indexContent.includes('bedi_emblem_3d.jpg'), `index.html uses the high-contrast 3D emblem in navbar`);
+assert(fs.existsSync(path.join(BASE_DIR, 'images/bedi_emblem_3d.jpg')), `images/bedi_emblem_3d.jpg exists`);
+assert(indexContent.includes('js/heritage.js'), `index.html includes automatic 1987 heritage year calculation script`);
+assert(fs.existsSync(path.join(BASE_DIR, 'js/heritage.js')), `js/heritage.js exists`);
 assert(indexContent.includes('+91 9310825699'), `index.html contains contact phone +91 9310825699`);
 assert(indexContent.includes('+91 9811825699'), `index.html contains contact phone +91 9811825699`);
 assert(indexContent.includes('+91 9899114052'), `index.html contains contact phone +91 9899114052`);

@@ -336,6 +336,7 @@ function extractInteractionText(data: any): string {
 }
 
 async function getGeminiCatalogAnswer(userMessage: string, historyContext: string, products: ProductRow[]): Promise<string> {
+  const heritageYears = Math.max(1, new Date().getFullYear() - 1987);
   const inventoryLines = products.map((p) => {
     const stockNote = Number(p.stock_quantity || 0) > 0 ? `Ready:${p.stock_quantity}pcs` : "MadeToOrder";
     return `${p.name} (${p.category}, Size:${p.available_sizes}, Price:₹${Number(p.final_price || p.base_price).toFixed(2)}, ${stockNote})`;
@@ -344,7 +345,7 @@ async function getGeminiCatalogAnswer(userMessage: string, historyContext: strin
   if (GEMINI_API_KEY) {
     const systemInstruction = `You are BediBot, the warm, generous, and articulate client advisor for Bedi Fashion™.
 BUSINESS PROFILE:
-- Proprietor: Mr. Guru Charan Singh Bedi (Established 1987 — 39+ years heritage)
+- Proprietor: Mr. Guru Charan Singh Bedi (Established 1987 — ${heritageYears}+ years heritage)
 - Contact Mobile Numbers: +91 9310825699 | +91 9811825699 | +91 9899114052
 - Official WhatsApp Desk: +91 9211825699
 - Email: info@bedifashion.in
@@ -366,7 +367,7 @@ RULES:
       ? `Recent Conversation Context: ${historyContext}\n\nCustomer Message: ${userMessage}`
       : userMessage;
 
-    for (const model of ["gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-3.1-flash-lite"]) {
+    for (const model of ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite-preview", "gemini-3.8-flash"]) {
       try {
         const res = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
           method: "POST",
@@ -379,7 +380,7 @@ RULES:
             model,
             system_instruction: systemInstruction,
             input: inputPrompt,
-            generation_config: { max_output_tokens: 380 }
+            generation_config: { thinking_level: "minimal", max_output_tokens: 700 }
           })
         });
         if (res.ok) {
