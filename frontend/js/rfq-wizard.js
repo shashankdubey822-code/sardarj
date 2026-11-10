@@ -8,7 +8,7 @@
 
   let currentStep = 1;
   let selectedItems = [];
-  let configuredGoogleFormUrl = '';
+  let configuredGoogleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfj-Ec1HvxAsK8RC1XnlcL3-9UfEUUq0q--YcMg3PDKmUvEfQ/viewform';
 
   const rfqState = {
     institutionType: 'K-12 School / Academy',
@@ -64,6 +64,11 @@
     openBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
+        const formUrl = configuredGoogleFormUrl || window.BEDI_RFQ_FORM_URL;
+        if (formUrl) {
+          window.open(formUrl, '_blank', 'noopener,noreferrer');
+          return;
+        }
         openRFQModal();
       });
     });
