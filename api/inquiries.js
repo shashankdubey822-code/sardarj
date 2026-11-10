@@ -1,4 +1,5 @@
-/**
+/** @version 2.1.0 - Supabase institutional_rfqs live integration
+ *
  * BEDI FASHION™ — INSTITUTIONAL RFQ DATABASE API (/api/inquiries)
  * Stores Website Instant Institutional RFQ & Google Form submissions into Supabase (`institutional_rfqs`).
  * Also serves dynamic RFQ configuration (`GET /api/inquiries?config=1`) for Google Form / Web Form routing.
