@@ -17,7 +17,7 @@
     heritage: '39+ years of institutional uniform heritage (Est. 1987)',
     head_office: 'Plot No - 125, Sector-18, Faridabad, Haryana - 121002',
     shop_address: 'Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303',
-    phones: ['+91 9211825699', '+91 9811825699', '+91 9899114052'],
+    phones: ['+91 9310825699', '+91 9811825699', '+91 9899114052'],
     primary_wa: '919211825699',
     email: 'info@bedifashion.in',
     moq_stock: '25 pieces for ready-made standard stock inventory',
@@ -203,7 +203,7 @@ How may I assist your institution today? You can ask about our **56+ products, f
       }
       return `Our order tiers are built for institutional flexibility:
 - **Ready Stock Inventory**: Minimum Order is just **25 pieces** per category.
-- **Custom Institutional Contracts**: MOQ starts at **100 pieces** for custom Pantone dyes, CAD patterns, and gold bullion crest embroidery.
+- **Customized Institutional Orders**: MOQ starts at **100 pieces** for custom Pantone dyes, tailored patterns, and gold bullion crest embroidery.
 
 Would you like to connect directly with Proprietor Mr. Guru Charan Singh Bedi? <a href="https://wa.me/919211825699?text=Hello%20Mr.%20Guru%20Charan%20Singh%20Bedi,%20inquiring%20about%20MOQ%20and%20institutional%20pricing." target="_blank">Chat with Proprietor on WhatsApp (+91 9211825699)</a>`;
     }
@@ -255,7 +255,8 @@ Ready stock is available for quick dispatch. <a href="https://wa.me/919211825699
 - **मुख्य कार्यालय (Head Office)**: प्लॉट नं. 125, सेक्टर-18, फरीदाबाद, हरियाणा - 121002
 - **शॉप (Bedi Creation)**: बेदी क्रिएशन, गली नंबर 3, पंजाब नेशनल बैंक के सामने, RS ब्यूटी पार्लर के पास, F ब्लॉक, सेक्टर 44, नोएडा, उत्तर प्रदेश - 201303
 - **प्रोप्राइटर**: श्री गुरु चरण सिंह बेदी (स्थापना 1987)
-- **संपर्क सूत्र**: +91 9211825699 | +91 9811825699
+- **संपर्क मोबाइल (Contact Mobile)**: +91 9310825699 | +91 9811825699 | +91 9899114052
+- **आधिकारिक व्हाट्सएप (WhatsApp)**: +91 9211825699
 - **ईमेल**: info@bedifashion.in
 
 <a href="https://wa.me/919211825699?text=Hello%20Mr.%20Guru%20Charan%20Singh%20Bedi,%20we%20would%20like%20to%20visit%20your%20office%20or%20shop." target="_blank">व्हाट्सएप पर अपॉइंटमेंट शेड्यूल करें →</a>`;
@@ -264,7 +265,8 @@ Ready stock is available for quick dispatch. <a href="https://wa.me/919211825699
 - **Head Office**: Plot No - 125, Sector-18, Faridabad, Haryana - 121002
 - **Shop (Bedi Creation)**: Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303
 - **Proprietor**: Mr. Guru Charan Singh Bedi (Est. 1987)
-- **Direct Phone**: +91 9211825699 | +91 9811825699
+- **Contact Mobile**: +91 9310825699 | +91 9811825699 | +91 9899114052
+- **WhatsApp Concierge**: +91 9211825699
 - **Email**: info@bedifashion.in
 
 Procurement heads are welcome to visit our Head Office or Noida Shop. <a href="https://wa.me/919211825699?text=Hello%20Mr.%20Guru%20Charan%20Singh%20Bedi,%20we%20want%20to%20visit%20your%20Head%20Office%20or%20Noida%20Shop." target="_blank">Schedule a Visit on WhatsApp →</a>`;

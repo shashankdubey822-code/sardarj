@@ -105,7 +105,14 @@ assert(indexContent.includes('Bedi Fashion'), `index.html contains brand title`)
 assert(indexContent.includes('Plot No - 125, Sector-18'), `index.html contains Head Office address`);
 assert(indexContent.includes('Sector 44, Noida'), `index.html contains Noida Shop address`);
 assert(indexContent.includes('1987'), `index.html contains Est. 1987 founding year`);
-assert(indexContent.includes('+91 9211825699'), `index.html contains primary phone +91 9211825699`);
+assert(!indexContent.includes('1997'), `index.html has zero stale 1997 references`);
+assert(!indexContent.includes('btn-nav-admin'), `index.html has no public Admin navbar button`);
+assert(indexContent.includes('bedi_logo_3d.jpg'), `index.html uses the custom 3D logo image`);
+assert(fs.existsSync(path.join(BASE_DIR, 'images/bedi_logo_3d.jpg')), `images/bedi_logo_3d.jpg exists`);
+assert(indexContent.includes('+91 9310825699'), `index.html contains contact phone +91 9310825699`);
+assert(indexContent.includes('+91 9811825699'), `index.html contains contact phone +91 9811825699`);
+assert(indexContent.includes('+91 9899114052'), `index.html contains contact phone +91 9899114052`);
+assert(indexContent.includes('+91 9211825699'), `index.html contains WhatsApp line +91 9211825699`);
 assert(indexContent.includes('products-grid'), `index.html contains products-grid container`);
 assert(indexContent.includes('webgl-canvas-container'), `index.html contains webgl-canvas-container`);
 assert(indexContent.includes('bedibot-window'), `index.html contains bedibot-window`);

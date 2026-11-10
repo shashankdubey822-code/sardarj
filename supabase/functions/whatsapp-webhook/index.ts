@@ -85,7 +85,7 @@ const CATEGORY_META: Record<string, { id: string; title: string; subtitle: strin
     id: "cat_belt",
     title: "🥋 School Belts",
     subtitle: "Official crest uniform belts",
-    fabricNote: "Custom school buckle weaving",
+    fabricNote: "Customized school buckle weaving",
     moq: "100 pcs"
   },
   "Tie": {
@@ -104,6 +104,63 @@ const CATEGORY_META: Record<string, { id: string; title: string; subtitle: strin
   }
 };
 
+const CUSTOMIZATION_OPTIONS: Record<string, { title: string; details: string }> = {
+  cust_school: {
+    title: "🏫 Customized School Uniforms",
+    details: `*🏫 Customized School Uniforms (Bedi Fashion™)*
+
+• *What We Tailor:* Crested wool/matty blazers, fused-collar shirts, box-pleated tunics, striped house T-shirts, and woven belts/ties.
+• *Customization Options:* Gold bullion & machine crest embroidery, house color matching, and Junior–Senior sizing (20 to 42).
+• *MOQ & Timeline:* 25 pcs (stock cuts) / 100 pcs (tailored colors) • 14–21 days delivery.
+
+🎨 *Preview 3D Uniforms Online:*
+https://sardarj.vercel.app/#studio`
+  },
+  cust_corporate: {
+    title: "👔 Customized Corporate Uniforms",
+    details: `*👔 Customized Corporate & Executive Wear*
+
+• *What We Tailor:* Wrinkle-free formal shirts, corporate suiting blazers, tailored trousers, and monogrammed polo T-shirts.
+• *Customization Options:* Embroidered company logo on pocket/sleeve, bespoke collar styling, and full sizing drives (S to 5XL).
+• *MOQ & Timeline:* 25 pcs minimum • Free swatch & sizing evaluation for teams.
+
+🎨 *Explore Styles Online:*
+https://sardarj.vercel.app/#studio`
+  },
+  cust_hospital: {
+    title: "🏥 Customized Hospital & Medical Wear",
+    details: `*🏥 Customized Hospital & Medical Uniforms*
+
+• *What We Tailor:* Silvadur™ antimicrobial OT scrub suits, doctor lab coats, nursing uniforms, and sterile patient gowns.
+• *Customization Options:* Hospital logo embroidery, autoclave-safe colorfast fabrics (160–210 GSM), and fluid-barrier finishes.
+• *MOQ & Timeline:* 25 pcs minimum • Priority hospital batch dispatch.
+
+🎨 *Explore Medical Catalog:*
+https://sardarj.vercel.app/#studio`
+  },
+  cust_industrial: {
+    title: "🦺 Customized Workwear & Security",
+    details: `*🦺 Customized Industrial & Security Uniforms*
+
+• *What We Tailor:* 100% Cotton twill boiler suits (240–280 GSM), high-visibility reflective coveralls, and security epaulet uniforms.
+• *Customization Options:* 2-inch certified reflective bands, bar-tacked stress seams, and embroidered agency badges.
+• *MOQ & Timeline:* 25 pcs minimum • Bulk annual contracts welcome.
+
+🎨 *Explore Workwear Specs:*
+https://sardarj.vercel.app/#studio`
+  },
+  cust_fabric: {
+    title: "🎨 Fabric, Embroidery & Sample Kits",
+    details: `*🎨 Customized Fabric Shades & Crest Embroidery*
+
+• *What We Provide:* Custom yarn dyeing, bullion gold crest badges, machine crest stitching, and woven jacquard ties/belts.
+• *Complimentary Service:* We dispatch physical fabric swatch cards and finished sample garments for institutional approval.
+
+📞 *Speak Directly With Our Desk:*
++91 9310825699 | +91 9811825699 | +91 9899114052`
+  }
+};
+
 function getCategoryMeta(rawCat: string) {
   if (CATEGORY_META[rawCat]) return CATEGORY_META[rawCat];
   const slug = rawCat.toLowerCase().replace(/[^a-z0-9]+/g, "_");
@@ -116,7 +173,7 @@ function getCategoryMeta(rawCat: string) {
   };
 }
 
-// Fetch live products from Supabase so every change reflects immediately
+// Fetch live products quietly behind the scenes
 async function fetchLiveProducts(): Promise<ProductRow[]> {
   if (!supabase) return [];
   try {
@@ -126,7 +183,7 @@ async function fetchLiveProducts(): Promise<ProductRow[]> {
       .order("id", { ascending: true })
       .limit(500);
     if (error) {
-      console.warn("Supabase products query error:", error.message);
+      console.warn("Catalog query error:", error.message);
       return [];
     }
     return (data || []) as ProductRow[];
@@ -136,21 +193,21 @@ async function fetchLiveProducts(): Promise<ProductRow[]> {
   }
 }
 
-// Format a live Supabase rate card message for a category
+// Format clean customer-facing rate card (zero technical jargon)
 function buildDynamicCategoryCard(rawCat: string, items: ProductRow[]): string {
   const meta = getCategoryMeta(rawCat);
   const lines = [
     `*${meta.title}* (Bedi Fashion™)`,
     `${meta.subtitle} (5% GST incl.)\n`,
-    `📏 *Live Rates & Sizes (Supabase):*`
+    `📏 *Available Sizes & Rates:*`
   ];
 
   for (const p of items.slice(0, 14)) {
     const price = Number(p.final_price || p.base_price || 0).toFixed(2);
     const colorNote = p.color && p.color !== "Standard" ? ` (${p.color})` : "";
     const stockTag = Number(p.stock_quantity || 0) > 0 && p.is_in_stock !== false
-      ? `✅ ${p.stock_quantity} pcs`
-      : `⏳ Order`;
+      ? `✅ ${p.stock_quantity} pcs ready`
+      : `⏳ Made to Order`;
     lines.push(`• *${p.name}*${colorNote} — Size ${p.available_sizes}: *₹${price}* [${stockTag}]`);
   }
 
@@ -158,12 +215,11 @@ function buildDynamicCategoryCard(rawCat: string, items: ProductRow[]): string {
     lines.push(`• ...plus ${items.length - 14} more sizes available.`);
   }
 
-  lines.push(`\n✨ *Spec:* ${meta.fabricNote}`);
+  lines.push(`\n✨ *Fabric Spec:* ${meta.fabricNote}`);
   lines.push(`📦 *Wholesale MOQ:* ${meta.moq}`);
   return lines.join("\n");
 }
 
-// Send Meta Interactive Buttons (titles capped at 20 chars)
 async function sendWhatsAppButtons(
   to: string,
   bodyText: string,
@@ -209,14 +265,13 @@ async function sendWhatsAppButtons(
   }
 }
 
-// Send Meta Interactive List Menu
 async function sendWhatsAppList(
   to: string,
   bodyText: string,
   buttonLabel: string,
   sections: Array<{ title: string; rows: Array<{ id: string; title: string; description?: string }> }>,
-  headerText: string = "Live Product Catalog",
-  footerText: string = "Tap a category for live rates"
+  headerText: string = "Official Product Catalog",
+  footerText: string = "Tap an option to continue"
 ) {
   if (!WHATSAPP_TOKEN || !PHONE_NUMBER_ID) return;
 
@@ -261,7 +316,6 @@ async function sendWhatsAppList(
   }
 }
 
-// Extract text from Gemini Interactions API response
 function extractInteractionText(data: any): string {
   if (!data) return "";
   if (typeof data.output_text === "string" && data.output_text.trim()) {
@@ -281,10 +335,9 @@ function extractInteractionText(data: any): string {
   return "";
 }
 
-// Generous Official Gemini AI Concierge backed by Live Supabase Products
-async function getGeminiDatabaseAnswer(userMessage: string, historyContext: string, products: ProductRow[]): Promise<string> {
+async function getGeminiCatalogAnswer(userMessage: string, historyContext: string, products: ProductRow[]): Promise<string> {
   const inventoryLines = products.map((p) => {
-    const stockNote = Number(p.stock_quantity || 0) > 0 ? `Stock:${p.stock_quantity}` : "OnOrder";
+    const stockNote = Number(p.stock_quantity || 0) > 0 ? `Ready:${p.stock_quantity}pcs` : "MadeToOrder";
     return `${p.name} (${p.category}, Size:${p.available_sizes}, Price:₹${Number(p.final_price || p.base_price).toFixed(2)}, ${stockNote})`;
   });
 
@@ -292,26 +345,28 @@ async function getGeminiDatabaseAnswer(userMessage: string, historyContext: stri
     const systemInstruction = `You are BediBot, the warm, generous, and articulate client advisor for Bedi Fashion™.
 BUSINESS PROFILE:
 - Proprietor: Mr. Guru Charan Singh Bedi (Established 1987 — 39+ years heritage)
+- Contact Mobile Numbers: +91 9310825699 | +91 9811825699 | +91 9899114052
+- Official WhatsApp Desk: +91 9211825699
+- Email: info@bedifashion.in
 - Head Office: Plot No - 125, Sector-18, Faridabad, Haryana - 121002
 - Shop (Bedi Creation): Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303
-- Phone / WhatsApp: +91 9211825699 | +91 9811825699 | +91 9899114052
-- Email: info@bedifashion.in
-- Customized Uniforms: Bespoke school, corporate, and hospital uniforms with custom crest embroidery & bulk pricing.
-- NEVER mention any factory or DLF Sector 31/32 unit.
+- Customize Uniforms: Tailored institutional uniforms with custom school crest embroidery, fabric colors & sizes (14–21 days delivery). Inspect live at https://sardarj.vercel.app/#studio.
+- NEVER mention internal systems, databases, architecture, Supabase, APIs, or factories. Speak naturally as a showroom representative.
 
-LIVE SUPABASE PRODUCT INVENTORY (${products.length} items, rates incl. 5% GST):
+OFFICIAL PRODUCT CATALOG (${products.length} items, rates incl. 5% GST):
 ${inventoryLines.join("\n")}
 
 RULES:
-1. Be generous, gracious, warm, and grammatically clear (2–4 concise WhatsApp lines).
-2. Always quote exact live prices and availability from the LIVE SUPABASE PRODUCT INVENTORY above.
-3. Encourage tapping the buttons below to browse categories, place a Customized Uniform order, or contact Proprietor Mr. Guru Charan Singh Bedi directly.`;
+1. Be generous, gracious, warm, and grammatically spotless (2–4 concise WhatsApp lines).
+2. Always refer to customization as "Customize Uniforms" or "Customized Uniforms" (never "Custom Uniform").
+3. Quote exact live rates and availability from the Official Product Catalog above.
+4. Guide the user smoothly to tap Browse Products, Customize Uniforms, or Contact Direct below.`;
 
     const inputPrompt = historyContext
-      ? `Recent Context: ${historyContext}\n\nCustomer Inquiry: ${userMessage}`
+      ? `Recent Conversation Context: ${historyContext}\n\nCustomer Message: ${userMessage}`
       : userMessage;
 
-    for (const model of ["gemini-3.8-flash", "gemini-3.5-flash-lite"]) {
+    for (const model of ["gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-3.1-flash-lite"]) {
       try {
         const res = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
           method: "POST",
@@ -324,13 +379,15 @@ RULES:
             model,
             system_instruction: systemInstruction,
             input: inputPrompt,
-            generation_config: { max_output_tokens: 350 }
+            generation_config: { max_output_tokens: 380 }
           })
         });
         if (res.ok) {
           const data = await res.json();
           const text = extractInteractionText(data);
           if (text) return text;
+        } else if (res.status === 401 || res.status === 403) {
+          break;
         }
       } catch (err) {
         console.warn(`WhatsApp Gemini (${model}) error:`, err);
@@ -338,29 +395,30 @@ RULES:
     }
   }
 
-  // Live Supabase intelligent fallback if Gemini key is unavailable
+  // Dynamic live catalog fallback without exposing internal words
   const m = userMessage.toLowerCase();
-  const stopWords = new Set(["want", "some", "need", "price", "rate", "cost", "buy", "from", "have", "what", "with", "this", "that", "uniform", "uniforms", "school"]);
-  const words = m.split(/\s+/).filter((w) => w.length >= 3 && !stopWords.has(w));
+  const stopWords = new Set(["want", "some", "need", "price", "rate", "cost", "buy", "from", "have", "what", "with", "this", "that", "size", "uniform", "uniforms", "school"]);
+  const words = m.replace(/[^a-z0-9.\s-]/g, " ").split(/\s+/).filter((w) => w.length >= 2 && !stopWords.has(w) && !/^(is|am|are|the|for|can|you|get|all|any|do|me|my)$/.test(w));
   const matched = words.length > 0
-    ? products.filter((p) => `${p.name} ${p.category} ${p.color} ${p.available_sizes} ${p.description}`.toLowerCase().includes(words[0]))
+    ? products.filter((p) => {
+        const hay = `${p.name} ${p.category} ${p.color} ${p.available_sizes} ${p.description}`.toLowerCase();
+        return words.every((w) => hay.includes(w));
+      })
     : [];
 
   if (matched.length > 0 && matched.length <= 12) {
     const itemsText = matched.slice(0, 6).map((p) => `• *${p.name}* (Size ${p.available_sizes}): *₹${Number(p.final_price || p.base_price).toFixed(2)}*`).join("\n");
-    return `We would be glad to help! Here are live rates from our catalog:\n${itemsText}\n\nTap *Browse Products* or *Custom Uniforms* below for complete details.`;
+    return `We would be glad to help! Here are live rates from our collection:\n${itemsText}\n\nTap *Browse Products* or *Customize Uniforms* below for full details.`;
   }
 
-  return "Thank you for reaching out to *Bedi Fashion™* (Proprietor: Mr. Guru Charan Singh Bedi, Est. 1987)! Please tap a button below to explore live catalog rates, Customized Uniforms, or our Faridabad & Noida locations:";
+  return "Thank you for reaching out to *Bedi Fashion™* (Proprietor: *Mr. Guru Charan Singh Bedi*, Est. 1987)! Tap an option below to explore live prices, *Customize Uniforms*, or reach us directly:";
 }
 
-// Asynchronous message processor
 async function handleIncomingMessage(msg: any) {
   const from = msg.from;
   const msgId = msg.id;
   const timestamp = Number(msg.timestamp || 0);
 
-  // 1. Stale Message Guard: Drop if message was sent more than 120 seconds ago
   if (timestamp > 0) {
     const ageSeconds = Math.floor(Date.now() / 1000) - timestamp;
     if (ageSeconds > 120) {
@@ -369,7 +427,6 @@ async function handleIncomingMessage(msg: any) {
     }
   }
 
-  // 2. Persistent Deduplication via Supabase
   if (supabase && msgId) {
     try {
       const { data: existing } = await supabase
@@ -412,7 +469,6 @@ async function handleIncomingMessage(msg: any) {
   if (from && (userAction || userText)) {
     console.log(`[PROCESSING] From: ${from} | Action: "${userAction}" | Text: "${userText}"`);
 
-    // Always pull live Supabase products + session history
     const products = await fetchLiveProducts();
     const byCategory = new Map<string, ProductRow[]>();
     for (const p of products) {
@@ -452,7 +508,6 @@ async function handleIncomingMessage(msg: any) {
     const lower = userText.toLowerCase().replace(/[.,!?;:]/g, "").trim();
     const isAck = ["ok", "okay", "thanks", "thank you", "sure", "done", "got it", "theek hai", "thik hai", "accha"].includes(lower);
 
-    // Map legacy or text triggers cleanly
     if (!userAction) {
       if (isAck) {
         userAction = "acknowledgement";
@@ -477,18 +532,19 @@ async function handleIncomingMessage(msg: any) {
         else if (lower.includes("table")) userAction = "cat_table";
         else userAction = "btn_catalog";
       } else if (
+        lower.includes("customiz") ||
         lower.includes("custom") ||
-        lower.includes("service") ||
-        lower.includes("form") ||
-        lower.includes("rfq") ||
+        lower.includes("tailor") ||
+        lower.includes("embroid") ||
         lower.includes("bulk") ||
-        lower.includes("embroidery")
+        lower.includes("swatch")
       ) {
-        userAction = "btn_services";
+        userAction = "btn_customize";
       } else if (
         lower.includes("contact") ||
         lower.includes("call") ||
         lower.includes("phone") ||
+        lower.includes("mobile") ||
         lower.includes("address") ||
         lower.includes("location") ||
         lower.includes("shop") ||
@@ -510,27 +566,27 @@ async function handleIncomingMessage(msg: any) {
       }
     }
 
-    // Legacy category ID compatibility mapping
+    // Legacy compatibility mapping
     const legacyMap: Record<string, string> = {
       cat_coats: "cat_coat",
       cat_pants: "cat_belt_pant",
       cat_tshirts: "cat_tshirt",
       cat_bottoms: "cat_devider",
-      cat_accessories: "cat_tie"
+      cat_accessories: "cat_tie",
+      btn_services: "btn_customize"
     };
     if (legacyMap[userAction]) {
       userAction = legacyMap[userAction];
     }
 
-    // Standard cleanly phrased buttons (<= 20 chars each so nothing is truncated!)
+    // Parallel crystal-clear button titles (all <= 20 UTF-16 code units!)
     const STD_BUTTONS = [
       { id: "btn_catalog", title: "🛍️ Browse Products" },
-      { id: "btn_services", title: "💼 Custom Uniforms" },
+      { id: "btn_customize", title: "Customize Uniforms" },
       { id: "btn_contact", title: "📞 Contact Direct" }
     ];
 
     if (userAction === "btn_catalog") {
-      // Dynamically build sections directly from live Supabase categories
       const rows: Array<{ id: string; title: string; description: string }> = [];
       for (const [rawCat, items] of byCategory.entries()) {
         const meta = getCategoryMeta(rawCat);
@@ -545,12 +601,12 @@ async function handleIncomingMessage(msg: any) {
       }
 
       if (rows.length === 0) {
-        rows.push({ id: "btn_services", title: "💼 Custom Uniforms", description: "Request live catalog rates directly" });
+        rows.push({ id: "btn_customize", title: "Customize Uniforms", description: "Explore customized uniform sectors" });
       }
 
       await sendWhatsAppList(
         from,
-        "Please select a product category below to view live rates, sizes, and stock availability:",
+        "Please select a product category below to view live rates, available sizes, and stock:",
         "Select Category",
         [
           {
@@ -559,10 +615,9 @@ async function handleIncomingMessage(msg: any) {
           }
         ],
         "Bedi Fashion™ Catalog",
-        "Live rates incl. 5% GST"
+        "All rates include 5% GST"
       );
     } else if (userAction.startsWith("cat_")) {
-      // Match the live category from Supabase
       let matchedCat = "";
       let matchedItems: ProductRow[] = [];
       for (const [rawCat, items] of byCategory.entries()) {
@@ -575,43 +630,56 @@ async function handleIncomingMessage(msg: any) {
 
       const cardBody = matchedItems.length > 0
         ? buildDynamicCategoryCard(matchedCat, matchedItems)
-        : "Sorry, items for this category are currently being updated. Tap *Custom Uniforms* to request a custom quotation!";
+        : "Items for this category are currently being updated. Tap *Customize Uniforms* to configure a bespoke order!";
 
       await sendWhatsAppButtons(
         from,
         cardBody,
         [
           { id: "btn_catalog", title: "🛍️ Other Products" },
-          { id: "btn_services", title: "💼 Custom Uniforms" }
+          { id: "btn_customize", title: "Customize Uniforms" }
         ],
         "Bedi Fashion™ Live Rates",
-        "Tap a button to continue"
+        "Tap an option below"
       );
-    } else if (userAction === "btn_services") {
-      const serviceMsg = `💼 *Customized Uniforms & Bulk Orders*
-
-We gladly tailor *Customized Uniforms* for schools, hospitals, corporates, and organizations—including school crest embroidery, custom fabric colors, and full sizing sets.
-
-👉 *Submit Your Requirement Here:*
-https://forms.gle/BediFashionUniformsRFQ
-
-Or reach Proprietor *Mr. Guru Charan Singh Bedi* (+91 9211825699) directly for fabric swatches and bulk quotations.`;
-
+    } else if (userAction === "btn_customize") {
+      await sendWhatsAppList(
+        from,
+        "We tailor *Customized Uniforms* with school crest embroidery, custom fabric colors, and full size sets. Choose your sector below to view customization options:",
+        "Customize Sector",
+        [
+          {
+            title: "Customize Your Uniform",
+            rows: [
+              { id: "cust_school", title: "🏫 School Uniforms", description: "Crest embroidery, custom checks, sizes 20–42" },
+              { id: "cust_corporate", title: "👔 Corporate Wear", description: "Logo shirts, blazers, ties & trousers" },
+              { id: "cust_hospital", title: "🏥 Hospital & Medical", description: "Antimicrobial scrubs, lab coats & OT gowns" },
+              { id: "cust_industrial", title: "🦺 Workwear & Security", description: "Boiler suits, 3M coveralls & guard wear" },
+              { id: "cust_fabric", title: "🎨 Fabric & Swatches", description: "Custom dye shades, bullion crests & sample kit" }
+            ]
+          }
+        ],
+        "Customize Uniforms",
+        "Est. 1987 • Tailored for Institutions"
+      );
+    } else if (userAction.startsWith("cust_") && CUSTOMIZATION_OPTIONS[userAction]) {
+      const cust = CUSTOMIZATION_OPTIONS[userAction];
       await sendWhatsAppButtons(
         from,
-        serviceMsg,
+        cust.details,
         [
           { id: "btn_catalog", title: "🛍️ View Products" },
-          { id: "btn_contact", title: "📞 Contact Us" }
+          { id: "btn_contact", title: "📞 Contact Direct" }
         ],
         "Customized Uniforms",
-        "Tap a button to choose"
+        "Faridabad & Noida • Est. 1987"
       );
     } else if (userAction === "btn_contact") {
       const contactMsg = `📞 *Bedi Fashion™ Contact Coordinates*
 
 • *Proprietor:* Mr. Guru Charan Singh Bedi (Est. 1987)
-• *Phone / WhatsApp:* +91 9211825699
+• *Contact Mobile:* +91 9310825699 | +91 9811825699 | +91 9899114052
+• *WhatsApp Desk:* +91 9211825699
 • *Email:* info@bedifashion.in
 • *Head Office:* Plot No - 125, Sector-18, Faridabad, Haryana - 121002
 • *Shop (Bedi Creation):* Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303`;
@@ -621,7 +689,7 @@ Or reach Proprietor *Mr. Guru Charan Singh Bedi* (+91 9211825699) directly for f
         contactMsg,
         [
           { id: "btn_catalog", title: "🛍️ View Products" },
-          { id: "btn_services", title: "💼 Custom Uniforms" }
+          { id: "btn_customize", title: "Customize Uniforms" }
         ],
         "Direct Assistance",
         "Faridabad & Noida • Est. 1987"
@@ -637,7 +705,7 @@ Or reach Proprietor *Mr. Guru Charan Singh Bedi* (+91 9211825699) directly for f
     } else if (userAction === "greeting") {
       const greetingText = hasActiveSession
         ? "Namaste ji! How else may *Bedi Fashion™* assist you today?"
-        : "Namaste ji! Welcome to *Bedi Fashion™* (Proprietor: Mr. Guru Charan Singh Bedi, Est. 1987). Please choose an option below:";
+        : "Namaste ji! Welcome to *Bedi Fashion™* (Proprietor: *Mr. Guru Charan Singh Bedi*, Est. 1987). Please choose an option below:";
 
       await sendWhatsAppButtons(
         from,
@@ -647,7 +715,7 @@ Or reach Proprietor *Mr. Guru Charan Singh Bedi* (+91 9211825699) directly for f
         "Faridabad & Noida • Est. 1987"
       );
     } else {
-      const aiAnswer = await getGeminiDatabaseAnswer(userText, sessionHistoryText, products);
+      const aiAnswer = await getGeminiCatalogAnswer(userText, sessionHistoryText, products);
 
       await sendWhatsAppButtons(
         from,
@@ -658,16 +726,15 @@ Or reach Proprietor *Mr. Guru Charan Singh Bedi* (+91 9211825699) directly for f
       );
     }
 
-    // Record interaction in Supabase DB
     if (supabase) {
       try {
         await supabase.from("b2b_inquiries").insert({
           sender_id: from,
-          requirement: `In: "${userAction || userText}" | Mode: live_supabase_interactive`,
+          requirement: `In: "${userAction || userText}" | Mode: live_interactive`,
           status: msgId ? `msg_${msgId}` : "active_session"
         });
       } catch (dbErr) {
-        console.warn("Could not save to b2b_inquiries:", dbErr);
+        console.warn("Could not save inquiry:", dbErr);
       }
     }
   }
@@ -676,7 +743,6 @@ Or reach Proprietor *Mr. Guru Charan Singh Bedi* (+91 9211825699) directly for f
 serve(async (req) => {
   const url = new URL(req.url);
 
-  // 1. Meta Webhook Verification Handshake (GET)
   if (req.method === "GET") {
     const mode = url.searchParams.get("hub.mode");
     const token = url.searchParams.get("hub.verify_token");
@@ -689,7 +755,6 @@ serve(async (req) => {
     return new Response("Forbidden", { status: 403 });
   }
 
-  // 2. Incoming WhatsApp Event (POST)
   if (req.method === "POST") {
     try {
       const payload = await req.json();

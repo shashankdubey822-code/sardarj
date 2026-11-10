@@ -213,19 +213,9 @@ a {
   position: relative;
 }
 
+/* Legacy brand crest pill disabled in favor of official 3D emblem */
 .brand-crest::after {
-  content: '39';
-  position: absolute;
-  bottom: -4px;
-  right: -5px;
-  background: var(--accent-saffron);
-  color: #FFFFFF;
-  font-size: 9px;
-  font-family: var(--font-sans);
-  font-weight: 800;
-  padding: 1px 4px;
-  border-radius: 4px;
-  border: 1px solid #FFFFFF;
+  display: none;
 }
 
 .brand-text {

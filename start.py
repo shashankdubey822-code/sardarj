@@ -36,7 +36,7 @@ processes = []
 def banner():
     print("""
 ================================================================================
-  🧵 BEDI FASHION™ — UNIFIED FULL-STACK PRODUCTION PLATFORM (EST. 1997)
+  🧵 BEDI FASHION™ — UNIFIED FULL-STACK PRODUCTION PLATFORM (EST. 1987)
   Integrated Frontend • FastAPI Backend • Supabase • 24x7 WhatsApp Bot
 ================================================================================
 """)

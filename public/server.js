@@ -43,7 +43,8 @@ Founded in 1987 by Proprietor Mr. Guru Charan Singh Bedi, Bedi Fashion is North 
 BUSINESS COORDINATES:
 - Head Office: Plot No - 125, Sec-18, Faridabad, Haryana - 121002
 - Shop (Bedi Creation): Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303
-- Phone Numbers: +91 9211825699 | +91 9811825699 | +91 9899114052
+- Contact Mobile: +91 9310825699 | +91 9811825699 | +91 9899114052
+- WhatsApp Desk: +91 9211825699
 - Email Addresses: info@bedifashion.in | garments@bedifashion.in
 - Proprietor: Mr. Guru Charan Singh Bedi (Est. 1987)
 
@@ -238,9 +239,9 @@ function generateSmartLocalReply(msg) {
 
   if (m.includes('contact') || m.includes('phone') || m.includes('address') || m.includes('location') || m.includes('shop') || m.includes('noida') || m.includes('factory') || m.includes('पता') || m.includes('फोन')) {
     if (isHindi) {
-      return `बेदी फैशन™ के संपर्क निर्देशांक:\n• मुख्य कार्यालय: प्लॉट नं. 125, सेक्टर-18, फरीदाबाद, हरियाणा - 121002\n• शॉप (Bedi Creation): गली नंबर 3, पंजाब नेशनल बैंक के सामने, RS ब्यूटी पार्लर के पास, F ब्लॉक, सेक्टर 44, नोएडा, उत्तर प्रदेश - 201303\n• प्रोप्राइटर: श्री गुरु चरण सिंह बेदी (स्थापना 1987)\n• फोन/व्हाट्सएप: +91 9211825699 / +91 9811825699\n• ईमेल: info@bedifashion.in`;
+      return `बेदी फैशन™ के संपर्क निर्देशांक:\n• मुख्य कार्यालय: प्लॉट नं. 125, सेक्टर-18, फरीदाबाद, हरियाणा - 121002\n• शॉप (Bedi Creation): गली नंबर 3, पंजाब नेशनल बैंक के सामने, RS ब्यूटी पार्लर के पास, F ब्लॉक, सेक्टर 44, नोएडा, उत्तर प्रदेश - 201303\n• प्रोप्राइटर: श्री गुरु चरण सिंह बेदी (स्थापना 1987)\n• संपर्क मोबाइल: +91 9310825699 | +91 9811825699 | +91 9899114052\n• व्हाट्सएप: +91 9211825699\n• ईमेल: info@bedifashion.in`;
     }
-    return `Bedi Fashion™ Coordinates:\n• Head Office: Plot No - 125, Sector-18, Faridabad, Haryana - 121002\n• Shop (Bedi Creation): Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303\n• Proprietor: Mr. Guru Charan Singh Bedi (Est. 1987)\n• Direct Line / WhatsApp: +91 9211825699\n• Email: info@bedifashion.in | garments@bedifashion.in`;
+    return `Bedi Fashion™ Coordinates:\n• Head Office: Plot No - 125, Sector-18, Faridabad, Haryana - 121002\n• Shop (Bedi Creation): Bedi Creation, Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303\n• Proprietor: Mr. Guru Charan Singh Bedi (Est. 1987)\n• Contact Mobile: +91 9310825699 | +91 9811825699 | +91 9899114052\n• WhatsApp Desk: +91 9211825699\n• Email: info@bedifashion.in | garments@bedifashion.in`;
   }
 
   if (isHindi) {
