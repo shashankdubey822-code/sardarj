@@ -8,7 +8,8 @@
 
   let currentStep = 1;
   let selectedItems = [];
-  let configuredGoogleFormUrl = '';
+  let configuredGoogleFormUrl =
+    'https://script.google.com/macros/s/AKfycbyio_UCGV2-2TMkipE6tivo87QSEDtB5CYvMvm8nLPspNQ2rH1LPahFBTsasXsnsmNA/exec';
 
   const rfqState = {
     institutionType: 'K-12 School / Academy',
@@ -64,8 +65,9 @@
     openBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        if (configuredGoogleFormUrl && selectedItems.length === 0) {
-          window.open(configuredGoogleFormUrl, '_blank', 'noopener,noreferrer');
+        const targetUrl = configuredGoogleFormUrl || window.BEDI_RFQ_FORM_URL;
+        if (targetUrl) {
+          window.open(targetUrl, '_blank', 'noopener,noreferrer');
           return;
         }
         openRFQModal();

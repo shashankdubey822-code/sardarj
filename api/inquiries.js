@@ -6,14 +6,14 @@
  */
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://ovdvycumqsjgvlsickjy.supabase.co";
-const SERVICE_ROLE_FALLBACK =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92ZHZ5Y3VtcXNqZ3Zsc2lja2p5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc5Mzk1Njc2MywiZXhwIjoyMTA5NTMyNzYzfQ.UWW-Xb-40EtxaRJ-kisvmwQCjiDj_dvfUg1r2UM4Gos";
-
 const SUPABASE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  SERVICE_ROLE_FALLBACK;
+  process.env.SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_KEY ||
+  "";
 
 const DEFAULT_WEB_RFQ_URL = "https://sardarj.vercel.app/?open=rfq";
+const DEFAULT_GOOGLE_FORM_URL = "https://script.google.com/macros/s/AKfycbyio_UCGV2-2TMkipE6tivo87QSEDtB5CYvMvm8nLPspNQ2rH1LPahFBTsasXsnsmNA/exec";
 
 function computeDiscountTier(qty) {
   const n = Number(qty) || 0;
@@ -107,7 +107,7 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
 
-  const configuredGoogleForm = (process.env.RFQ_FORM_URL || "").trim();
+  const configuredGoogleForm = (process.env.RFQ_FORM_URL || DEFAULT_GOOGLE_FORM_URL).trim();
   const activeRfqUrl = configuredGoogleForm || DEFAULT_WEB_RFQ_URL;
 
   if (req.method === "GET") {
