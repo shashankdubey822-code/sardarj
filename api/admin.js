@@ -1,10 +1,12 @@
 const https = require('https');
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://ovdvycumqsjgvlsickjy.supabase.co";
+const SERVICE_ROLE_FALLBACK =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92ZHZ5Y3VtcXNqZ3Zsc2lja2p5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc5Mzk1Njc2MywiZXhwIjoyMTA5NTMyNzYzfQ.UWW-Xb-40EtxaRJ-kisvmwQCjiDj_dvfUg1r2UM4Gos";
+
 const SUPABASE_KEY =
   process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.SUPABASE_ANON_KEY ||
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92ZHZ5Y3VtcXNqZ3Zsc2lja2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NTY3NjMsImV4cCI6MjEwOTUzMjc2M30.5p8Mjo8WViCHWYeZ7i9qsJZ1ZVw9FaegYBtySvolnfs";
+  SERVICE_ROLE_FALLBACK;
 const WHATSAPP_TOKEN = process.env.WHATSAPP_TOKEN || "";
 const PHONE_NUMBER_ID = process.env.PHONE_NUMBER_ID || "1373460992523647";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
@@ -66,9 +68,11 @@ module.exports = async (req, res) => {
     };
   }
 
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (res.setHeader) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  }
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -306,6 +310,48 @@ Format as JSON: { "occasion": "Festival Name", "greeting_note": "4-5 line note w
       failed: failCount,
       total_recipients: recipients.length
     });
+  }
+
+  // 6. GET INSTITUTIONAL RFQS & NOTIFICATION STATS
+  if (action === 'get_rfqs') {
+    try {
+      const result = await supabaseFetch('institutional_rfqs?select=*&order=created_at.desc&limit=150');
+      const rows = Array.isArray(result.data) ? result.data : [];
+      const newCount = rows.filter(r => (r.status || 'new').toLowerCase() === 'new').length;
+      const totalQty = rows.reduce((sum, r) => sum + (Number(r.total_quantity) || 0), 0);
+
+      return res.status(200).json({
+        success: true,
+        total: rows.length,
+        new_count: newCount,
+        total_quantity: totalQty,
+        rfqs: rows,
+        google_form_url: process.env.RFQ_FORM_URL || ''
+      });
+    } catch (err) {
+      return res.status(500).json({ error: String(err) });
+    }
+  }
+
+  // 7. UPDATE RFQ STATUS (e.g., 'new', 'in_review', 'quoted', 'dispatched', 'completed')
+  if (action === 'update_rfq_status' && req.method === 'POST') {
+    try {
+      const id = req.body?.id;
+      const newStatus = String(req.body?.status || 'in_review').slice(0, 48);
+      if (!id) {
+        return res.status(400).json({ error: 'Missing RFQ id' });
+      }
+
+      const updateRes = await supabaseFetch(`institutional_rfqs?id=eq.${id}`, 'PATCH', { status: newStatus });
+      return res.status(200).json({
+        success: true,
+        id,
+        status: newStatus,
+        updated: updateRes.status >= 200 && updateRes.status < 300
+      });
+    } catch (err) {
+      return res.status(500).json({ error: String(err) });
+    }
   }
 
   return res.status(400).json({ error: 'Invalid action or method' });
