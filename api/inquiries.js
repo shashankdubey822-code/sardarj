@@ -13,7 +13,7 @@ const SUPABASE_KEY =
   "";
 
 const DEFAULT_WEB_RFQ_URL = "https://sardarj.vercel.app/?open=rfq";
-const DEFAULT_GOOGLE_FORM_URL = "https://script.google.com/macros/s/AKfycbyio_UCGV2-2TMkipE6tivo87QSEDtB5CYvMvm8nLPspNQ2rH1LPahFBTsasXsnsmNA/exec";
+const DEFAULT_GOOGLE_FORM_URL = "";
 
 function computeDiscountTier(qty) {
   const n = Number(qty) || 0;
