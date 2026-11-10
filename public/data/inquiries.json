@@ -12,6 +12,22 @@
       }
     ],
     "customization": "Embroidered crest",
+    "id": "rfq-1794303887610",
+    "timestamp": "2026-11-10T09:44:47.610Z"
+  },
+  {
+    "institution_name": "Test Academy Faridabad",
+    "category": "School Uniforms",
+    "contact_person": "Mr. Tester",
+    "phone": "+91 9999999999",
+    "city": "Faridabad",
+    "items": [
+      {
+        "product_name": "Oxford Shirt",
+        "quantity": 100
+      }
+    ],
+    "customization": "Embroidered crest",
     "id": "rfq-1794301698874",
     "timestamp": "2026-11-10T09:08:18.874Z"
   },

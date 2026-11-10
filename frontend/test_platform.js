@@ -112,6 +112,8 @@ assert(fs.existsSync(path.join(BASE_DIR, 'images/bedi_logo_3d.jpg')), `images/be
 assert(indexContent.includes('bedi_emblem_3d.jpg'), `index.html uses the high-contrast 3D emblem in navbar`);
 assert(fs.existsSync(path.join(BASE_DIR, 'images/bedi_emblem_3d.jpg')), `images/bedi_emblem_3d.jpg exists`);
 assert(indexContent.includes('js/heritage.js'), `index.html includes automatic 1987 heritage year calculation script`);
+assert(indexContent.includes('tab-map-headoffice') && indexContent.includes('tab-map-shop'), `index.html contains Head Office and Shop interactive Google Map tabs`);
+assert(indexContent.includes('location-google-map') && indexContent.includes('map-go-link'), `index.html embeds scrollable Google Map and Go navigation button`);
 assert(fs.existsSync(path.join(BASE_DIR, 'js/heritage.js')), `js/heritage.js exists`);
 assert(indexContent.includes('+91 9310825699'), `index.html contains contact phone +91 9310825699`);
 assert(indexContent.includes('+91 9811825699'), `index.html contains contact phone +91 9811825699`);

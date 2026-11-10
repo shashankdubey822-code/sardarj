@@ -770,15 +770,15 @@
               Under the direct stewardship of Proprietor <strong>Mr. Guru Charan Singh Bedi (Est. 1987)</strong>, Bedi Fashion provides dependable uniform solutions across Delhi NCR. When you submit an RFQ or call our direct line, you speak directly with our leadership team with decades of textile expertise.
             </p>
 
-            <div class="facility-list" style="margin-bottom:30px;">
-              <div class="facility-item">
+            <div class="facility-list" style="margin-bottom:26px;">
+              <div class="facility-item facility-item-interactive" data-map-target="headoffice" role="button" tabindex="0" title="View Head Office on Google Map">
                 <span class="facility-icon">🏛️</span>
                 <div>
                   <strong>Head Office & Sample Room:</strong><br />
                   Plot No - 125, Sector-18, Faridabad, Haryana - 121002, India
                 </div>
               </div>
-              <div class="facility-item">
+              <div class="facility-item facility-item-interactive" data-map-target="shop" role="button" tabindex="0" title="View Noida Shop on Google Map">
                 <span class="facility-icon">🏬</span>
                 <div>
                   <strong>Shop (Bedi Creation):</strong><br />
@@ -803,25 +803,91 @@
               </div>
             </div>
 
-            <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
               <a href="https://wa.me/919211825699?text=Hello%20Mr.%20Guru%20Charan%20Singh%20Bedi,%20we%20want%20to%20discuss%20an%20institutional%20uniform%20order." target="_blank" rel="noopener noreferrer" class="btn-primary-maison">
                 💬 WhatsApp Mr. Guru Charan Singh Bedi
               </a>
               <a href="tel:+919310825699" class="btn-secondary-maison">
                 📞 Call Direct (+91 9310825699)
               </a>
+              <button class="btn-secondary-maison btn-open-rfq" type="button">
+                🧵 Request Free Physical Swatches →
+              </button>
             </div>
           </div>
 
           <div>
-            <div style="background:#FFFFFF; border:1px solid var(--border-hairline); border-radius:16px; padding:30px; box-shadow:var(--shadow-card);">
-              <h4 class="font-serif" style="font-size:24px; margin-bottom:12px;">Immediate Institutional Sample Dispatch</h4>
-              <p style="font-size:13px; color:var(--text-muted); line-height:1.55; margin-bottom:20px;">
-                Are you a school principal, purchase committee head, or HR lead in Delhi NCR? We courier full fabric shade cards and sizing sets within 24 hours for board evaluation.
+            <!-- Interactive Dual-Location Tabbed Google Maps Card -->
+            <div class="location-map-card" id="location-map-card">
+              <div class="location-map-header">
+                <div>
+                  <span class="location-map-eyebrow">Interactive Google Maps Locator</span>
+                  <h4 class="font-serif location-map-heading" id="map-loc-title">Bedi Fashion™ — Head Office</h4>
+                </div>
+                <div class="location-tabs" role="tablist" aria-label="Select Office or Shop Location">
+                  <button
+                    type="button"
+                    class="location-tab-btn active"
+                    id="tab-map-headoffice"
+                    data-loc="headoffice"
+                    role="tab"
+                    aria-selected="true"
+                  >
+                    🏛️ Head Office
+                  </button>
+                  <button
+                    type="button"
+                    class="location-tab-btn"
+                    id="tab-map-shop"
+                    data-loc="shop"
+                    role="tab"
+                    aria-selected="false"
+                  >
+                    🏬 Shop
+                  </button>
+                </div>
+              </div>
+
+              <p class="location-active-address" id="map-loc-address">
+                Plot No - 125, Sector-18 Market, Old Faridabad, Haryana - 121002 • Open 8:00 AM – 8:00 PM
               </p>
-              <button class="btn-primary-maison btn-open-rfq" style="width:100%; justify-content:center;">
-                Request Free Physical Swatches →
-              </button>
+
+              <div class="location-map-viewport">
+                <iframe
+                  id="location-google-map"
+                  title="Bedi Fashion™ Location Map"
+                  src="https://maps.google.com/maps?q=Bedi%20Fashion%2C%20Plot%20No%20125%2C%20Sector%2018%2C%20Faridabad%2C%20Haryana%20121002&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen
+                ></iframe>
+              </div>
+
+              <div class="location-map-footer">
+                <div class="location-coords-pill" id="map-loc-coords">
+                  📍 28.4177° N, 77.3265° E • Scroll &amp; zoom to inspect
+                </div>
+                <div class="location-map-actions">
+                  <a
+                    id="map-pin-link"
+                    href="https://www.google.com/maps/search/?api=1&amp;query=Bedi%20Fashion%2C%20Plot%20No%20125%2C%20Sector%2018%2C%20Faridabad%2C%20Haryana%20121002"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-map-pin"
+                  >
+                    📍 View Pin
+                  </a>
+                  <a
+                    id="map-go-link"
+                    href="https://www.google.com/maps/dir/?api=1&amp;destination=Bedi%20Fashion%2C%20Plot%20No%20125%2C%20Sector%2018%2C%20Faridabad%2C%20Haryana%20121002"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-map-go"
+                  >
+                    🧭 Go / Navigate →
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

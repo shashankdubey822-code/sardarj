@@ -74,6 +74,7 @@
     setupMobileMenu();
     setupSmoothScroll();
     setupSchoolBlazerViewToggle();
+    setupLocationMapTabs();
   }
 
   // 1. Seasonal Institutional Timeline Alert
@@ -421,6 +422,78 @@
     if (orbitBtn) orbitBtn.style.display = 'flex';
     const stageHint = document.querySelector('.stage-hint');
     if (stageHint) stageHint.style.display = 'block';
+  }
+
+  // 11. Interactive Dual-Location Google Maps Switcher (Head Office vs Noida Shop)
+  function setupLocationMapTabs() {
+    const mapFrame = document.getElementById('location-google-map');
+    const titleEl = document.getElementById('map-loc-title');
+    const addressEl = document.getElementById('map-loc-address');
+    const coordsEl = document.getElementById('map-loc-coords');
+    const pinLink = document.getElementById('map-pin-link');
+    const goLink = document.getElementById('map-go-link');
+    const tabBtns = document.querySelectorAll('.location-tab-btn');
+    const sourceCards = document.querySelectorAll('.facility-item-interactive[data-map-target]');
+
+    if (!mapFrame || !tabBtns.length) return;
+
+    const LOCATIONS = {
+      headoffice: {
+        title: 'Bedi Fashion™ — Head Office',
+        address: 'Plot No - 125, Sector-18 Market, Old Faridabad, Haryana - 121002 • Open 8:00 AM – 8:00 PM',
+        coords: '📍 28.4177° N, 77.3265° E • Scroll & zoom to inspect',
+        query: 'Bedi Fashion, Plot No 125, Sector 18, Faridabad, Haryana 121002'
+      },
+      shop: {
+        title: 'Bedi Creation — Noida Retail Shop',
+        address: 'Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303',
+        coords: '📍 28.5533° N, 77.3372° E • Near PNB Sector 44 • Scroll & zoom',
+        query: 'Bedi Creation, Gali Number 3, Opposite Punjab National Bank, F Block, Sector 44, Noida, Uttar Pradesh 201303'
+      }
+    };
+
+    function selectLocation(locKey) {
+      const loc = LOCATIONS[locKey];
+      if (!loc) return;
+
+      const encoded = encodeURIComponent(loc.query);
+      const embedUrl = `https://maps.google.com/maps?q=${encoded}&t=&z=17&ie=UTF8&iwloc=&output=embed`;
+      const pinUrl = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+      const dirUrl = `https://www.google.com/maps/dir/?api=1&destination=${encoded}`;
+
+      if (mapFrame.getAttribute('src') !== embedUrl) {
+        mapFrame.setAttribute('src', embedUrl);
+      }
+      if (titleEl) titleEl.textContent = loc.title;
+      if (addressEl) addressEl.textContent = loc.address;
+      if (coordsEl) coordsEl.textContent = loc.coords;
+      if (pinLink) pinLink.setAttribute('href', pinUrl);
+      if (goLink) goLink.setAttribute('href', dirUrl);
+
+      tabBtns.forEach((btn) => {
+        const isActive = btn.dataset.loc === locKey;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      sourceCards.forEach((card) => {
+        card.classList.toggle('active-map-source', card.dataset.mapTarget === locKey);
+      });
+    }
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => selectLocation(btn.dataset.loc));
+    });
+
+    sourceCards.forEach((card) => {
+      card.addEventListener('click', () => selectLocation(card.dataset.mapTarget));
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectLocation(card.dataset.mapTarget);
+        }
+      });
+    });
   }
 
   // One-Click PDF Lookbook Trigger
