@@ -285,14 +285,22 @@ function buildLiveSupabaseFallbackReply(message, products, lang) {
   }
 
   // Specific product/category search in live Supabase data
-  const stopWords = new Set(["want", "some", "need", "price", "rate", "cost", "buy", "from", "have", "what", "with", "this", "that", "uniform", "uniforms", "school"]);
-  const keywords = m.split(/\s+/).filter((w) => w.length >= 3 && !stopWords.has(w));
-  const matched = keywords.length > 0
-    ? products.filter((p) => {
-        const hay = `${p.item_code} ${p.name} ${formatCategoryLabel(p.category)} ${p.category} ${p.color} ${p.description} ${p.available_sizes}`.toLowerCase();
-        return keywords.some((k) => hay.includes(k));
-      })
-    : [];
+  const stopWords = new Set(["want", "some", "need", "price", "rate", "rates", "cost", "buy", "from", "have", "what", "with", "this", "that", "size", "sizes", "uniform", "uniforms", "school", "show", "tell", "give", "much", "available", "stock"]);
+  const words = m.replace(/[^a-z0-9.\s-]/g, " ").split(/\s+/).filter((w) => w.length >= 2 && !stopWords.has(w) && !/^(is|am|are|the|for|can|you|get|all|any|do|me|my|of|in|on|to)$/.test(w));
+  let matched = [];
+  if (words.length > 0) {
+    // Prefer items matching ALL keywords (e.g. "coat" + "36"), else fallback to ANY keyword
+    const strictMatched = products.filter((p) => {
+      const hay = `${p.item_code} ${p.name} ${formatCategoryLabel(p.category)} ${p.category} ${p.color} ${p.description} ${p.available_sizes}`.toLowerCase();
+      return words.every((k) => hay.includes(k));
+    });
+    matched = strictMatched.length > 0
+      ? strictMatched
+      : products.filter((p) => {
+          const hay = `${p.item_code} ${p.name} ${formatCategoryLabel(p.category)} ${p.category} ${p.color} ${p.description} ${p.available_sizes}`.toLowerCase();
+          return words.some((k) => hay.includes(k));
+        });
+  }
 
   if (matched.length > 0 && matched.length <= 20) {
     const top = matched.slice(0, 8);
