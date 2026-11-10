@@ -133,7 +133,8 @@ function extractInteractionText(data) {
 }
 
 /**
- * Call Google Gemini Interactions API with live Supabase inventory context.
+ * Call Google Gemini Interactions API with live Supabase inventory context,
+ * falling back to generateContent endpoint if Interactions is unavailable.
  */
 async function callGeminiInteractions(apiKey, systemInstruction, message, history, previousInteractionId) {
   const historyLines = Array.isArray(history)
@@ -147,8 +148,12 @@ async function callGeminiInteractions(apiKey, systemInstruction, message, histor
     ? `Recent Conversation Context:\n${historyLines}\n\nLatest Customer Message:\n${message}`
     : message;
 
-  const models = ["gemini-3.8-flash", "gemini-3.5-flash-lite"];
-  for (const model of models) {
+  const models = ["gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
+  let lastStatus = 0;
+  let lastError = "";
+
+  // 1. Primary: Official Interactions API
+  for (const model of models.slice(0, 2)) {
     try {
       const payload = {
         model,
@@ -173,27 +178,77 @@ async function callGeminiInteractions(apiKey, systemInstruction, message, histor
       });
 
       const raw = await res.text();
-      let data = null;
-      try {
-        data = JSON.parse(raw);
-      } catch (_) {
-        continue;
-      }
-
+      lastStatus = res.status;
       if (res.ok) {
-        const reply = extractInteractionText(data);
-        if (reply) {
-          return { reply, interactionId: data.id || null, model };
-        }
+        try {
+          const data = JSON.parse(raw);
+          const reply = extractInteractionText(data);
+          if (reply) {
+            return { reply, interactionId: data.id || null, model };
+          }
+        } catch (_) {}
       } else {
-        console.warn(`Gemini Interactions (${model}) HTTP ${res.status}:`, raw.slice(0, 200));
+        lastError = raw.slice(0, 140);
+        console.warn(`Gemini Interactions (${model}) HTTP ${res.status}:`, lastError);
+        if (res.status === 401 || res.status === 403) {
+          return { errorStatus: lastStatus, errorDetail: lastError };
+        }
+      }
+    } catch (err) {
+      lastError = err.message;
+    }
+  }
+
+  // 2. Compatibility: Standard generateContent endpoint for non-Interactions projects/keys
+  const contents = [];
+  if (Array.isArray(history)) {
+    for (const h of history.slice(-8)) {
+      if (h && h.content) {
+        contents.push({
+          role: (h.role === "assistant" || h.role === "model" || h.role === "bot") ? "model" : "user",
+          parts: [{ text: String(h.content) }]
+        });
+      }
+    }
+  }
+  if (!contents.length || contents[contents.length - 1].parts[0].text !== message) {
+    contents.push({ role: "user", parts: [{ text: message }] });
+  }
+
+  for (const model of models) {
+    try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey
+        },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: systemInstruction }] },
+          contents,
+          generationConfig: { maxOutputTokens: 700 }
+        })
+      });
+      const raw = await res.text();
+      lastStatus = res.status;
+      if (res.ok) {
+        try {
+          const parsed = JSON.parse(raw);
+          const reply = (parsed.candidates?.[0]?.content?.parts || []).map((p) => p.text || "").join("").trim();
+          if (reply) {
+            return { reply, interactionId: null, model };
+          }
+        } catch (_) {}
+      } else {
+        lastError = raw.slice(0, 140);
         if (res.status === 401 || res.status === 403) break;
       }
     } catch (err) {
-      console.warn(`Gemini Interactions (${model}) error:`, err.message);
+      lastError = err.message;
     }
   }
-  return null;
+
+  return { errorStatus: lastStatus, errorDetail: lastError };
 }
 
 /**
@@ -324,6 +379,7 @@ CONVERSATION GUIDELINES:
 6. Keep responses well-structured with clean bullet points and offer helpful next steps (such as connecting with Proprietor Mr. Guru Charan Singh Bedi on WhatsApp +91 9211825699 or requesting physical swatches).`;
 
   const geminiApiKey = process.env.GEMINI_API_KEY || "";
+  let geminiDiag = { hasEnvKey: Boolean(geminiApiKey), errorStatus: null, errorDetail: null };
   if (geminiApiKey) {
     const aiResult = await callGeminiInteractions(
       geminiApiKey,
@@ -341,12 +397,17 @@ CONVERSATION GUIDELINES:
         source: "gemini_interactions_supabase"
       });
     }
+    if (aiResult) {
+      geminiDiag.errorStatus = aiResult.errorStatus;
+      geminiDiag.errorDetail = aiResult.errorDetail;
+    }
   }
 
   const fallbackReply = buildLiveSupabaseFallbackReply(message, products, lang);
   return res.status(200).json({
     reply: fallbackReply,
     productsCount: products.length,
-    source: "live_supabase_concierge"
+    source: "live_supabase_concierge",
+    diagnostics: geminiDiag
   });
 };

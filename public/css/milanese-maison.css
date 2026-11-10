@@ -1,6 +1,6 @@
 /* ==========================================================================
    BEDI FASHION™ — MILANESE LUXURY MAISON DESIGN SYSTEM
-   Brand: Bedi Fashion™ (Founded 1997 • 29+ Years of Heritage • Faridabad, India)
+   Brand: Bedi Fashion™ (Founded 1987 • 39+ Years of Heritage • Faridabad & Noida, India)
    Theme: Style 3 — Milanese Luxury Maison (Soft Warm Ivory & Terracotta Saffron)
    100% Light-Mode Daylight Luxury Aesthetic
    ========================================================================== */
@@ -214,7 +214,7 @@ a {
 }
 
 .brand-crest::after {
-  content: '29';
+  content: '39';
   position: absolute;
   bottom: -4px;
   right: -5px;

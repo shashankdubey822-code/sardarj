@@ -205,13 +205,13 @@ How may I assist your institution today? You can ask about our **56+ products, f
 - **Ready Stock Inventory**: Minimum Order is just **25 pieces** per category.
 - **Custom Institutional Contracts**: MOQ starts at **100 pieces** for custom Pantone dyes, CAD patterns, and gold bullion crest embroidery.
 
-Would you like to connect directly with Mr. Bedi? <a href="https://wa.me/919211825699?text=Hello%20Mr.%20Bedi,%20inquiring%20about%20MOQ%20and%20institutional%20pricing." target="_blank">Chat with Owner on WhatsApp (+91 9211825699)</a>`;
+Would you like to connect directly with Proprietor Mr. Guru Charan Singh Bedi? <a href="https://wa.me/919211825699?text=Hello%20Mr.%20Guru%20Charan%20Singh%20Bedi,%20inquiring%20about%20MOQ%20and%20institutional%20pricing." target="_blank">Chat with Proprietor on WhatsApp (+91 9211825699)</a>`;
     }
 
     // 2. School Uniforms
     if (q.includes('school') || q.includes('blazer') || q.includes('skirt') || q.includes('tracksuit') || q.includes('स्कूल')) {
       if (isHindi) {
-        return `बेदी फैशन 29 वर्षों से दिल्ली-एनसीआर के 500+ प्रतिष्ठित स्कूलों को वर्दी प्रदान कर रहा है:
+        return `बेदी फैशन 39+ वर्षों से दिल्ली-एनसीआर के 500+ प्रतिष्ठित स्कूलों को वर्दी प्रदान कर रहा है:
 - **शर्ट**: 65/35 पॉली-कॉटन पॉपलिन (150 GSM), रिंकल-फ्री कॉलर।
 - **ट्राउजर व स्कर्ट**: 240 GSM हैवी टेरी-कॉटन ट्विल, डबल-नीडल सिलाई।
 - **ब्लेज़र**: प्रीमियम वूल-सर्ज फैब्रिक, हैंड-एम्ब्रॉयडर्ड बुलियन क्रेस्ट।
@@ -219,7 +219,7 @@ Would you like to connect directly with Mr. Bedi? <a href="https://wa.me/9192118
 
 हम आपकी स्कूल प्रबंध समिति को **मुफ्त फैब्रिक स्वाच व साइजिंग सेट** भेज सकते हैं। <a href="https://wa.me/919211825699?text=Hello%20Bedi%20Fashion,%20we%20need%20School%20Uniform%20samples%20for%20our%20management%20committee." target="_blank">स्कूल सैंपल मँगवाएं →</a>`;
       }
-      return `Bedi Fashion is the premier school uniform contractor in North India with 29+ years of school trust:
+      return `Bedi Fashion is a trusted school uniform supplier in North India with 39+ years of school trust (Est. 1987):
 - **Oxford & Poplin Shirts**: 65/35 Poly-Cotton (150 GSM), fused permanent collar.
 - **Trousers & Skirts**: 240 GSM high-durability Terry-Cotton, Teflon stain resist.
 - **Wool Serge Blazers**: Hand-finished bullion institutional monograms and gold crest buttons.

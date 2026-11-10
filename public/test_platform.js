@@ -103,7 +103,8 @@ const indexContent = fs.readFileSync(indexHtmlPath, 'utf-8');
 
 assert(indexContent.includes('Bedi Fashion'), `index.html contains brand title`);
 assert(indexContent.includes('Plot No - 125, Sector-18'), `index.html contains Head Office address`);
-assert(indexContent.includes('Springfield Colony'), `index.html contains Manufacturing Unit I address`);
+assert(indexContent.includes('Sector 44, Noida'), `index.html contains Noida Shop address`);
+assert(indexContent.includes('1987'), `index.html contains Est. 1987 founding year`);
 assert(indexContent.includes('+91 9211825699'), `index.html contains primary phone +91 9211825699`);
 assert(indexContent.includes('products-grid'), `index.html contains products-grid container`);
 assert(indexContent.includes('webgl-canvas-container'), `index.html contains webgl-canvas-container`);
