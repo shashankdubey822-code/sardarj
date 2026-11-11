@@ -400,7 +400,7 @@ RULES:
   // Dynamic live catalog fallback without exposing internal words
   const m = userMessage.toLowerCase();
   if (m.includes("crest") || m.includes("embroid") || m.includes("custom") || m.includes("rfq") || m.includes("form") || m.includes("bulk") || m.includes("fabric")) {
-    return `✨ *Customize Uniforms & Institutional Orders*\n\nFor institutional orders in *school crest embroidery* or *bulk fabric*, please fill out our requirement form:\n📝 ${RFQ_FORM_URL}\n\nOr call our desk at +91 9310825699 | +91 9811825699 | +91 9899114052.`;
+    return `✨ *Customized Uniforms & Institutional Orders*\n\nFor institutional orders in *school crest embroidery* or *bulk fabric*, please fill out our requirement form:\n📝 ${RFQ_FORM_URL}\n\nOr call our desk at +91 9310825699 | +91 9811825699 | +91 9899114052.`;
   }
   const stopWords = new Set(["want", "some", "need", "price", "rate", "cost", "buy", "from", "have", "what", "with", "this", "that", "size", "uniform", "uniforms", "school"]);
   const words = m.replace(/[^a-z0-9.\s-]/g, " ").split(/\s+/).filter((w) => w.length >= 2 && !stopWords.has(w) && !/^(is|am|are|the|for|can|you|get|all|any|do|me|my)$/.test(w));
@@ -413,10 +413,10 @@ RULES:
 
   if (matched.length > 0 && matched.length <= 12) {
     const itemsText = matched.slice(0, 6).map((p) => `• *${p.name}* (Size ${p.available_sizes}): *₹${Number(p.final_price || p.base_price).toFixed(2)}*`).join("\n");
-    return `We would be glad to help! Here are live rates from our collection:\n${itemsText}\n\nTap *Browse Products* or *Customize Uniforms* below for full details.`;
+    return `We would be glad to help! Here are live rates from our collection:\n${itemsText}\n\nTap *Browse Products* or *Customized Uniforms* below for full details.`;
   }
 
-  return "Thank you for reaching out to *Bedi Fashion™* (Proprietor: *Mr. Guru Charan Singh Bedi*, Est. 1987)! Tap an option below to explore live prices, *Customize Uniforms*, or reach us directly:";
+  return "Thank you for reaching out to *Bedi Fashion™* (Proprietor: *Mr. Guru Charan Singh Bedi*, Est. 1987)! Tap an option below to explore live prices, *Customized Uniforms*, or reach us directly:";
 }
 
 async function handleIncomingMessage(msg: any) {
@@ -587,7 +587,7 @@ async function handleIncomingMessage(msg: any) {
     // Parallel crystal-clear button titles (all <= 20 UTF-16 code units!)
     const STD_BUTTONS = [
       { id: "btn_catalog", title: "🛍️ Browse Products" },
-      { id: "btn_customize", title: "Customize Uniforms" },
+      { id: "btn_customize", title: "Customized Uniforms" },
       { id: "btn_contact", title: "📞 Contact Direct" }
     ];
 
@@ -606,7 +606,7 @@ async function handleIncomingMessage(msg: any) {
       }
 
       if (rows.length === 0) {
-        rows.push({ id: "btn_customize", title: "Customize Uniforms", description: "Explore customized uniform sectors" });
+        rows.push({ id: "btn_customize", title: "Customized Uniforms", description: "Explore customized uniform sectors" });
       }
 
       await sendWhatsAppList(
@@ -635,14 +635,14 @@ async function handleIncomingMessage(msg: any) {
 
       const cardBody = matchedItems.length > 0
         ? buildDynamicCategoryCard(matchedCat, matchedItems)
-        : "Items for this category are currently being updated. Tap *Customize Uniforms* to configure a bespoke order!";
+        : "Items for this category are currently being updated. Tap *Customized Uniforms* to configure a bespoke order!";
 
       await sendWhatsAppButtons(
         from,
         cardBody,
         [
           { id: "btn_catalog", title: "🛍️ Other Products" },
-          { id: "btn_customize", title: "Customize Uniforms" }
+          { id: "btn_customize", title: "Customized Uniforms" }
         ],
         "Bedi Fashion™ Live Rates",
         "Tap an option below"
@@ -650,11 +650,11 @@ async function handleIncomingMessage(msg: any) {
     } else if (userAction === "btn_customize") {
       await sendWhatsAppList(
         from,
-        `✨ *Customize Uniforms & Institutional Orders*\n\nFor institutional orders in *school crest embroidery* or *bulk fabric*, please fill out this requirement form:\n📝 ${RFQ_FORM_URL}\n\nYou can also select a sector below for tailored uniform details:`,
+        `✨ *Customized Uniforms & Institutional Orders*\n\nFor institutional orders in *school crest embroidery* or *bulk fabric*, please fill out this requirement form:\n📝 ${RFQ_FORM_URL}\n\nYou can also select a sector below for tailored uniform details:`,
         "Customize Sector",
         [
           {
-            title: "Customize Your Uniform",
+            title: "Customized Uniforms",
             rows: [
               { id: "cust_school", title: "🏫 School Uniforms", description: "Crest embroidery, custom checks, sizes 20–42" },
               { id: "cust_corporate", title: "👔 Corporate Wear", description: "Logo shirts, blazers, ties & trousers" },
@@ -664,7 +664,7 @@ async function handleIncomingMessage(msg: any) {
             ]
           }
         ],
-        "Customize Uniforms",
+        "Customized Uniforms",
         "Est. 1987 • Tailored for Institutions"
       );
     } else if (userAction.startsWith("cust_") && CUSTOMIZATION_OPTIONS[userAction]) {
@@ -686,15 +686,21 @@ async function handleIncomingMessage(msg: any) {
 • *Contact Mobile:* +91 9310825699 | +91 9811825699 | +91 9899114052
 • *WhatsApp Desk:* +91 9211825699
 • *Email:* info@bedifashion.in
-• *Head Office:* Plot No - 125, Sector-18, Faridabad, Haryana - 121002
-• *Shop (Bedi Creation):* Gali Number 3, Opposite Punjab National Bank, Beside RS Beauty Parlour, F Block, Sector 44, Noida, Uttar Pradesh - 201303`;
+
+📍 *Head Office (Faridabad):*
+Plot No - 125, Sector-18, Faridabad, Haryana - 121002
+🗺️ *Google Map:* https://maps.google.com/?q=28.4177,77.3265
+
+📍 *Shop (Bedi Creation, Noida):*
+Gali Number 3, Beside RS Beauty Parlour, Opp. Punjab National Bank, F Block, Sector 44, Noida, UP - 201303
+🗺️ *Google Map:* https://maps.google.com/?q=28.5524195,77.3370199`;
 
       await sendWhatsAppButtons(
         from,
         contactMsg,
         [
           { id: "btn_catalog", title: "🛍️ View Products" },
-          { id: "btn_customize", title: "Customize Uniforms" }
+          { id: "btn_customize", title: "Customized Uniforms" }
         ],
         "Direct Assistance",
         "Faridabad & Noida • Est. 1987"
@@ -736,7 +742,7 @@ async function handleIncomingMessage(msg: any) {
         await supabase.from("b2b_inquiries").insert({
           sender_id: from,
           requirement: `In: "${userAction || userText}" | Mode: live_interactive`,
-          status: msgId ? `msg_${msgId}` : "active_session"
+          status: msgId ? `msg_${msgId}`.slice(0, 150) : "active_session"
         });
       } catch (dbErr) {
         console.warn("Could not save inquiry:", dbErr);
